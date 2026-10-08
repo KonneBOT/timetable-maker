@@ -41,6 +41,14 @@ def create_sample_excel(filename="RS_timetable_data.xlsx"):
         {"Train number": "RS 1 (1002)", "Stop": "Kirchentellinsfurt", "Km": 7.1, "Arrival": "08:20", "Departure": "08:21"},
         {"Train number": "RS 1 (1002)", "Stop": "Tübingen Lustnau", "Km": 2.5, "Arrival": "08:25", "Departure": "08:26"},
         {"Train number": "RS 1 (1002)", "Stop": "Tübingen Hbf", "Km": 0.0, "Arrival": "08:29", "Departure": None},
+
+        # 2nd train in the same direction
+        {"Train number": "RS 1 (1003)", "Stop": "Tübingen Hbf", "Km": 0.0, "Arrival": None, "Departure": "08:10"},
+        {"Train number": "RS 1 (1003)", "Stop": "Tübingen Lustnau", "Km": 2.5, "Arrival": "08:13", "Departure": "08:14"},
+        {"Train number": "RS 1 (1003)", "Stop": "Kirchentellinsfurt", "Km": 7.1, "Arrival": "08:18", "Departure": "08:19"},
+        {"Train number": "RS 1 (1003)", "Stop": "Wannweil", "Km": 10.4, "Arrival": "08:22", "Departure": "08:23"},
+        {"Train number": "RS 1 (1003)", "Stop": "Reutlingen West", "Km": 13.8, "Arrival": "08:26", "Departure": "08:27"},
+        {"Train number": "RS 1 (1003)", "Stop": "Reutlingen Hbf", "Km": 15.2, "Arrival": "08:29", "Departure": None},
     ]
 
     # Create Excel with different tabs for the sections
@@ -158,7 +166,7 @@ if __name__ == "__main__":
     excel_file = "rsna_timetable_data.xlsx"
 
     # 1. Create sample file (when run for the first time)
-    create_sample_excel(excel_file)
+    # create_sample_excel(excel_file)
 
     # 2. Read selected section
     selected_section = "Tübingen - Reutlingen"
