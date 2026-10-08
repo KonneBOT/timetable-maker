@@ -68,26 +68,27 @@ def plot_route_timetable(df, title_name):
     for _, row in stations.iterrows():
         ax.axhline(y=row['Km'], color='lightgray', linestyle='--', linewidth=0.8, zorder=1)
 
-    # Draw train paths
+    # Draw train paths in chronological order to avoid backtracking between
+    # arrival and departure points at the same stop.
     for train_number, train_data in df.groupby('Train number'):
-        train_data = train_data.sort_values('Km')
-        times = []
-        distances = []
+        path_points = []
 
         for _, row in train_data.iterrows():
+            km = row['Km']
             arrival = row['arrival_dt']
             departure = row['departure_dt']
-            km = row['Km']
 
-            if pd.notnull(arrival) and pd.notnull(departure):
-                times.extend([arrival, departure])
-                distances.extend([km, km])
-            elif pd.notnull(departure):
-                times.append(departure)
-                distances.append(km)
-            elif pd.notnull(arrival):
-                times.append(arrival)
-                distances.append(km)
+            if pd.notnull(arrival):
+                path_points.append((arrival, km))
+            if pd.notnull(departure):
+                path_points.append((departure, km))
+
+        if not path_points:
+            continue
+
+        path_points.sort(key=lambda item: item[0])
+        times = [point[0] for point in path_points]
+        distances = [point[1] for point in path_points]
 
         # Plot route
         ax.plot(times, distances, marker='o', markersize=4, linewidth=2, label=train_number, zorder=3)
