@@ -1,7 +1,26 @@
+import os
 import pandas as pd
+import matplotlib
+
+if os.environ.get("DISPLAY", "") == "" and os.name != "nt":
+    matplotlib.use("Agg")
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
+
+
+def display_or_save(fig, filename_prefix, title_name):
+    """Save a plot when running headless and show it otherwise."""
+    safe_title = title_name.replace(" ", "_").replace("/", "_")
+    filename = f"{filename_prefix}_{safe_title}.png"
+
+    if matplotlib.get_backend().lower() == "agg":
+        fig.savefig(filename, dpi=200, bbox_inches="tight")
+        plt.close(fig)
+    else:
+        plt.show()
+
 
 def create_sample_excel(filename="RS_timetable_data.xlsx"):
     """Creates a sample Excel file with data for the RS Neckar-Alb."""
@@ -89,7 +108,7 @@ def plot_route_timetable(df, title_name):
     plt.legend(title="Trains", loc='upper left', bbox_to_anchor=(1.01, 1))
 
     plt.tight_layout()
-    plt.show()
+    display_or_save(fig, "route_timetable", title_name)
 
 def generate_line_timetable(df, title_name):
     """Creates a classic display line timetable as a matrix table."""
@@ -132,7 +151,7 @@ def generate_line_timetable(df, title_name):
 
     plt.title(f"Line timetable / display: {title_name}", fontsize=14, fontweight='bold', pad=20)
     plt.tight_layout()
-    plt.show()
+    display_or_save(fig, "line_timetable", title_name)
 
 if __name__ == "__main__":
     excel_file = "rsna_timetable_data.xlsx"
