@@ -57,11 +57,6 @@ MEX_RE_TUEBINGEN_REUTLINGEN = {
     ]
 }
 
-TRAIN_BLUEPRINTS = {
-    "TUEBINGEN_REUTLINGEN": RS1_TUEBINGEN_REUTLINGEN,
-    "MEX_RE_TUEBINGEN_REUTLINGEN": MEX_RE_TUEBINGEN_REUTLINGEN,
-}
-
 
 def reverse_blueprint(blueprint):
     """Return the same run in the opposite direction."""
@@ -167,7 +162,7 @@ def plot_route_timetable(df, title_name):
     
     # Horizontal lines for stations
     for _, row in stations.iterrows():
-        ax.axhline(y=row['Km'], color='lightgray', linestyle='--', linewidth=0.8, zorder=1)
+        ax.axhline(y=row['Km'], color='lightgray', linestyle='-', linewidth=0.8, zorder=1)
 
     # Draw train paths in chronological order to avoid backtracking between
     # arrival and departure points at the same stop.
@@ -202,10 +197,13 @@ def plot_route_timetable(df, title_name):
     # Formatting of the X-axis (time)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
     ax.xaxis.set_major_locator(mdates.MinuteLocator(interval=5))
+    ax.xaxis.set_minor_locator(mdates.MinuteLocator(interval=1))
     ax.set_xlabel("Time", fontsize=11)
     
     plt.xticks(rotation=45)
-    plt.grid(True, which='both', color='gainsboro', linestyle=':', zorder=0)
+    ax.grid(True, which='major', axis='y', color='gainsboro', linestyle=':', linewidth=0.8, zorder=0)
+    ax.grid(True, which='major', axis='x', color='gainsboro', linestyle=':', linewidth=1.6, zorder=0)
+    ax.grid(True, which='minor', axis='x', color='lightgray', linestyle='--', linewidth=0.6, zorder=0)
     plt.title(f"Route timetable (graphic timetable): {title_name}", fontsize=14, pad=15)
     plt.legend(title="Trains", loc='upper left', bbox_to_anchor=(1.01, 1))
 
