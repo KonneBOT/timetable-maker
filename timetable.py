@@ -1,5 +1,6 @@
 import os
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import pandas as pd
 import matplotlib
@@ -9,6 +10,16 @@ if os.environ.get("DISPLAY", "") == "" and os.name != "nt":
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+
+
+OUTPUT_DIR = Path(__file__).resolve().parent / "output"
+
+
+def output_path(filename):
+    """Return a path inside the output directory for generated files."""
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    path = Path(filename)
+    return path if path.is_absolute() else OUTPUT_DIR / path
 
 
 # Stations are defined once and trains refer to them by ID.  This keeps names,
@@ -123,13 +134,21 @@ def trains_to_dataframe(trains, stations=STATIONS):
     return pd.DataFrame(rows)
 
 
+TRAINS = [
+    create_train("1001", RS1_TUEBINGEN_REUTLINGEN, "08:00"),
+    create_train("1002", reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN), "08:10"),
+    create_train("1003", RS1_TUEBINGEN_REUTLINGEN, "08:10"),
+    create_train("19213", MEX_RE_TUEBINGEN_REUTLINGEN, "08:08"),
+]
+
+
 def display_or_save(fig, filename_prefix, title_name):
-    """Save a plot when running headless and show it otherwise."""
+    """Save plots in the output directory and show them in interactive mode."""
     safe_title = title_name.replace(" ", "_").replace("/", "_")
-    filename = f"{filename_prefix}_{safe_title}.png"
+    filename = output_path(f"{filename_prefix}_{safe_title}.png")
+    fig.savefig(filename, dpi=200, bbox_inches="tight")
 
     if matplotlib.get_backend().lower() == "agg":
-        fig.savefig(filename, dpi=200, bbox_inches="tight")
         plt.close(fig)
     else:
         plt.show()
@@ -137,6 +156,7 @@ def display_or_save(fig, filename_prefix, title_name):
 
 def create_sample_excel(filename="RS_timetable_data.xlsx"):
     """Creates a sample Excel file with data for the RS Neckar-Alb."""
+    filename = output_path(filename)
     # Create Excel with different tabs for the sections
     with pd.ExcelWriter(filename, engine='openpyxl') as writer:
         trains_to_dataframe(TRAINS).to_excel(
@@ -254,19 +274,12 @@ def generate_line_timetable(df, title_name):
     display_or_save(fig, "line_timetable", title_name)
 
 if __name__ == "__main__":
-    excel_file = "rsna_timetable_data.xlsx"
+    excel_file = output_path("rsna_timetable_data.xlsx")
 
     # 1. Create sample file (when run for the first time)
     # create_sample_excel(excel_file)
 
     # 2. Build the selected section from the structured station/train data.
-
-    TRAINS = [
-        create_train("1001", RS1_TUEBINGEN_REUTLINGEN, "08:00"),
-        create_train("1002", reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN), "08:10"),
-        create_train("1003", RS1_TUEBINGEN_REUTLINGEN, "08:10"),
-        create_train("19213", MEX_RE_TUEBINGEN_REUTLINGEN, "08:08"),
-    ]
 
     selected_section = "Tübingen - Reutlingen"
     timetable_df = trains_to_dataframe(TRAINS)
