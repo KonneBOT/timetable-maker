@@ -1,4 +1,6 @@
 import os
+from datetime import datetime, timedelta
+
 import pandas as pd
 import matplotlib
 
@@ -7,7 +9,123 @@ if os.environ.get("DISPLAY", "") == "" and os.name != "nt":
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from datetime import datetime
+
+
+# Stations are defined once and trains refer to them by ID.  This keeps names,
+# abbreviations, and route positions consistent across all timetable sources.
+STATIONS = {
+    1: {"name": "Tübingen Hbf", "code": "TT", "km": 0.0},
+    2: {"name": "Tübingen Güterbahnhof", "code": "TTG", "km": 1.4},
+    3: {"name": "Tübingen Neckaraue", "code": "TTN", "km": 2.5},
+    4: {"name": "Kirchentellinsfurt", "code": "TKI", "km": 7.4},
+    5: {"name": "Wannweil", "code": "TWAN", "km": 9.5},
+    6: {"name": "Reutlingen Betzingen", "code": "TREB", "km": 12.0},
+    7: {"name": "Reutlinge Bösmannsäcker", "code": "TRBO", "km": 13.1},
+    8: {"name": "Reutlingen West", "code": "RTW", "km": 13.9},
+    9: {"name": "Reutlingen Hbf", "code": "TRE", "km": 14.8},
+}
+
+def stationCodeToId(name):
+    """Return the station ID for a given station code."""
+    for station_id, station in STATIONS.items():
+        if station["code"] == name:
+            return station_id
+    raise ValueError(f"Unknown station code: {name}")
+
+# A blueprint contains only relative times.  Changing the first departure
+# shifts the complete train while keeping all running and dwell times intact.
+RS1_TUEBINGEN_REUTLINGEN = {
+    "name": "RS 1",
+    "stops": [
+        {"station_id": 1, "arrival": None, "departure": 0},
+        {"station_id": 2, "arrival": 1, "departure": 2},
+        {"station_id": 3, "arrival": 3, "departure": 4},
+        {"station_id": 4, "arrival": 8, "departure": 9},
+        {"station_id": 5, "arrival": 12, "departure": 13},
+        {"station_id": 6, "arrival": 16, "departure": 17},
+        {"station_id": 7, "arrival": 19, "departure": 20},
+        {"station_id": 8, "arrival": 22, "departure": 23},
+        {"station_id": 9, "arrival": 25, "departure": None},
+    ],
+}
+
+MEX_RE_TUEBINGEN_REUTLINGEN = {
+    "name": "MEX RE",
+    "stops": [
+        {"station_id": stationCodeToId("TT"), "arrival": None, "departure": 0},
+        {"station_id": stationCodeToId("TRE"), "arrival": 9, "departure": 10}
+    ]
+}
+
+TRAIN_BLUEPRINTS = {
+    "TUEBINGEN_REUTLINGEN": RS1_TUEBINGEN_REUTLINGEN,
+    "MEX_RE_TUEBINGEN_REUTLINGEN": MEX_RE_TUEBINGEN_REUTLINGEN,
+}
+
+
+def reverse_blueprint(blueprint):
+    """Return the same run in the opposite direction."""
+    end = max(
+        offset
+        for stop in blueprint["stops"]
+        for offset in (stop["arrival"], stop["departure"])
+        if offset is not None
+    )
+    reversed_stops = []
+    for stop in reversed(blueprint["stops"]):
+        reversed_stops.append({
+            "station_id": stop["station_id"],
+            "arrival": None if stop["departure"] is None else end - stop["departure"],
+            "departure": None if stop["arrival"] is None else end - stop["arrival"],
+        })
+    return {"name": blueprint["name"], "stops": reversed_stops}
+
+
+def create_train(train_id, blueprint, start_time):
+    """Create one concrete train from a relative-time blueprint."""
+    start = datetime.strptime(start_time, "%H:%M")
+    stops = []
+
+    for stop in blueprint["stops"]:
+        station_id = stop["station_id"]
+        if station_id not in STATIONS:
+            raise ValueError(f"Unknown station ID in blueprint: {station_id}")
+
+        def absolute_time(offset):
+            if offset is None:
+                return None
+            return (start + timedelta(minutes=offset)).strftime("%H:%M")
+
+        stops.append({
+            "station_id": station_id,
+            "arrival": absolute_time(stop["arrival"]),
+            "departure": absolute_time(stop["departure"]),
+        })
+
+    return {"id": train_id, "name": blueprint["name"], "stops": stops}
+
+
+def trains_to_dataframe(trains, stations=STATIONS):
+    """Flatten structured station/train data for plotting and tabular output."""
+    rows = []
+    for train in trains:
+        for stop in train["stops"]:
+            station_id = stop["station_id"]
+            try:
+                station = stations[station_id]
+            except KeyError as error:
+                raise ValueError(f"Unknown station ID in train {train['id']}: {station_id}") from error
+
+            rows.append({
+                "Train number": f"{train['name']} ({train['id']})",
+                "Stop": station["name"],
+                "Station code": station["code"],
+                "Station ID": station_id,
+                "Km": station["km"],
+                "Arrival": stop["arrival"],
+                "Departure": stop["departure"],
+            })
+    return pd.DataFrame(rows)
 
 
 def display_or_save(fig, filename_prefix, title_name):
@@ -24,36 +142,11 @@ def display_or_save(fig, filename_prefix, title_name):
 
 def create_sample_excel(filename="RS_timetable_data.xlsx"):
     """Creates a sample Excel file with data for the RS Neckar-Alb."""
-    
-    # Sample data for section 1: Tübingen -> Reutlingen
-    sample_section_data = [
-        {"Train number": "RS 1 (1001)", "Stop": "Tübingen Hbf", "Km": 0.0, "Arrival": None, "Departure": "08:00"},
-        {"Train number": "RS 1 (1001)", "Stop": "Tübingen Lustnau", "Km": 2.5, "Arrival": "08:03", "Departure": "08:04"},
-        {"Train number": "RS 1 (1001)", "Stop": "Kirchentellinsfurt", "Km": 7.1, "Arrival": "08:08", "Departure": "08:09"},
-        {"Train number": "RS 1 (1001)", "Stop": "Wannweil", "Km": 10.4, "Arrival": "08:12", "Departure": "08:13"},
-        {"Train number": "RS 1 (1001)", "Stop": "Reutlingen West", "Km": 13.8, "Arrival": "08:16", "Departure": "08:17"},
-        {"Train number": "RS 1 (1001)", "Stop": "Reutlingen Hbf", "Km": 15.2, "Arrival": "08:19", "Departure": None},
-        
-        # Opposite direction
-        {"Train number": "RS 1 (1002)", "Stop": "Reutlingen Hbf", "Km": 15.2, "Arrival": None, "Departure": "08:10"},
-        {"Train number": "RS 1 (1002)", "Stop": "Reutlingen West", "Km": 13.8, "Arrival": "08:12", "Departure": "08:13"},
-        {"Train number": "RS 1 (1002)", "Stop": "Wannweil", "Km": 10.4, "Arrival": "08:16", "Departure": "08:17"},
-        {"Train number": "RS 1 (1002)", "Stop": "Kirchentellinsfurt", "Km": 7.1, "Arrival": "08:20", "Departure": "08:21"},
-        {"Train number": "RS 1 (1002)", "Stop": "Tübingen Lustnau", "Km": 2.5, "Arrival": "08:25", "Departure": "08:26"},
-        {"Train number": "RS 1 (1002)", "Stop": "Tübingen Hbf", "Km": 0.0, "Arrival": "08:29", "Departure": None},
-
-        # 2nd train in the same direction
-        {"Train number": "RS 1 (1003)", "Stop": "Tübingen Hbf", "Km": 0.0, "Arrival": None, "Departure": "08:10"},
-        {"Train number": "RS 1 (1003)", "Stop": "Tübingen Lustnau", "Km": 2.5, "Arrival": "08:13", "Departure": "08:14"},
-        {"Train number": "RS 1 (1003)", "Stop": "Kirchentellinsfurt", "Km": 7.1, "Arrival": "08:18", "Departure": "08:19"},
-        {"Train number": "RS 1 (1003)", "Stop": "Wannweil", "Km": 10.4, "Arrival": "08:22", "Departure": "08:23"},
-        {"Train number": "RS 1 (1003)", "Stop": "Reutlingen West", "Km": 13.8, "Arrival": "08:26", "Departure": "08:27"},
-        {"Train number": "RS 1 (1003)", "Stop": "Reutlingen Hbf", "Km": 15.2, "Arrival": "08:29", "Departure": None},
-    ]
-
     # Create Excel with different tabs for the sections
     with pd.ExcelWriter(filename, engine='openpyxl') as writer:
-        pd.DataFrame(sample_section_data).to_excel(writer, sheet_name="Tübingen - Reutlingen", index=False)
+        trains_to_dataframe(TRAINS).to_excel(
+            writer, sheet_name="Tübingen - Reutlingen", index=False
+        )
         
         # Empty/placeholder sheets for the remaining required sections
         for sheet in ["RT-Betzingen-Ohmenhausen", "Tübingen - Albstadt", "Tübingen - Rottenburg", "Tübingen - Entringen"]:
@@ -168,9 +261,17 @@ if __name__ == "__main__":
     # 1. Create sample file (when run for the first time)
     # create_sample_excel(excel_file)
 
-    # 2. Read selected section
+    # 2. Build the selected section from the structured station/train data.
+
+    TRAINS = [
+        create_train("1001", RS1_TUEBINGEN_REUTLINGEN, "08:00"),
+        create_train("1002", reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN), "08:10"),
+        create_train("1003", RS1_TUEBINGEN_REUTLINGEN, "08:10"),
+        create_train("19213", MEX_RE_TUEBINGEN_REUTLINGEN, "08:08"),
+    ]
+
     selected_section = "Tübingen - Reutlingen"
-    timetable_df = pd.read_excel(excel_file, sheet_name=selected_section)
+    timetable_df = trains_to_dataframe(TRAINS)
 
     # 3. Generate diagrams
     if not timetable_df.empty:
