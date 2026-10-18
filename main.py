@@ -17,34 +17,42 @@ RS1_TUEBINGEN_REUTLINGEN = {
     ],
 }
 
-MEX_RE_TUEBINGEN_REUTLINGEN = {
-    "name": "MEX RE",
+RE_TUEBINGEN_REUTLINGEN = {
+    "name": "RE 17",
     "stops": [
         {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
         {"station_id": station_code_to_id("TRE"), "arrival": 9, "departure": 10},
     ],
 }
 
+MEX_TUEBINGEN_REUTLINGEN = {
+    "name": "MEX 13",
+    "stops": [
+        {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
+        {"station_id": station_code_to_id("TKI"), "arrival": 6, "departure": 7},
+        {"station_id": station_code_to_id("TRE"), "arrival": 11, "departure": 12},
+    ],
+}
 
 TRAINS = [
     Train.from_blueprint(
         "1001", RS1_TUEBINGEN_REUTLINGEN, "RS 1", "08:00",
-        "LPLPL", "REGIONAL", 120, "X1",
+        "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
         "1002", Train.reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN),
-        "RS 1", "08:15", "LPLPL", "REGIONAL", 120, "X1",
+        "RS 1", "08:15", "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
         "1003", RS1_TUEBINGEN_REUTLINGEN, "RS 1", "08:15",
-        "LPLPL", "REGIONAL", 120, "X1",
+        "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
-        "19213", MEX_RE_TUEBINGEN_REUTLINGEN, "MEX 13", "08:17",
+        "19213", MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "08:17",
         "LPPPL", "COMMUTER", 120, "X1",
     ),
     Train.from_blueprint(
-        "19173", MEX_RE_TUEBINGEN_REUTLINGEN, "RE 17", "08:12",
+        "19173", RE_TUEBINGEN_REUTLINGEN, "RE 17", "08:12",
         "LPPPL", "COMMUTER", 120, "X1",
     ),
 ]
