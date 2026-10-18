@@ -22,26 +22,175 @@ def output_path(filename):
     return path if path.is_absolute() else OUTPUT_DIR / path
 
 
-# Stations are defined once and trains refer to them by ID.  This keeps names,
-# abbreviations, and route positions consistent across all timetable sources.
-STATIONS = {
-    1: {"name": "Tübingen Hbf", "code": "TT", "km": 0.0},
-    2: {"name": "Tübingen Güterbahnhof", "code": "TTG", "km": 1.4},
-    3: {"name": "Tübingen Neckaraue", "code": "TTN", "km": 2.5},
-    4: {"name": "Kirchentellinsfurt", "code": "TKI", "km": 7.4},
-    5: {"name": "Wannweil", "code": "TWAN", "km": 9.5},
-    6: {"name": "Reutlingen Betzingen", "code": "TREB", "km": 12.0},
-    7: {"name": "Reutlinge Bösmannsäcker", "code": "TRBO", "km": 13.1},
-    8: {"name": "Reutlingen West", "code": "RTW", "km": 13.9},
-    9: {"name": "Reutlingen Hbf", "code": "TRE", "km": 14.8},
-}
+STATIONS_FILE = Path(__file__).resolve().parent / "stations.txt"
 
-def stationCodeToId(name):
-    """Return the station ID for a given station code."""
+
+def parse_station_file(file):
+    """Load station data from ``abbrev|name|code|km`` records."""
+    stations = {}
+    with open(file, "r", encoding="utf-8") as station_file:
+        for line_number, line in enumerate(station_file, start=1):
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+
+            parts = [part.strip() for part in line.split("|")]
+            if len(parts) != 4:
+                raise ValueError(
+                    f"Invalid station record in {file}:{line_number}; "
+                    "expected abbrev|name|code|km"
+                )
+
+            abbrev, name, code, km_text = parts
+            if not abbrev or not name or not code:
+                raise ValueError(
+                    f"Invalid station record in {file}:{line_number}; "
+                    "abbreviation, name and code are required"
+                )
+            try:
+                km = None if km_text in {"", "X"} else float(km_text)
+            except ValueError as error:
+                raise ValueError(
+                    f"Invalid kilometre value in {file}:{line_number}: {km_text!r}"
+                ) from error
+
+            stations[len(stations) + 1] = {
+                "name": name,
+                "code": code,
+                "km": km,
+                "abbrev": abbrev,
+            }
+
+    if not stations:
+        raise ValueError(f"No stations found in {file}")
+    return stations
+
+
+STATIONS = parse_station_file(STATIONS_FILE)
+
+
+def stationCodeToId(code):
+    """Return the station ID for a station code."""
     for station_id, station in STATIONS.items():
-        if station["code"] == name:
+        if station["code"] == code:
             return station_id
-    raise ValueError(f"Unknown station code: {name}")
+    raise ValueError(f"Unknown station code: {code}")
+
+
+#################
+#### CLASSES ####
+#################
+
+class Car:
+    """One vehicle in a train composition."""
+
+    TYPES = frozenset({"L", "P", "C"})
+
+    def __init__(self, car_type):
+        if car_type not in self.TYPES:
+            raise ValueError(
+                f"Unknown car type {car_type!r}; expected one of "
+                f"{', '.join(sorted(self.TYPES))}"
+            )
+        self.type = car_type
+
+    def __repr__(self):
+        return f"Car({self.type!r})"
+
+
+class Train:
+    """A train with vehicles and scheduled station stops."""
+
+    def __init__(
+        self,
+        train_id,
+        name,
+        composition="LPL",
+        train_type="REGIONAL",
+        max_speed_kmph=100,
+        flags="X1",
+    ):
+        if not train_id:
+            raise ValueError("A train ID is required")
+        if not name:
+            raise ValueError("A train name is required")
+        self.id = str(train_id)
+        self.name = name
+        self.train_type = train_type
+        self.max_speed_kmph = max_speed_kmph
+        self.flags = flags
+        self.composition = composition
+        self.cars = [Car(car_type) for car_type in composition]
+        self.stops = []
+
+    def add_stop(self, station_id, arrival=None, departure=None):
+        """Append a stop and return this train for fluent construction."""
+        if station_id not in STATIONS:
+            raise ValueError(f"Unknown station ID in train {self.id}: {station_id}")
+        self.stops.append({
+            "station_id": station_id,
+            "arrival": arrival,
+            "departure": departure,
+        })
+        return self
+
+    @classmethod
+    def from_blueprint(
+        cls,
+        train_id,
+        blueprint,
+        name,
+        start_time,
+        composition="",
+        train_type="REGIONAL",
+        max_speed_kmph=100,
+        flags="X1",
+    ):
+        """Create a concrete train by applying a start time to a blueprint."""
+        start = datetime.strptime(start_time, "%H:%M")
+        train = cls(
+            train_id,
+            name,
+            composition,
+            train_type,
+            max_speed_kmph,
+            flags,
+        )
+
+        for stop in blueprint["stops"]:
+            def absolute_time(offset):
+                if offset is None:
+                    return None
+                return (start + timedelta(minutes=offset)).strftime("%H:%M")
+
+            train.add_stop(
+                stop["station_id"],
+                absolute_time(stop["arrival"]),
+                absolute_time(stop["departure"]),
+            )
+        return train
+
+    @staticmethod
+    def reverse_blueprint(blueprint):
+        """Return a blueprint for the same service in the opposite direction."""
+        end = max(
+            offset
+            for stop in blueprint["stops"]
+            for offset in (stop["arrival"], stop["departure"])
+            if offset is not None
+        )
+        return {
+            "name": blueprint["name"],
+            "stops": [
+                {
+                    "station_id": stop["station_id"],
+                    "arrival": None if stop["departure"] is None else end - stop["departure"],
+                    "departure": None if stop["arrival"] is None else end - stop["arrival"],
+                }
+                for stop in reversed(blueprint["stops"])
+            ],
+        }
+
 
 # A blueprint contains only relative times.  Changing the first departure
 # shifts the complete train while keeping all running and dwell times intact.
@@ -69,61 +218,20 @@ MEX_RE_TUEBINGEN_REUTLINGEN = {
 }
 
 
-def reverse_blueprint(blueprint):
-    """Return the same run in the opposite direction."""
-    end = max(
-        offset
-        for stop in blueprint["stops"]
-        for offset in (stop["arrival"], stop["departure"])
-        if offset is not None
-    )
-    reversed_stops = []
-    for stop in reversed(blueprint["stops"]):
-        reversed_stops.append({
-            "station_id": stop["station_id"],
-            "arrival": None if stop["departure"] is None else end - stop["departure"],
-            "departure": None if stop["arrival"] is None else end - stop["arrival"],
-        })
-    return {"name": blueprint["name"], "stops": reversed_stops}
-
-
-def create_train(train_id, blueprint, start_time):
-    """Create one concrete train from a relative-time blueprint."""
-    start = datetime.strptime(start_time, "%H:%M")
-    stops = []
-
-    for stop in blueprint["stops"]:
-        station_id = stop["station_id"]
-        if station_id not in STATIONS:
-            raise ValueError(f"Unknown station ID in blueprint: {station_id}")
-
-        def absolute_time(offset):
-            if offset is None:
-                return None
-            return (start + timedelta(minutes=offset)).strftime("%H:%M")
-
-        stops.append({
-            "station_id": station_id,
-            "arrival": absolute_time(stop["arrival"]),
-            "departure": absolute_time(stop["departure"]),
-        })
-
-    return {"id": train_id, "name": blueprint["name"], "stops": stops}
-
 
 def trains_to_dataframe(trains, stations=STATIONS):
     """Flatten structured station/train data for plotting and tabular output."""
     rows = []
     for train in trains:
-        for stop in train["stops"]:
+        for stop in train.stops:
             station_id = stop["station_id"]
             try:
                 station = stations[station_id]
             except KeyError as error:
-                raise ValueError(f"Unknown station ID in train {train['id']}: {station_id}") from error
+                raise ValueError(f"Unknown station ID in train {train.id}: {station_id}") from error
 
             rows.append({
-                "Train number": f"{train['name']} ({train['id']})",
+                "Train number": f"{train.name} ({train.id})",
                 "Stop": station["name"],
                 "Station code": station["code"],
                 "Station ID": station_id,
@@ -135,11 +243,26 @@ def trains_to_dataframe(trains, stations=STATIONS):
 
 
 TRAINS = [
-    create_train("1001", RS1_TUEBINGEN_REUTLINGEN, "08:00"),
-    create_train("1002", reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN), "08:15"),
-    create_train("1003", RS1_TUEBINGEN_REUTLINGEN, "08:15"),
-    create_train("19213", MEX_RE_TUEBINGEN_REUTLINGEN, "08:17"),
-    create_train("19173", MEX_RE_TUEBINGEN_REUTLINGEN, "08:12"),
+    Train.from_blueprint(
+        "1001", RS1_TUEBINGEN_REUTLINGEN, "RS 1", "08:00",
+        "LPLPL", "REGIONAL", 120, "X1",
+    ),
+    Train.from_blueprint(
+        "1002", Train.reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN), "RS 1", "08:15",
+        "LPLPL", "REGIONAL", 120, "X1",
+    ),
+    Train.from_blueprint(
+        "1003", RS1_TUEBINGEN_REUTLINGEN, "RS 1", "08:15",
+        "LPLPL", "REGIONAL", 120, "X1",
+    ),
+    Train.from_blueprint(
+        "19213", MEX_RE_TUEBINGEN_REUTLINGEN, "MEX 13", "08:17",
+        "LPPPL", "COMMUTER", 120, "X1",
+    ),
+    Train.from_blueprint(
+        "19173", MEX_RE_TUEBINGEN_REUTLINGEN, "RE 17", "08:12",
+        "LPPPL", "COMMUTER", 120, "X1",
+    ),
 ]
 
 
@@ -275,12 +398,6 @@ def generate_line_timetable(df, title_name):
     display_or_save(fig, "line_timetable", title_name)
 
 if __name__ == "__main__":
-    excel_file = output_path("rsna_timetable_data.xlsx")
-
-    # 1. Create sample file (when run for the first time)
-    # create_sample_excel(excel_file)
-
-    # 2. Build the selected section from the structured station/train data.
 
     selected_section = "Tübingen - Reutlingen"
     timetable_df = trains_to_dataframe(TRAINS)

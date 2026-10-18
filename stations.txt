@@ -1,0 +1,95 @@
+# Station data: abbreviation|name|code|km
+# Use X or an empty value for stations without a route kilometre.
+a|TÜBINGEN HBF (TT)|TT|0.0
+b|Tübingen Güterbahnhof|TTG|1.4
+c|Tübingen Neckaraue|TTN|2.6
+d|Kirchentellinsfurt|TKI|7.4
+e|Wannweil|TWAN|9.5
+f|Reutlingen-Betzingen|RBE|12.0
+g|Bosmännsäcker|RBO|13.1
+h|Reutlingen West|RTW|13.9
+i|Reutlingen Betriebshof|RTB|14.8
+j|REUTLINGEN HBF (TRE)|TRE|14.8
+k|Reutlingen Hbf (Karlsstrasse)|RhbfK|15.0
+l|Reutlingen Hbf (Bahnhofstrasse)|RHbfB|15.0
+m|RTunlimited|RTU|16.4
+n|Betzingen Süd|RBES|X
+o|Markwiesenstrasse|RBEM|X
+p|Adolf Kolping Strasse|RBAK|X
+q|Ohmenhausen Ost|ROHO|X
+r|Ohmenhausen Mitte|ROHM|X
+s|Ohmenhausen West|ROHW|X
+t|Gomaringen Ost|RGOO|X
+u|Gomaringen Mitte|RGOM|X
+v|Ohmenhausen Abstellung|ROHA|X
+w|Gomaringen Tübingerstrasse|RGOT|X
+y|Gartentor|RGA|X
+z|Albtorplatz|RALB|X
+A|Am Echazufer|RECH|X
+B|Reutlingen Süd|RTS|X
+C|Arbachstraße|PFA|X
+D|Bismarckstraße|PFB|X
+E|Pfullingen Marktplatz|PFM|X
+F|Klostergarten|PFK|X
+G|Pfullingen Süd|PFS|X
+H|Abstellanlage Hortense|PFAB|X
+I|--> Engstingen|TKL|X
+J|Mühlbachäcker (Süd)|TMUS|0.8
+K|Derendingen (TDD)|TDD|1.8
+L|Mühlbachäcker (nord)|TMUN|0.8
+M|Steinlachwasen|TST|2.8
+N|Dußligen (TDU)|TDU|8.1
+O|Dußlingen Ost|TDUO|9.0
+P|Schulzentrum Steinlach-Wiesaz|NSCH|X
+Q|Nehren Mitte|NMI|X
+R|Nehren Bhf (TNEH)|TNEH|13.3
+S|Nehren Süd|NSU|X
+T|Mössingen Abstellung|TMSA|X
+U|Mössingen (TMS)|TMS|16.1
+V|Bad Sebastiansweiler - Belsen|TBSB|17.7
+W|Bodelshausen|TBOD|21.3
+X|Hechingen Abstellung|THEA|24.6
+Y|Hechingen (THCH)|THCH|24.7
+Z|Hechingen Stetten|THST|27.0
+à|Hechingen Süd|THSU|30.0
+á|Wessingen - Zimmern|TWEZ|32.0
+â|Bisingen (TBIS)|TBIS|34.2
+ã|Eyach <--|TEY|X
+ä|Bisingen Steinhofen|TBSH|35.1
+å|Engstlatt (TENG)|TENG|38.7
+æ|Balingen (TBG)|TBG|41.7
+ç|Balingen Süd|TBGS|42.8
+è|--> Schömberg|TSCB|X
+|THCH Wende|THCH We|
+|TMS Wende|TMS We|X
+é|Balingen Mitte|TBGM|42.3
+ê|Endingen Ost|TENO|44.0
+ë|Frommern West|TFRW|46.1
+ì|Frommern (TFR)|TFR|46.7
+í|Albstadt Laufen (TLA)|TLA|49.9
+î|Albstadt Laufen Ort|TLAO|51.0
+ï|Albstadt Lautlingen|TLAU|54.1
+ð|Albstadt Ebingen West (TAEW)|TAEW|57.3
+ñ|Albstadt Ebingen Meßstetterstrasse|TAEM|58.6
+ò|Ebingen Abstellung|TAEA|59.5
+ó|Albstadt Ebingen (TAE)|TAE|59.6
+ô|--> Sigmaringen|TSIG|60.0
+õ|--> Tailfingen / Onstmettingen|TAET|59.8
+ö|--> Burladingen|TBLD|X
+ø|Weilheim|TWEI|2.1
+ù|Kilchberg|TKC|4.0
+ú|Bühl|TBU|4.7
+û|Kiebingen|TKIB|6.8
+ü|Rottenburg Dätzweg|TRTD|9.1
+ý|Rottenburg Abstellung|TRTA|9.6
+þ|ROTTENBURG (TRT)|TRT|9.7
+ÿ|Tübingen West|TTW|1.6
+ā|Unterjesingen Sandäcker|TUJS|5.4
+ă|Unterjesingen Mitte|TUJM|5.9
+ą|Pfäffingen|TPG|7.5
+ć|Entringen|TENT|9.9
+ĉ|Altingen|TALT|14.5
+ċ|Gültstein|TGU|17.2
+č|Herrenberg Zwerchweg|THEZ|19.0
+ď|Herrenberg|THEZ|21.2
+đ|Tübingen BW|TTBW|X
