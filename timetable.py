@@ -136,9 +136,10 @@ def trains_to_dataframe(trains, stations=STATIONS):
 
 TRAINS = [
     create_train("1001", RS1_TUEBINGEN_REUTLINGEN, "08:00"),
-    create_train("1002", reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN), "08:10"),
-    create_train("1003", RS1_TUEBINGEN_REUTLINGEN, "08:10"),
-    create_train("19213", MEX_RE_TUEBINGEN_REUTLINGEN, "08:08"),
+    create_train("1002", reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN), "08:15"),
+    create_train("1003", RS1_TUEBINGEN_REUTLINGEN, "08:15"),
+    create_train("19213", MEX_RE_TUEBINGEN_REUTLINGEN, "08:17"),
+    create_train("19173", MEX_RE_TUEBINGEN_REUTLINGEN, "08:12"),
 ]
 
 
