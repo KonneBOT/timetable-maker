@@ -2,18 +2,18 @@ from train import Train, station_code_to_id, trains_to_dataframe
 from diagrams import generate_line_timetable, plot_route_timetable
 
 
-RS1_TUEBINGEN_REUTLINGEN = {
-    "name": "RS 1",
+RS5_TUEBINGEN_REUTLINGEN = {
+    "name": "RS 5",
     "stops": [
         {"station_id": 1, "arrival": None, "departure": 0},
-        {"station_id": 2, "arrival": 1, "departure": 2},
-        {"station_id": 3, "arrival": 3, "departure": 4},
-        {"station_id": 4, "arrival": 8, "departure": 9},
+        {"station_id": 2, "arrival": 2, "departure": 3},
+        {"station_id": 3, "arrival": 5, "departure": 6},
+        {"station_id": 4, "arrival": 9, "departure": 10},
         {"station_id": 5, "arrival": 12, "departure": 13},
-        {"station_id": 6, "arrival": 16, "departure": 17},
-        {"station_id": 7, "arrival": 19, "departure": 20},
-        {"station_id": 8, "arrival": 22, "departure": 23},
-        {"station_id": 9, "arrival": 25, "departure": None},
+        {"station_id": 6, "arrival": 15, "departure": 16},
+        {"station_id": 7, "arrival": 17, "departure": 18},
+        {"station_id": 8, "arrival": 19, "departure": 20},
+        {"station_id": 9, "arrival": 22, "departure": None},
     ],
 }
 
@@ -36,15 +36,15 @@ MEX_TUEBINGEN_REUTLINGEN = {
 
 TRAINS = [
     Train.from_blueprint(
-        "1001", RS1_TUEBINGEN_REUTLINGEN, "RS 1", "08:00",
+        "1001", RS5_TUEBINGEN_REUTLINGEN, "RS 5", "08:00",
         "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
-        "1002", Train.reverse_blueprint(RS1_TUEBINGEN_REUTLINGEN),
-        "RS 1", "08:15", "LPLPL", "REGIONAL", 100, "X1",
+        "1002", Train.reverse_blueprint(RS5_TUEBINGEN_REUTLINGEN),
+        "RS 5", "08:15", "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
-        "1003", RS1_TUEBINGEN_REUTLINGEN, "RS 1", "08:15",
+        "1003", RS5_TUEBINGEN_REUTLINGEN, "RS 5", "08:15",
         "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
