@@ -40,7 +40,11 @@ def plot_route_timetable(df, title_name):
     df["departure_dt"] = pd.to_datetime(
         df["Departure"], format="%H:%M", errors="coerce"
     )
-    stations = df[["Stop", "Km"]].drop_duplicates().sort_values("Km")
+    stations = (
+        df[["Stop", "Station code", "Km"]]
+        .drop_duplicates()
+        .sort_values("Km")
+    )
 
     for _, row in stations.iterrows():
         ax.axhline(row["Km"], color="lightgray", linewidth=0.8, zorder=1)
@@ -59,7 +63,9 @@ def plot_route_timetable(df, title_name):
                     label=train_number, zorder=3)
 
     ax.set_yticks(stations["Km"])
-    ax.set_yticklabels(stations["Stop"], fontsize=10, fontweight="bold")
+    ax.set_yticklabels(
+        stations["Station code"], fontsize=10, fontweight="bold"
+    )
     ax.set_ylabel("Route profile (stops)", fontsize=11)
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
     ax.xaxis.set_major_locator(mdates.MinuteLocator(interval=5))
@@ -78,8 +84,14 @@ def plot_route_timetable(df, title_name):
 def generate_line_timetable(df, title_name):
     """Create a classic line timetable as a matrix table."""
     df["Time"] = df["Departure"].fillna(df["Arrival"])
-    timetable_table = df.pivot(index="Stop", columns="Train number", values="Time")
-    station_order = df[["Stop", "Km"]].drop_duplicates().sort_values("Km")["Stop"]
+    timetable_table = df.pivot(
+        index="Station code", columns="Train number", values="Time"
+    )
+    station_order = (
+        df[["Station code", "Km"]]
+        .drop_duplicates()
+        .sort_values("Km")["Station code"]
+    )
     timetable_table = timetable_table.reindex(station_order).fillna("|")
 
     fig, ax = plt.subplots(figsize=(8, len(station_order) * 0.5 + 1.5))
@@ -90,7 +102,7 @@ def generate_line_timetable(df, title_name):
     ]
     table = ax.table(
         cellText=table_data,
-        colLabels=["Stop / Train"] + list(timetable_table.columns),
+        colLabels=["Station"] + list(timetable_table.columns),
         loc="center",
         cellLoc="center",
     )

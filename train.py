@@ -190,6 +190,7 @@ def trains_to_dataframe(trains, stations=STATIONS):
             rows.append({
                 "Train number": f"{train.name} ({train.id})",
                 "Stop": station["name"],
+                "Abbreviation": station["abbrev"],
                 "Station code": station["code"],
                 "Station ID": station_id,
                 "Km": station["km"],
