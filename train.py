@@ -303,36 +303,6 @@ class Train:
             )
         return train
 
-    @staticmethod
-    def reverse_blueprint(blueprint):
-        """Return a local-time blueprint for the same service in reverse."""
-        stops = blueprint["stops"]
-        return {
-            "name": blueprint["name"],
-            "stops": [
-                {
-                    "station_id": stop["station_id"],
-                    "platform": stop.get("platform", "any"),
-                    "arrival": (
-                        None
-                        if index == 0
-                        else stops[len(stops) - index]["arrival"]
-                    ),
-                    "departure": (
-                        0
-                        if index == 0
-                        else (
-                            None
-                            if index == len(stops) - 1
-                            else stop["departure"]
-                        )
-                    ),
-                }
-                for index, stop in enumerate(reversed(stops))
-            ],
-        }
-
-
 def trains_to_dataframe(trains, stations=STATIONS):
     """Flatten structured station/train data for plotting and tabular output."""
     rows = []
@@ -359,11 +329,6 @@ def trains_to_dataframe(trains, stations=STATIONS):
                 "Through run": stop.is_through_run,
             })
     return pd.DataFrame(rows)
-
-
-def reverse_blueprint(blueprint):
-    """Compatibility wrapper for :meth:`Train.reverse_blueprint`."""
-    return Train.reverse_blueprint(blueprint)
 
 
 def create_train(train_id, blueprint, name, start_time, **train_options):
