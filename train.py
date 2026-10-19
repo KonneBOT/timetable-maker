@@ -113,6 +113,29 @@ class Train:
         })
         return self
 
+    def extend_stop(self, station_id, minutes):
+        """Extend a stop's dwell time by shifting its departure later."""
+        if station_id not in STATIONS:
+            raise ValueError(f"Unknown station ID in train {self.id}: {station_id}")
+        if not isinstance(minutes, int) or isinstance(minutes, bool) or minutes < 0:
+            raise ValueError("Stop extension must be a non-negative integer")
+
+        for stop in self.stops:
+            if stop["station_id"] == station_id:
+                if stop["departure"] is None:
+                    raise ValueError(
+                        f"Stop at station {station_id} has no departure time"
+                    )
+                departure = datetime.strptime(stop["departure"], "%H:%M")
+                stop["departure"] = (
+                    departure + timedelta(minutes=minutes)
+                ).strftime("%H:%M")
+                return self
+
+        raise ValueError(
+            f"Train {self.id} has no stop at station ID {station_id}"
+        )
+
     @classmethod
     def from_blueprint(
         cls,
