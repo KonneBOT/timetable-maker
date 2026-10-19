@@ -1,6 +1,73 @@
 from train import Train, station_code_to_id, trains_to_dataframe
 from diagrams import generate_line_timetable, plot_route_timetable
 
+RS1_TUEBINGEN_ALBSTADT = {
+    "name": "RS 1",
+    "stops": [
+        {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
+        {"station_id": station_code_to_id("TMUS"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TDD"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TST"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TDU"), "arrival": 5, "departure": 1},
+        {"station_id": station_code_to_id("TNEH"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TMS"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TBSB"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TBOD"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("THCH"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("THST"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("THSU"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TWEZ"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TBIS"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TBSH"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TENG"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TBG"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TBGM"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TBGS"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TENO"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TFRW"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TFR"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TLAO"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TALT"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TAEW"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TAEM"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TAE"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TAET"), "arrival": 1, "departure": None},
+    ]
+}
+
+RS1_ALBSTADT_TUEBINGEN = {
+    "name": "RS 1",
+    "stops": [
+        {"station_id": station_code_to_id("TAT"), "arrival": None, "departure": 0},
+        {"station_id": station_code_to_id("TAE"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TAEM"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TAEW"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TALT"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TLAO"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TFR"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TFRW"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TENO"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TBGS"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TBGM"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TBG"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TENG"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TBSH"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TBIS"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TWEZ"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("THSU"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("THST"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("THCH"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TBOD"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TBSB"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TMS"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TNEH"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TDU"), "arrival": 3, "departure": 1},
+        {"station_id": station_code_to_id("TST"), "arrival": 5, "departure": 1},
+        {"station_id": station_code_to_id("TDD"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TMUS"), "arrival": 1, "departure": 1},
+        {"station_id": station_code_to_id("TT"), "arrival": 2, "departure": None},
+    ]
+}
 
 RS5_TUEBINGEN_REUTLINGEN = {
     "name": "RS 5",
