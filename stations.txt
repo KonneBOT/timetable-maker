@@ -91,6 +91,6 @@ Z|Hechingen Stetten|THST|27.0
 ć|Entringen|TENT|9.9
 ĉ|Altingen|TALT|14.5
 ċ|Gültstein|TGU|17.2
-č|Herrenberg Zwerchweg|THEZ|19.0
+č|Herrenberg Zwerchweg|TZWE|19.0
 ď|Herrenberg|THEZ|21.2
 đ|Tübingen BW|TTBW|X
