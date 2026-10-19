@@ -94,6 +94,31 @@ RS5_TUEBINGEN_ENGSTINGEN = {
     ],
 }
 
+RS5_ENGSTINGEN_TUEBINGEN = {
+    "name": "RS 5",
+    "stops": [
+        {"station_id": station_code_to_id("TKL"), "arrival": None, "departure": 0, "platform": 1},
+        {"station_id": station_code_to_id("PFS"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("PFK"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFB"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFA"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTS"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RECH"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RALB"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RGA"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RHbfK"), "arrival": 2, "departure": 1, "platform": 21},
+        {"station_id": station_code_to_id("RTW"), "arrival": 2, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("RBO"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RBE"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TWAN"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TKI"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TTN"), "arrival": 3, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("TTG"), "arrival": 2, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("TT"), "arrival": 2, "departure": None, "platform": 2},
+    ],
+}
+
 RE_TUEBINGEN_REUTLINGEN = {
     "name": "RE 17",
     "stops": [
@@ -117,8 +142,8 @@ TRAINS = [
         "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
-        "1002", Train.reverse_blueprint(RS5_TUEBINGEN_ENGSTINGEN),
-        "RS 5", "08:15", "LPLPL", "REGIONAL", 100, "X1",
+        "1002", RS5_ENGSTINGEN_TUEBINGEN,
+        "RS 5", "08:00", "LPLPL", "REGIONAL", 100, "X1",
     ),
     Train.from_blueprint(
         "1003", RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "08:15",
@@ -136,14 +161,16 @@ TRAINS = [
 
 
 def main():
-    selected_section = "Tübingen - Reutlingen"
+    selected_section = "Tübingen - Betzingen"
     timetable_df = trains_to_dataframe(TRAINS)
     if timetable_df.empty:
         print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
         return
 
     plot_route_timetable(timetable_df, selected_section)
-    generate_line_timetable(timetable_df, selected_section)
+    plot_route_timetable(timetable_df, "Betzingen - Tübingen")
+    generate_line_timetable(TRAINS, selected_section, "08:00", 180)
+    generate_line_timetable(TRAINS, "Betzingen - Tübingen", "08:00", 180)
 
 
 if __name__ == "__main__":
