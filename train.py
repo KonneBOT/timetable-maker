@@ -102,14 +102,21 @@ class Train:
         self.cars = [Car(car_type) for car_type in composition]
         self.stops = []
 
-    def add_stop(self, station_id, arrival=None, departure=None):
+    def add_stop(
+        self, station_id, arrival=None, departure=None, platform="any"
+    ):
         """Append a stop and return this train for fluent construction."""
         if station_id not in STATIONS:
             raise ValueError(f"Unknown station ID in train {self.id}: {station_id}")
+        if platform is None:
+            platform = "any"
+        if not platform:
+            raise ValueError("A platform must not be empty")
         self.stops.append({
             "station_id": station_id,
             "arrival": arrival,
             "departure": departure,
+            "platform": platform,
         })
         return self
 
@@ -130,6 +137,24 @@ class Train:
                 stop["departure"] = (
                     departure + timedelta(minutes=minutes)
                 ).strftime("%H:%M")
+                return self
+
+        raise ValueError(
+            f"Train {self.id} has no stop at station ID {station_id}"
+        )
+
+    def change_platform(self, station_id, platform):
+        """Change the platform assigned to a station stop."""
+        if station_id not in STATIONS:
+            raise ValueError(f"Unknown station ID in train {self.id}: {station_id}")
+        if platform is None:
+            platform = "any"
+        if not platform:
+            raise ValueError("A platform must not be empty")
+
+        for stop in self.stops:
+            if stop["station_id"] == station_id:
+                stop["platform"] = platform
                 return self
 
         raise ValueError(
@@ -177,7 +202,12 @@ class Train:
             else:
                 departure = None
 
-            train.add_stop(stop["station_id"], arrival, departure)
+            train.add_stop(
+                stop["station_id"],
+                arrival,
+                departure,
+                stop.get("platform", "any"),
+            )
         return train
 
     @staticmethod
@@ -189,6 +219,7 @@ class Train:
             "stops": [
                 {
                     "station_id": stop["station_id"],
+                    "platform": stop.get("platform", "any"),
                     "arrival": (
                         None
                         if index == 0
@@ -231,6 +262,7 @@ def trains_to_dataframe(trains, stations=STATIONS):
                 "Km": station["km"],
                 "Arrival": stop["arrival"],
                 "Departure": stop["departure"],
+                "Platform": stop.get("platform", "any"),
             })
     return pd.DataFrame(rows)
 

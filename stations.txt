@@ -10,7 +10,7 @@ g|Bosmännsäcker|RBO|13.1
 h|Reutlingen West|RTW|13.9
 i|Reutlingen Betriebshof|RTB|14.8
 j|REUTLINGEN HBF (TRE)|TRE|14.8
-k|Reutlingen Hbf (Karlsstrasse)|RhbfK|15.0
+k|Reutlingen Hbf (Karlsstrasse)|RHbfK|15.0
 l|Reutlingen Hbf (Bahnhofstrasse)|RHbfB|15.0
 m|RTunlimited|RTU|16.4
 n|Betzingen Süd|RBES|X
