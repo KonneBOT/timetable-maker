@@ -51,16 +51,29 @@ def plot_route_timetable(df, title_name):
 
     for train_number, train_data in df.groupby("Train number"):
         path_points = []
+        through_points = []
         for _, row in train_data.iterrows():
             if pd.notnull(row["arrival_dt"]):
                 path_points.append((row["arrival_dt"], row["Km"]))
+                if row.get("Through run", False):
+                    through_points.append((row["arrival_dt"], row["Km"]))
             if pd.notnull(row["departure_dt"]):
                 path_points.append((row["departure_dt"], row["Km"]))
         path_points.sort(key=lambda item: item[0])
         if path_points:
             times, distances = zip(*path_points)
-            ax.plot(times, distances, marker="o", markersize=4, linewidth=2,
+            ax.plot(times, distances, linewidth=2,
                     label=train_number, zorder=3)
+            if through_points:
+                through_times, through_distances = zip(*through_points)
+                ax.scatter(
+                    through_times,
+                    through_distances,
+                    facecolors="none",
+                    edgecolors="C0",
+                    s=40,
+                    zorder=4,
+                )
 
     ax.set_yticks(stations["Km"])
     ax.set_yticklabels(
