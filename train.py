@@ -125,34 +125,42 @@ class Train:
         max_speed_kmph=100,
         flags="X1",
     ):
-        """Create a concrete train by applying a start time to a blueprint."""
+        """Create a train from travel and dwell times in a blueprint.
+
+        ``arrival`` is the travel time from the previous stop's departure and
+        ``departure`` is the dwell time at the current stop. The first stop's
+        departure is relative to ``start_time``.
+        """
         start = datetime.strptime(start_time, "%H:%M")
         train = cls(
             train_id, name, composition, train_type, max_speed_kmph, flags
         )
 
+        current_time = start
         for stop in blueprint["stops"]:
-            def absolute_time(offset):
-                if offset is None:
-                    return None
-                return (start + timedelta(minutes=offset)).strftime("%H:%M")
+            travel_time = stop["arrival"]
+            if travel_time is not None:
+                current_time += timedelta(minutes=travel_time)
+                arrival = current_time.strftime("%H:%M")
+            else:
+                arrival = None
 
-            train.add_stop(
-                stop["station_id"],
-                absolute_time(stop["arrival"]),
-                absolute_time(stop["departure"]),
-            )
+            dwell_time = stop["departure"]
+            if dwell_time is not None:
+                departure = (current_time + timedelta(minutes=dwell_time)).strftime(
+                    "%H:%M"
+                )
+                current_time += timedelta(minutes=dwell_time)
+            else:
+                departure = None
+
+            train.add_stop(stop["station_id"], arrival, departure)
         return train
 
     @staticmethod
     def reverse_blueprint(blueprint):
-        """Return a blueprint for the same service in the opposite direction."""
-        end = max(
-            offset
-            for stop in blueprint["stops"]
-            for offset in (stop["arrival"], stop["departure"])
-            if offset is not None
-        )
+        """Return a local-time blueprint for the same service in reverse."""
+        stops = blueprint["stops"]
         return {
             "name": blueprint["name"],
             "stops": [
@@ -160,16 +168,20 @@ class Train:
                     "station_id": stop["station_id"],
                     "arrival": (
                         None
-                        if stop["departure"] is None
-                        else end - stop["departure"]
+                        if index == 0
+                        else stops[len(stops) - index]["arrival"]
                     ),
                     "departure": (
-                        None
-                        if stop["arrival"] is None
-                        else end - stop["arrival"]
+                        0
+                        if index == 0
+                        else (
+                            None
+                            if index == len(stops) - 1
+                            else stop["departure"]
+                        )
                     ),
                 }
-                for stop in reversed(blueprint["stops"])
+                for index, stop in enumerate(reversed(stops))
             ],
         }
 

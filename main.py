@@ -6,14 +6,14 @@ RS5_TUEBINGEN_REUTLINGEN = {
     "name": "RS 5",
     "stops": [
         {"station_id": 1, "arrival": None, "departure": 0},
-        {"station_id": 2, "arrival": 2, "departure": 3},
-        {"station_id": 3, "arrival": 5, "departure": 6},
-        {"station_id": 4, "arrival": 9, "departure": 10},
-        {"station_id": 5, "arrival": 12, "departure": 13},
-        {"station_id": 6, "arrival": 15, "departure": 16},
-        {"station_id": 7, "arrival": 17, "departure": 18},
-        {"station_id": 8, "arrival": 19, "departure": 20},
-        {"station_id": 9, "arrival": 22, "departure": None},
+        {"station_id": 2, "arrival": 2, "departure": 1},
+        {"station_id": 3, "arrival": 2, "departure": 1},
+        {"station_id": 4, "arrival": 3, "departure": 1},
+        {"station_id": 5, "arrival": 2, "departure": 1},
+        {"station_id": 6, "arrival": 2, "departure": 1},
+        {"station_id": 7, "arrival": 1, "departure": 1},
+        {"station_id": 8, "arrival": 1, "departure": 1},
+        {"station_id": 9, "arrival": 2, "departure": None},
     ],
 }
 
@@ -21,7 +21,7 @@ RE_TUEBINGEN_REUTLINGEN = {
     "name": "RE 17",
     "stops": [
         {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
-        {"station_id": station_code_to_id("TRE"), "arrival": 9, "departure": 10},
+        {"station_id": station_code_to_id("TRE"), "arrival": 9, "departure": None},
     ],
 }
 
@@ -29,8 +29,8 @@ MEX_TUEBINGEN_REUTLINGEN = {
     "name": "MEX 13",
     "stops": [
         {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
-        {"station_id": station_code_to_id("TKI"), "arrival": 6, "departure": 7},
-        {"station_id": station_code_to_id("TRE"), "arrival": 11, "departure": 12},
+        {"station_id": station_code_to_id("TKI"), "arrival": 6, "departure": 1},
+        {"station_id": station_code_to_id("TRE"), "arrival": 4, "departure": None},
     ],
 }
 
