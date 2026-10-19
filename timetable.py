@@ -3,7 +3,7 @@
 from main import (
     MEX_TUEBINGEN_REUTLINGEN,
     RE_TUEBINGEN_REUTLINGEN,
-    RS5_TUEBINGEN_REUTLINGEN,
+    RS5_TUEBINGEN_ENGSTINGEN,
     TRAINS,
     main,
 )
@@ -11,7 +11,9 @@ from diagrams import generate_line_timetable, plot_route_timetable
 from train import (
     STATIONS,
     Car,
+    Station,
     Train,
+    Visit,
     create_train,
     reverse_blueprint,
     station_code_to_id,

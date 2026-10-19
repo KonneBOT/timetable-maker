@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import pandas as pd
@@ -8,9 +9,73 @@ BASE_DIR = Path(__file__).resolve().parent
 STATIONS_FILE = BASE_DIR / "stations.txt"
 
 
+@dataclass(eq=False)
+class Station:
+    """A station and the visits currently assigned to it."""
+
+    id: int
+    abbrev: str
+    name: str
+    code: str
+    km: float | None
+    platforms: frozenset = field(default_factory=frozenset)
+    visits: list = field(default_factory=list, repr=False)
+
+    def __getitem__(self, key):
+        """Provide compatibility with the former station dictionaries."""
+        return getattr(self, key)
+
+    def add_visit(self, visit):
+        if visit not in self.visits:
+            self.visits.append(visit)
+
+    def remove_visit(self, visit):
+        if visit in self.visits:
+            self.visits.remove(visit)
+
+    def departures(self):
+        """Return visits with a departure time, ordered by departure."""
+        return sorted(
+            (visit for visit in self.visits if visit.departure is not None),
+            key=lambda visit: visit.departure,
+        )
+
+
+@dataclass(eq=False)
+class Visit:
+    """A train's scheduled visit at a station."""
+
+    station: Station
+    arrival: str | None = None
+    departure: str | None = None
+    platform: int | str = "any"
+    train: object = field(default=None, repr=False)
+
+    @property
+    def is_through_run(self):
+        return (
+            self.arrival is not None
+            and self.departure is not None
+            and self.arrival == self.departure
+        )
+
+    @property
+    def is_stop(self):
+        return self.departure is not None and not self.is_through_run
+
+    def __getitem__(self, key):
+        """Provide compatibility with the former stop dictionaries."""
+        if key == "station_id":
+            return self.station.id
+        if key == "platform":
+            return self.platform
+        return getattr(self, key)
+
+
 def parse_station_file(file):
-    """Load station data from ``abbrev|name|code|km`` records."""
+    """Load stations from ``abbrev|name|code|km[|platforms]`` records."""
     stations = {}
+    codes = {}
     with open(file, "r", encoding="utf-8") as station_file:
         for line_number, line in enumerate(station_file, start=1):
             line = line.strip()
@@ -18,13 +83,14 @@ def parse_station_file(file):
                 continue
 
             parts = [part.strip() for part in line.split("|")]
-            if len(parts) != 4:
+            if len(parts) not in {4, 5}:
                 raise ValueError(
                     f"Invalid station record in {file}:{line_number}; "
-                    "expected abbrev|name|code|km"
+                    "expected abbrev|name|code|km[|platforms]"
                 )
 
-            abbrev, name, code, km_text = parts
+            abbrev, name, code, km_text = parts[:4]
+            platform_text = parts[4] if len(parts) == 5 else ""
             if not abbrev or not name or not code:
                 raise ValueError(
                     f"Invalid station record in {file}:{line_number}; "
@@ -37,12 +103,15 @@ def parse_station_file(file):
                     f"Invalid kilometre value in {file}:{line_number}: {km_text!r}"
                 ) from error
 
-            stations[len(stations) + 1] = {
-                "name": name,
-                "code": code,
-                "km": km,
-                "abbrev": abbrev,
-            }
+            platforms = frozenset(
+                int(platform.strip())
+                for platform in platform_text.split(",")
+                if platform.strip()
+            )
+            station_id = len(stations) + 1
+            station = Station(station_id, abbrev, name, code, km, platforms)
+            stations[station_id] = station
+            codes.setdefault(code, []).append(station_id)
 
     if not stations:
         raise ValueError(f"No stations found in {file}")
@@ -50,13 +119,18 @@ def parse_station_file(file):
 
 
 STATIONS = parse_station_file(STATIONS_FILE)
+STATION_CODE_TO_IDS = {}
+for _station_id, _station in STATIONS.items():
+    STATION_CODE_TO_IDS.setdefault(_station.code, []).append(_station_id)
 
 
 def station_code_to_id(code):
     """Return the station ID for a station code."""
-    for station_id, station in STATIONS.items():
-        if station["code"] == code:
-            return station_id
+    station_ids = STATION_CODE_TO_IDS.get(code, [])
+    if len(station_ids) == 1:
+        return station_ids[0]
+    if len(station_ids) > 1:
+        raise ValueError(f"Ambiguous station code: {code}")
     raise ValueError(f"Unknown station code: {code}")
 
 
@@ -100,41 +174,64 @@ class Train:
         self.flags = flags
         self.composition = composition
         self.cars = [Car(car_type) for car_type in composition]
-        self.stops = []
+        self.visits = []
+        self.stops = self.visits
+
+    @staticmethod
+    def _station(station):
+        if isinstance(station, Station):
+            return station
+        try:
+            return STATIONS[station]
+        except (KeyError, TypeError) as error:
+            raise ValueError(f"Unknown station: {station}") from error
+
+    @staticmethod
+    def _validate_platform(station, platform):
+        platform = "any" if platform is None else platform
+        if platform == "":
+            raise ValueError("A platform must not be empty")
+        if platform != "any" and station.platforms and platform not in station.platforms:
+            raise ValueError(
+                f"Platform {platform!r} is not available at station {station.code}"
+            )
+        return platform
 
     def add_stop(
         self, station_id, arrival=None, departure=None, platform="any"
     ):
         """Append a stop and return this train for fluent construction."""
-        if station_id not in STATIONS:
-            raise ValueError(f"Unknown station ID in train {self.id}: {station_id}")
-        if platform is None:
-            platform = "any"
-        if not platform:
-            raise ValueError("A platform must not be empty")
-        self.stops.append({
-            "station_id": station_id,
-            "arrival": arrival,
-            "departure": departure,
-            "platform": platform,
-        })
+        station = self._station(station_id)
+        platform = self._validate_platform(station, platform)
+        visit = Visit(station, arrival, departure, platform, self)
+        self.visits.append(visit)
+        station.add_visit(visit)
         return self
+
+    def remove_stop(self, station_id):
+        """Remove the first visit at a station and update its station registry."""
+        station = self._station(station_id)
+        for visit in self.visits:
+            if visit.station is station:
+                self.visits.remove(visit)
+                station.remove_visit(visit)
+                return self
+        raise ValueError(f"Train {self.id} has no stop at station ID {station.id}")
 
     def extend_stop(self, station_id, minutes):
         """Extend a stop's dwell time by shifting its departure later."""
-        if station_id not in STATIONS:
-            raise ValueError(f"Unknown station ID in train {self.id}: {station_id}")
+        station = self._station(station_id)
         if not isinstance(minutes, int) or isinstance(minutes, bool) or minutes < 0:
             raise ValueError("Stop extension must be a non-negative integer")
 
-        for stop in self.stops:
-            if stop["station_id"] == station_id:
-                if stop["departure"] is None:
+        for stop in self.visits:
+            if stop.station is station:
+                if stop.departure is None:
                     raise ValueError(
                         f"Stop at station {station_id} has no departure time"
                     )
-                departure = datetime.strptime(stop["departure"], "%H:%M")
-                stop["departure"] = (
+                departure = datetime.strptime(stop.departure, "%H:%M")
+                stop.departure = (
                     departure + timedelta(minutes=minutes)
                 ).strftime("%H:%M")
                 return self
@@ -145,16 +242,12 @@ class Train:
 
     def change_platform(self, station_id, platform):
         """Change the platform assigned to a station stop."""
-        if station_id not in STATIONS:
-            raise ValueError(f"Unknown station ID in train {self.id}: {station_id}")
-        if platform is None:
-            platform = "any"
-        if not platform:
-            raise ValueError("A platform must not be empty")
+        station = self._station(station_id)
+        platform = self._validate_platform(station, platform)
 
-        for stop in self.stops:
-            if stop["station_id"] == station_id:
-                stop["platform"] = platform
+        for stop in self.visits:
+            if stop.station is station:
+                stop.platform = platform
                 return self
 
         raise ValueError(
@@ -245,7 +338,7 @@ def trains_to_dataframe(trains, stations=STATIONS):
     rows = []
     for train in trains:
         for stop in train.stops:
-            station_id = stop["station_id"]
+            station_id = stop.station.id
             try:
                 station = stations[station_id]
             except KeyError as error:
@@ -255,14 +348,15 @@ def trains_to_dataframe(trains, stations=STATIONS):
 
             rows.append({
                 "Train number": f"{train.name} ({train.id})",
-                "Stop": station["name"],
-                "Abbreviation": station["abbrev"],
-                "Station code": station["code"],
+                "Stop": station.name,
+                "Abbreviation": station.abbrev,
+                "Station code": station.code,
                 "Station ID": station_id,
-                "Km": station["km"],
-                "Arrival": stop["arrival"],
-                "Departure": stop["departure"],
-                "Platform": stop.get("platform", "any"),
+                "Km": station.km,
+                "Arrival": stop.arrival,
+                "Departure": stop.departure,
+                "Platform": stop.platform,
+                "Through run": stop.is_through_run,
             })
     return pd.DataFrame(rows)
 

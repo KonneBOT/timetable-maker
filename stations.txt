@@ -1,5 +1,6 @@
-# Station data: abbreviation|name|code|km
+# Station data: abbreviation|name|code|km|platforms
 # Use X or an empty value for stations without a route kilometre.
+# Platforms are optional and comma-separated, e.g. 1,2,3.
 a|TÜBINGEN HBF (TT)|TT|0.0
 b|Tübingen Güterbahnhof|TTG|1.4
 c|Tübingen Neckaraue|TTN|2.6
