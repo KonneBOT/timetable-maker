@@ -6,6 +6,8 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from sections import get_section
+from train import trains_to_dataframe
 
 if os.environ.get("DISPLAY", "") == "" and os.name != "nt":
     matplotlib.use("Agg")
@@ -33,18 +35,75 @@ def display_or_save(fig, filename_prefix, title_name):
         plt.show()
 
 
+def _filter_section_dataframe(df, section, minimum_visits=True):
+    section = get_section(section)
+    station_refs = list(section.station_codes)
+    station_codes = {
+        ref: index for index, ref in enumerate(station_refs)
+        if isinstance(ref, str)
+    }
+    station_ids = {
+        ref: index for index, ref in enumerate(station_refs)
+        if isinstance(ref, int)
+    }
+    section_stations = df[
+        df["Station code"].isin(
+            code for code in station_codes
+        )
+        | df["Station ID"].isin(
+            station_id for station_id in station_ids
+        )
+    ].copy()
+    if minimum_visits:
+        section_stations["_section_position"] = section_stations.apply(
+            lambda row: station_ids.get(
+                row["Station ID"], station_codes.get(row["Station code"])
+            ),
+            axis=1,
+        )
+        eligible = []
+        for train_number, train_data in section_stations.groupby(
+            "Train number", sort=False
+        ):
+            positions = train_data["_section_position"].tolist()
+            if (
+                len(set(positions)) >= 2
+                and all(
+                    earlier < later
+                    for earlier, later in zip(positions, positions[1:])
+                )
+            ):
+                eligible.append(train_number)
+        section_stations = section_stations[
+            section_stations["Train number"].isin(eligible)
+        ].copy()
+    return section, section_stations
+
+
 def plot_route_timetable(df, title_name):
     """Plot the route timetable as a distance-time diagram."""
+    section, df = _filter_section_dataframe(df, title_name)
+    if df.empty:
+        raise ValueError(f"No trains have at least two visits in section {section.name!r}")
     fig, ax = plt.subplots(figsize=(12, 7))
     df["arrival_dt"] = pd.to_datetime(df["Arrival"], format="%H:%M", errors="coerce")
     df["departure_dt"] = pd.to_datetime(
         df["Departure"], format="%H:%M", errors="coerce"
     )
-    stations = (
-        df[["Stop", "Station code", "Km"]]
-        .drop_duplicates()
-        .sort_values("Km")
+    stations = df[["Stop", "Station code", "Station ID", "Km"]].drop_duplicates()
+    station_order = []
+    for station_ref in section.station_codes:
+        matches = stations[
+            (stations["Station code"] == station_ref)
+            | (stations["Station ID"] == station_ref)
+        ]
+        for station_code in matches["Station code"]:
+            if station_code not in station_order:
+                station_order.append(station_code)
+    stations["order"] = stations["Station code"].map(
+        {code: index for index, code in enumerate(station_order)}
     )
+    stations = stations.sort_values("order")
 
     for _, row in stations.iterrows():
         ax.axhline(row["Km"], color="lightgray", linewidth=0.8, zorder=1)
@@ -94,18 +153,95 @@ def plot_route_timetable(df, title_name):
     display_or_save(fig, "route_timetable", title_name)
 
 
-def generate_line_timetable(df, title_name):
-    """Create a classic line timetable as a matrix table."""
-    df["Time"] = df["Departure"].fillna(df["Arrival"])
-    timetable_table = df.pivot(
-        index="Station code", columns="Train number", values="Time"
+def _parse_time(time_text):
+    return pd.to_datetime(time_text, format="%H:%M", errors="coerce")
+
+
+def _in_time_window(time_text, start, end):
+    timestamp = _parse_time(time_text)
+    if pd.isna(timestamp):
+        return False
+    return start <= timestamp < end
+
+
+def generate_line_timetable(
+    trains, section, start_time="00:00", duration=24 * 60
+):
+    """Create a section-specific line timetable for a time window.
+
+    ``duration`` is measured in minutes. The section is defined by the
+    ordered station codes in ``sections.LINE_SECTIONS``.
+    """
+    section = get_section(section)
+    start = _parse_time(start_time)
+    if pd.isna(start):
+        raise ValueError(f"Invalid start time: {start_time!r}")
+    if not isinstance(duration, int) or isinstance(duration, bool) or duration <= 0:
+        raise ValueError("Duration must be a positive integer in minutes")
+    end = start + pd.Timedelta(minutes=duration)
+    df = trains_to_dataframe(trains)
+    section, df = _filter_section_dataframe(df, section)
+    if df.empty:
+        raise ValueError(f"No visits found for section {section.name!r}")
+
+    train_visit_counts = df.groupby("Train number")["Station ID"].nunique()
+    eligible_trains = train_visit_counts[train_visit_counts >= 2].index
+    df = df[df["Train number"].isin(eligible_trains)].copy()
+    if df.empty:
+        raise ValueError(
+            f"No trains have at least two visits in section {section.name!r}"
+        )
+
+    def display_time(row):
+        event_time = row["Arrival"] if row["Through run"] else (
+            row["Departure"] or row["Arrival"]
+        )
+        if not _in_time_window(event_time, start, end):
+            return None
+        if row["Through run"]:
+            return f"{event_time} ○"
+        if row["Platform"] == "any":
+            return event_time
+        return f"{event_time} / {row['Platform']}"
+
+    df["Event time"] = df.apply(
+        lambda row: row["Arrival"]
+        if row["Through run"]
+        else (row["Departure"] or row["Arrival"]),
+        axis=1,
     )
-    station_order = (
-        df[["Station code", "Km"]]
-        .drop_duplicates()
-        .sort_values("Km")["Station code"]
+    df["Time"] = df.apply(display_time, axis=1)
+    df = df[df["Time"].notna()]
+    if df.empty:
+        raise ValueError(
+            f"No visits found for section {section.name!r} in the requested time window"
+        )
+    first_station = section.station_codes[0]
+    if isinstance(first_station, int):
+        first_rows = df[df["Station ID"] == first_station]
+    else:
+        first_rows = df[df["Station code"] == first_station]
+    departure_order = (
+        first_rows.groupby("Train number")["Event time"]
+        .first()
+        .map(_parse_time)
+        .sort_values()
+        .index
     )
+    timetable_table = df.pivot_table(
+        index="Station code", columns="Train number", values="Time", aggfunc="first"
+    )
+    station_order = []
+    for station_ref in section.station_codes:
+        if isinstance(station_ref, str):
+            code = station_ref
+        else:
+            matches = df.loc[df["Station ID"] == station_ref, "Station code"]
+            code = matches.iloc[0] if not matches.empty else None
+        if code in timetable_table.index and code not in station_order:
+            station_order.append(code)
     timetable_table = timetable_table.reindex(station_order).fillna("|")
+    timetable_table = timetable_table.reindex(columns=departure_order)
 
     fig, ax = plt.subplots(figsize=(8, len(station_order) * 0.5 + 1.5))
     ax.axis("off")
@@ -132,6 +268,9 @@ def generate_line_timetable(df, title_name):
             cell.get_text().set_weight("bold")
             cell.get_text().set_ha("left")
 
-    plt.title(f"Line timetable / display: {title_name}", fontweight="bold")
+    plt.title(
+        f"Line timetable / display: {section.name} ({start_time}, {duration} min)",
+        fontweight="bold",
+    )
     plt.tight_layout()
-    display_or_save(fig, "line_timetable", title_name)
+    display_or_save(fig, "line_timetable", section.name)
