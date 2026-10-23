@@ -306,27 +306,38 @@ MEX_REUTLINGEN_TUEBINGEN = {
 }
 
 
+train_1001 = Train.from_blueprint(
+    "1001", RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "08:00",
+    "LPLPL", "REGIONAL", 100, "X1",
+)
+
+train_1002 = Train.from_blueprint(
+    "1002", RS5_ENGSTINGEN_TUEBINGEN,
+    "RS 5", "08:00", "LPLPL", "REGIONAL", 100, "X1",
+)
+
+train_1003 = Train.from_blueprint(
+    "1003", RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "08:15",
+    "LPLPL", "REGIONAL", 100, "X1",
+)
+
+train_19213 = Train.from_blueprint(
+    "19213", MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "08:17",
+    "LPPPL", "COMMUTER", 120, "X1",
+)
+
+train_19173 = Train.from_blueprint(
+    "19173", RE_TUEBINGEN_REUTLINGEN, "RE 17", "08:12",
+    "LPPPL", "COMMUTER", 120, "X1",
+)
+
+
 TRAINS = [
-    Train.from_blueprint(
-        "1001", RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "08:00",
-        "LPLPL", "REGIONAL", 100, "X1",
-    ),
-    Train.from_blueprint(
-        "1002", RS5_ENGSTINGEN_TUEBINGEN,
-        "RS 5", "08:00", "LPLPL", "REGIONAL", 100, "X1",
-    ),
-    Train.from_blueprint(
-        "1003", RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "08:15",
-        "LPLPL", "REGIONAL", 100, "X1",
-    ),
-    Train.from_blueprint(
-        "19213", MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "08:17",
-        "LPPPL", "COMMUTER", 120, "X1",
-    ),
-    Train.from_blueprint(
-        "19173", RE_TUEBINGEN_REUTLINGEN, "RE 17", "08:12",
-        "LPPPL", "COMMUTER", 120, "X1",
-    ),
+    train_1001,
+    train_1002,
+    train_1003,
+    train_19213,
+    train_19173,
 ]
 
 
