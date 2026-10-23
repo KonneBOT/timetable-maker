@@ -1,5 +1,7 @@
 from datetime import datetime
 from pathlib import Path
+import shutil
+import subprocess
 
 from train import STATIONS
 
@@ -21,8 +23,33 @@ def _format_from_time(value):
     return value if len(value.split(":")) == 3 else f"{value}:00"
 
 
-def export_trains_txt(trains, filename="trains.txt"):
-    """Export trains to the ``+++timetable`` section format."""
+def _copy_text_to_clipboard(text):
+    """Copy text using an installed Linux clipboard utility."""
+    commands = (
+        (("wl-copy",), "Wayland"),
+        (("xclip", "-selection", "clipboard"), "xclip"),
+        (("xsel", "--clipboard", "--input"), "xsel"),
+    )
+    for command, _name in commands:
+        if shutil.which(command[0]):
+            subprocess.run(command, input=text, text=True, check=True)
+            return
+    raise RuntimeError(
+        "No clipboard utility found; install wl-clipboard, xclip, or xsel"
+    )
+
+
+def _output_to_clipboard_or_terminal(output):
+    choice = input("Copy to clipboard or print to terminal? [c/P] ").strip().lower()
+    if choice in {"c", "clipboard"}:
+        _copy_text_to_clipboard(output)
+        print("Timetable copied to the clipboard.")
+        return
+    print(output, end="")
+
+
+def export_trains_txt(trains, file_path=None):
+    """Export trains and interactively choose file, clipboard, or terminal."""
     lines = ["+++timetable"]
     for train in trains:
         legs = list(train.iter_legs())
@@ -47,5 +74,16 @@ def export_trains_txt(trains, filename="trains.txt"):
             )
 
     output = "\n".join(lines) + "\n"
-    Path(filename).write_text(output, encoding="utf-8")
+    if file_path is not None:
+        path = Path(file_path)
+        if path.exists():
+            answer = input(f"{path} already exists. Overwrite? [y/N] ").strip().lower()
+            if answer not in {"y", "yes"}:
+                _output_to_clipboard_or_terminal(output)
+                return output
+        path.write_text(output, encoding="utf-8")
+        print(f"Timetable exported to {path}.")
+        return output
+
+    _output_to_clipboard_or_terminal(output)
     return output
