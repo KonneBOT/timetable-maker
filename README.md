@@ -52,9 +52,20 @@ export_trains_txt(TRAINS, "generated_timetable.txt")
 ```
 
 Copy the generated `+++timetable` section below the station/reference section
-to create the final `trains.txt`. Do not export directly to an existing
-`trains.txt` unless its station section is backed up or restored afterwards:
-the current exporter replaces the target file.
+to create the final `trains.txt`. If the target file already exists, the
+exporter asks whether it may overwrite it. If overwriting is declined, it
+offers clipboard copying or terminal output instead.
+
+Without a file path, the exporter directly offers clipboard copying or
+terminal output:
+
+```python
+export_trains_txt(TRAINS)
+```
+
+Clipboard support uses the first available `wl-copy`, `xclip`, or `xsel`
+command. If none is installed and clipboard output is selected, the exporter
+raises an explicit error.
 
 The generated file must use station references that are present in the
 station section. The exporter obtains these references from `stations.txt`.
