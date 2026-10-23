@@ -305,53 +305,37 @@ MEX_REUTLINGEN_TUEBINGEN = {
     ]
 }
 
+######################################
+############# TRAIN LEGS #############
+######################################
+## Naming Convention (RS: 33XXX, MEX: 193XX, RE 17: 197XX, RE 17a/b: 32XX)
+## RS_1: 33100 - 33169, RS_11: 33170 - 33199, RS_12: 33200-33220, RS_2: 33220 - 33229
+## RS_3: 33300 - 33369, RS_31: 33370 - 33399, RS_4: 334XX, RS_5: 335XX, RS_6: 336XX, RS_7: 337XX
 
-train_1001 = Train.from_blueprint(
-    "1001", RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "08:00",
-    "LPLPL", "REGIONAL", 100, "X1",
-)
+# Format: train_ID = Train.from_blueprint(id, blueprint, name, starttime, train_format, train_type, max_speed, penalties)
 
-train_1002 = Train.from_blueprint(
-    "1002", RS5_ENGSTINGEN_TUEBINGEN,
-    "RS 5", "08:00", "LPLPL", "REGIONAL", 100, "X1",
-)
+# 1st mex of the day orginating from BW
+train_19301 = train.from_blueprint(19301, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "5:13", "LPPLPPL", "COMMUTER", 160)
+train_19301.set_origin(station_code_to_id("TTBW"), 2)
+train.set_ending(station_code_to_id("RTU"), 1, platform=1)
 
-train_1003 = Train.from_blueprint(
-    "1003", RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "08:15",
-    "LPLPL", "REGIONAL", 100, "X1",
-)
-
-train_19213 = Train.from_blueprint(
-    "19213", MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "08:17",
-    "LPPPL", "COMMUTER", 120, "X1",
-)
-
-train_19173 = Train.from_blueprint(
-    "19173", RE_TUEBINGEN_REUTLINGEN, "RE 17", "08:12",
-    "LPPPL", "COMMUTER", 120, "X1",
-)
-
+#################################
+############# TRAINS #############
+#################################
 
 TRAINS = [
-    train_1001,
-    train_1002,
-    train_1003,
-    train_19213,
-    train_19173,
+    train_19301
 ]
 
 
 def main():
     selected_section = "Tübingen - Betzingen"
-    timetable_df = trains_to_dataframe(TRAINS)
-    if timetable_df.empty:
-        print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
-        return
 
     plot_route_timetable(timetable_df, selected_section)
-    plot_route_timetable(timetable_df, "Betzingen - Tübingen")
     generate_line_timetable(TRAINS, selected_section, "08:00", 180)
     generate_line_timetable(TRAINS, "Betzingen - Tübingen", "08:00", 180)
+    train_19301.timetable
+    
 
 
 if __name__ == "__main__":
