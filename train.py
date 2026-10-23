@@ -253,13 +253,12 @@ class Train:
         if first_departure is None:
             raise ValueError("The current origin must have a departure time")
 
-        origin_departure = first_departure - timedelta(minutes=travel_time)
-        origin_arrival = origin_departure
-
-        if stopping:
-            self._shift_visits(timedelta(minutes=1))
-            origin_departure += timedelta(minutes=1)
-        first.arrival = self._format_time(origin_departure + timedelta(minutes=travel_time))
+        origin_dwell = 1 if stopping else 0
+        self._shift_visits(timedelta(minutes=1 + origin_dwell))
+        first_arrival = first_departure + timedelta(minutes=origin_dwell)
+        first.arrival = self._format_time(first_arrival)
+        origin_arrival = first_arrival - timedelta(minutes=travel_time)
+        origin_departure = origin_arrival + timedelta(minutes=origin_dwell)
 
         self.add_stop(
             station,
@@ -284,7 +283,9 @@ class Train:
         if last_arrival is None:
             raise ValueError("The current ending must have an arrival time")
 
-        ending_arrival = last_arrival + timedelta(minutes=travel_time)
+        last_departure = last_arrival + timedelta(minutes=1)
+        last.departure = self._format_time(last_departure)
+        ending_arrival = last_departure + timedelta(minutes=travel_time)
         ending_departure = (ending_arrival + timedelta(minutes=1) if stopping else None)
 
         self.add_stop(
