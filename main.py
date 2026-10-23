@@ -1,5 +1,6 @@
 from train import Train, station_code_to_id, trains_to_dataframe
 from diagrams import generate_line_timetable, plot_route_timetable
+from export import export_trains_txt
 
 RS1_TUEBINGEN_ALBSTADT = {
     "name": "RS 1",
@@ -315,9 +316,9 @@ MEX_REUTLINGEN_TUEBINGEN = {
 # Format: train_ID = Train.from_blueprint(id, blueprint, name, starttime, train_format, train_type, max_speed, penalties)
 
 # 1st mex of the day orginating from BW
-train_19301 = train.from_blueprint(19301, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "5:13", "LPPLPPL", "COMMUTER", 160)
+train_19301 = Train.from_blueprint(19301, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "5:13", "LPPLPPL", "COMMUTER", 160)
 train_19301.set_origin(station_code_to_id("TTBW"), 2)
-train.set_ending(station_code_to_id("RTU"), 1, platform=1)
+train_19301.set_ending(station_code_to_id("RTU"), 1, platform=1)
 
 #################################
 ############# TRAINS #############
@@ -331,11 +332,15 @@ TRAINS = [
 def main():
     selected_section = "Tübingen - Betzingen"
 
+    timetable_df = trains_to_dataframe(TRAINS)
+    if timetable_df.empty:
+        print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
+        return
     plot_route_timetable(timetable_df, selected_section)
-    generate_line_timetable(TRAINS, selected_section, "08:00", 180)
-    generate_line_timetable(TRAINS, "Betzingen - Tübingen", "08:00", 180)
-    train_19301.timetable
-    
+
+    generate_line_timetable(TRAINS, selected_section, "05:00", 180)
+    print(train_19301.timetable())
+    export_trains_txt(TRAINS)
 
 
 if __name__ == "__main__":
