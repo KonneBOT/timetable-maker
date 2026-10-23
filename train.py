@@ -373,18 +373,24 @@ class Train:
         raise ValueError(f"Train {self.id} has no stop at station ID {station.id}")
 
     def extend_stop(self, station_id, minutes):
-        """Extend a stop's dwell time by shifting its departure later."""
+        """Adjust a stop's dwell time by shifting its departure."""
         station = self._station(station_id)
-        if not isinstance(minutes, int) or isinstance(minutes, bool) or minutes < 0:
-            raise ValueError("Stop extension must be a non-negative integer")
+        if not isinstance(minutes, int) or isinstance(minutes, bool):
+            raise ValueError("Stop extension must be an integer")
 
         for stop in self.visits:
             if stop.station is station:
                 if stop.departure is None:
                     raise ValueError(f"Stop at station {station_id} has no departure time")
 
-                departure = datetime.strptime(stop.departure, "%H:%M")
-                stop.departure = (departure + timedelta(minutes=minutes)).strftime("%H:%M")
+                departure = self._parse_time(stop.departure)
+                arrival = self._parse_time(stop.arrival)
+                adjusted_departure = departure + timedelta(minutes=minutes)
+                if arrival is not None and adjusted_departure < arrival:
+                    raise ValueError(
+                        "Stop extension would create a negative dwell time"
+                    )
+                stop.departure = self._format_time(adjusted_departure)
                 return self
 
         raise ValueError(f"Train {self.id} has no stop at station ID {station_id}")
