@@ -23,6 +23,19 @@ def _format_from_time(value):
     return value if len(value.split(":")) == 3 else f"{value}:00"
 
 
+def _format_platform(station, platform):
+    if platform == "any":
+        return "0"
+    if isinstance(platform, int) and not isinstance(platform, bool):
+        return str(platform)
+    if isinstance(platform, str) and platform.isdigit():
+        return platform
+    raise ValueError(
+        f"Invalid platform {platform!r} for station {station.code}; "
+        "trains.txt requires a numeric platform"
+    )
+
+
 def _copy_text_to_clipboard(text):
     """Copy text using an installed Linux clipboard utility."""
     commands = (
@@ -64,7 +77,8 @@ def export_trains_txt(trains, file_path=None):
                         f"Train {train.id} has a visit without a timetable time"
                     )
                 visits.append(
-                    f"{station.abbrev}#{visit.platform}#{_format_from_time(from_time)}#"
+                    f"{station.abbrev}#{_format_platform(station, visit.platform)}"
+                    f"#{_format_from_time(from_time)}#"
                     f"{_duration_minutes(visit.arrival, visit.departure)}"
                 )
             lines.append(
