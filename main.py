@@ -203,7 +203,8 @@ RE17A_REUTLINGEN_ALBSTADT = {
     "stops": [
         {"station_id": station_code_to_id("TRE"), "arrival": None, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RBE"), "arrival": 3, "departure": 0, "platform": 1},
-        {"station_id": station_code_to_id("TT"), "arrival": 6, "departure": 2},
+        {"station_id": station_code_to_id("TKI"), "arrival": 1, "departure": 0, "platform": 1},
+        {"station_id": station_code_to_id("TT"), "arrival": 5, "departure": 2},
         {"station_id": station_code_to_id("TMS"), "arrival": 10, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("THCH"), "arrival": 6, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TBIS"), "arrival": 6, "departure": 1, "platform": 2},
@@ -221,7 +222,8 @@ RE17A_ALBSTADT_REUTLINGEN = {
         {"station_id": station_code_to_id("THCH"), "arrival": 6, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("TMS"), "arrival": 6, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TT"), "arrival": 10, "departure": 2},
-        {"station_id": station_code_to_id("RBE"), "arrival": 6, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("TKI"), "arrival": 5, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("RBE"), "arrival": 1, "departure": 0, "platform": 2},
         {"station_id": station_code_to_id("TRE"), "arrival": 3, "departure": None, "platform": 1},
     ]
 }
@@ -280,7 +282,8 @@ RE_TUEBINGEN_REUTLINGEN = {
     "name": "RE 17",
     "stops": [
         {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
-        {"station_id": station_code_to_id("RBE"), "arrival": 6, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("TKI"), "arrival": 5, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("RBE"), "arrival": 1, "departure": 0, "platform": 2},
         {"station_id": station_code_to_id("TRE"), "arrival": 3, "departure": None},
     ],
 }
@@ -290,7 +293,8 @@ RE_REUTLINGEN_TUEBINGEN = {
     "stops": [
         {"station_id": station_code_to_id("TRE"), "arrival": None, "departure": 0},
         {"station_id": station_code_to_id("RBE"), "arrival": 3, "departure": 0, "platform": 1},
-        {"station_id": station_code_to_id("TT"), "arrival": 6, "departure": None}
+        {"station_id": station_code_to_id("TKI"), "arrival": 1, "departure": 0, "platform": 1},
+        {"station_id": station_code_to_id("TT"), "arrival": 5, "departure": None}
     ]
 }
 
