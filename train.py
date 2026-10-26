@@ -380,11 +380,14 @@ class Train:
 
         for stop in self.visits:
             if stop.station is station:
-                if stop.departure is None:
-                    raise ValueError(f"Stop at station {station_id} has no departure time")
-
-                departure = self._parse_time(stop.departure)
                 arrival = self._parse_time(stop.arrival)
+
+                if stop.departure is None:
+                    departure = arrival + timedelta(minutes=minutes)
+                    stop.departure = self._format_time(departure)
+                    return self
+
+                departure = self._parse_time(stop.departure)                
                 adjusted_departure = departure + timedelta(minutes=minutes)
                 if arrival is not None and adjusted_departure < arrival:
                     raise ValueError(
@@ -407,15 +410,19 @@ class Train:
 
         raise ValueError(f"Train {self.id} has no stop at station ID {station_id}")
 
-    def add_leg(self, train, intermission):
-        """Append ``train`` as the next leg of this REG train."""
+    def add_leg(self, train, intermission=None):
+        """Append ``train`` as the next leg, optionally setting its intermission."""
         if self.train_type not in {"REG", "REGIONAL"}:
             raise ValueError("Only REG trains may have multiple legs")
         if not isinstance(train, Train):
             raise TypeError("A leg must be another Train")
         if train is self or train._leg_parent is not None:
             raise ValueError("The train is already part of a leg chain")
-        if not isinstance(intermission, int) or isinstance(intermission, bool) or intermission < 0:
+        if intermission is not None and (
+            not isinstance(intermission, int)
+            or isinstance(intermission, bool)
+            or intermission < 0
+        ):
             raise ValueError("Intermission must be a non-negative integer")
         if not self.visits or not train.visits:
             raise ValueError("Both trains must contain visits")
@@ -423,7 +430,25 @@ class Train:
         previous = list(self.iter_legs())[-1]
         previous_from = previous._from_time(previous.visits[-1])
         next_from = train._from_time(train.visits[0])
-        delta = (self._parse_time(previous_from)+ timedelta(minutes=intermission)- self._parse_time(next_from))
+        previous_time = self._parse_time(previous_from)
+        next_time = self._parse_time(next_from)
+        if previous_time is None or next_time is None:
+            raise ValueError(
+                "Both legs must have a time at their connection point"
+            )
+        if intermission is None:
+            intermission = int(
+                (next_time - previous_time).total_seconds() // 60
+            )
+            if intermission < 0:
+                raise ValueError(
+                    "The next leg must not start before the previous leg ends"
+                )
+        delta = (
+            previous_time
+            + timedelta(minutes=intermission)
+            - next_time
+        )
 
         train._shift_visits(delta)
         train._leg_parent = self
@@ -457,7 +482,7 @@ class Train:
                 lines.append(f"\nIntermission: {int(gap)} minutes")
 
             suffix = "" if len(legs) == 1 else f" - Leg {chr(ord('A') + index)}"
-            lines.append(f"\n{self.name}{suffix} ({self.id})")
+            lines.append(f"\n{self.name}{suffix} ({leg.id})")
             lines.append("Pos  Station                         Arrival    Departure  Platform")
             lines.append("-" * 72)
             for position, visit in enumerate(leg.visits, start=1):
@@ -528,9 +553,9 @@ def trains_to_dataframe(trains, stations=STATIONS):
 
                 rows.append({
                     "Train number": (
-                        f"{train.name}{chr(ord('A') + leg_index)} ({train.id})"
+                        f"{train.name}{chr(ord('A') + leg_index)} ({leg.id})"
                         if len(legs) > 1
-                        else f"{train.name} ({train.id})"
+                        else f"{train.name} ({leg.id})"
                     ),
                     "Stop": station.name,
                     "Abbreviation": station.abbrev,
