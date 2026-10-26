@@ -470,7 +470,7 @@ def main():
     if timetable_df.empty:
         print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
         return
-    plot_route_timetable(timetable_df, selected_section)
+    plot_route_timetable(timetable_df, selected_section, "05:00", 60)
 
     generate_line_timetable(TRAINS, selected_section, "05:00", 60)
     print(RE_3250.timetable())

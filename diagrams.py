@@ -80,16 +80,37 @@ def _filter_section_dataframe(df, section, minimum_visits=True):
     return section, section_stations
 
 
-def plot_route_timetable(df, title_name):
-    """Plot the route timetable as a distance-time diagram."""
+def plot_route_timetable(
+    df, title_name, start_time="00:00", duration=24 * 60
+):
+    """Plot the route timetable as a distance-time diagram for a time window."""
+    start = _parse_time(start_time)
+    if pd.isna(start):
+        raise ValueError(f"Invalid start time: {start_time!r}")
+    if not isinstance(duration, int) or isinstance(duration, bool) or duration <= 0:
+        raise ValueError("Duration must be a positive integer in minutes")
+    end = start + pd.Timedelta(minutes=duration)
+
     section, df = _filter_section_dataframe(df, title_name)
     if df.empty:
         raise ValueError(f"No trains have at least two visits in section {section.name!r}")
-    fig, ax = plt.subplots(figsize=(12, 7))
     df["arrival_dt"] = pd.to_datetime(df["Arrival"], format="%H:%M", errors="coerce")
     df["departure_dt"] = pd.to_datetime(
         df["Departure"], format="%H:%M", errors="coerce"
     )
+    in_window = (
+        df["arrival_dt"].between(start, end, inclusive="left")
+        | df["departure_dt"].between(start, end, inclusive="left")
+    )
+    eligible_trains = df.loc[in_window, "Train number"].unique()
+    df = df[df["Train number"].isin(eligible_trains)].copy()
+    if df.empty:
+        raise ValueError(
+            f"No trains have visits in section {section.name!r} "
+            "in the requested time window"
+        )
+
+    fig, ax = plt.subplots(figsize=(12, 7))
     stations = df[["Stop", "Station code", "Station ID", "Km"]].drop_duplicates()
     station_order = []
     for station_ref in section.station_codes:
@@ -142,12 +163,17 @@ def plot_route_timetable(df, title_name):
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
     ax.xaxis.set_major_locator(mdates.MinuteLocator(interval=5))
     ax.xaxis.set_minor_locator(mdates.MinuteLocator(interval=1))
+    ax.set_xlim(start, end)
     ax.set_xlabel("Time", fontsize=11)
     plt.xticks(rotation=45)
     ax.grid(True, which="major", axis="y", color="gainsboro", linestyle=":")
     ax.grid(True, which="major", axis="x", color="gainsboro", linestyle=":")
     ax.grid(True, which="minor", axis="x", color="lightgray", linestyle="--")
-    plt.title(f"Route timetable (graphic timetable): {title_name}", fontsize=14)
+    plt.title(
+        f"Route timetable (graphic timetable): {title_name} "
+        f"({start_time}, {duration} min)",
+        fontsize=14,
+    )
     plt.legend(title="Trains", loc="upper left", bbox_to_anchor=(1.01, 1))
     plt.tight_layout()
     display_or_save(fig, "route_timetable", title_name)
