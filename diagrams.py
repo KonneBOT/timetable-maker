@@ -35,7 +35,9 @@ def display_or_save(fig, filename_prefix, title_name):
         plt.show()
 
 
-def _filter_section_dataframe(df, section, minimum_visits=True):
+def _filter_section_dataframe(
+    df, section, minimum_visits=True, bidirectional=True
+):
     section = get_section(section)
     station_refs = list(section.station_codes)
     station_codes = {
@@ -66,15 +68,14 @@ def _filter_section_dataframe(df, section, minimum_visits=True):
             "Train number", sort=False
         ):
             positions = train_data["_section_position"].tolist()
-            if (
-                len(set(positions)) >= 2
-                and (
-                    all(earlier < later for earlier, later in zip(positions, positions[1:]))
-                    or all(
-                        earlier > later
-                        for earlier, later in zip(positions, positions[1:])
-                    )
-                )
+            is_forward = all(
+                earlier < later for earlier, later in zip(positions, positions[1:])
+            )
+            is_reverse = all(
+                earlier > later for earlier, later in zip(positions, positions[1:])
+            )
+            if len(set(positions)) >= 2 and (
+                is_forward or (bidirectional and is_reverse)
             ):
                 eligible.append(train_number)
         section_stations = section_stations[
@@ -186,13 +187,6 @@ def _parse_time(time_text):
     return pd.to_datetime(time_text, format="%H:%M", errors="coerce")
 
 
-def _in_time_window(time_text, start, end):
-    timestamp = _parse_time(time_text)
-    if pd.isna(timestamp):
-        return False
-    return start <= timestamp < end
-
-
 def generate_line_timetable(
     trains, section, start_time="00:00", duration=24 * 60
 ):
@@ -209,24 +203,36 @@ def generate_line_timetable(
         raise ValueError("Duration must be a positive integer in minutes")
     end = start + pd.Timedelta(minutes=duration)
     df = trains_to_dataframe(trains)
-    section, df = _filter_section_dataframe(df, section)
+    section, df = _filter_section_dataframe(
+        df, section, bidirectional=False
+    )
     if df.empty:
         raise ValueError(f"No visits found for section {section.name!r}")
 
-    train_visit_counts = df.groupby("Train number")["Station ID"].nunique()
-    eligible_trains = train_visit_counts[train_visit_counts >= 2].index
+    first_station = section.station_codes[0]
+    if isinstance(first_station, int):
+        first_rows = df[df["Station ID"] == first_station]
+    else:
+        first_rows = df[df["Station code"] == first_station]
+    first_rows = first_rows.copy()
+    first_rows["departure_dt"] = pd.to_datetime(
+        first_rows["Departure"], format="%H:%M", errors="coerce"
+    )
+    eligible_trains = first_rows.loc[
+        first_rows["departure_dt"].between(start, end, inclusive="left"),
+        "Train number",
+    ].unique()
     df = df[df["Train number"].isin(eligible_trains)].copy()
     if df.empty:
         raise ValueError(
-            f"No trains have at least two visits in section {section.name!r}"
+            f"No trains depart from the first station of section {section.name!r} "
+            "in the requested time window"
         )
 
     def display_time(row):
         event_time = row["Arrival"] if row["Through run"] else (
             row["Departure"] or row["Arrival"]
         )
-        if not _in_time_window(event_time, start, end):
-            return None
         if row["Through run"]:
             return f"{event_time} ○"
         if row["Platform"] == "any":
@@ -240,18 +246,9 @@ def generate_line_timetable(
         axis=1,
     )
     df["Time"] = df.apply(display_time, axis=1)
-    df = df[df["Time"].notna()]
-    if df.empty:
-        raise ValueError(
-            f"No visits found for section {section.name!r} in the requested time window"
-        )
-    first_station = section.station_codes[0]
-    if isinstance(first_station, int):
-        first_rows = df[df["Station ID"] == first_station]
-    else:
-        first_rows = df[df["Station code"] == first_station]
     departure_order = (
-        first_rows.groupby("Train number")["Event time"]
+        first_rows[first_rows["Train number"].isin(eligible_trains)]
+        .groupby("Train number")["Departure"]
         .first()
         .map(_parse_time)
         .sort_values()
