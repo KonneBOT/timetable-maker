@@ -68,9 +68,12 @@ def _filter_section_dataframe(df, section, minimum_visits=True):
             positions = train_data["_section_position"].tolist()
             if (
                 len(set(positions)) >= 2
-                and all(
-                    earlier < later
-                    for earlier, later in zip(positions, positions[1:])
+                and (
+                    all(earlier < later for earlier, later in zip(positions, positions[1:]))
+                    or all(
+                        earlier > later
+                        for earlier, later in zip(positions, positions[1:])
+                    )
                 )
             ):
                 eligible.append(train_number)
