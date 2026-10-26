@@ -402,21 +402,29 @@ MEX_19312.change_platform(station_code_to_id("TRE"), 2)
 _MEX_TRAINS = [MEX_19301, MEX_19302, MEX_19303, MEX_19304, MEX_19305, MEX_19306, MEX_19307, MEX_19308, MEX_19309, MEX_19310, MEX_19311, MEX_19312]
 
 ## RE 17a
-RE_3250 = Train.from_blueprint(3250, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "5:07", "LPPLPPL", "REGIONAL", 160)
+RE_3250 = Train.from_blueprint(3250, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "5:17", "LPPLPPL", "REGIONAL", 160)
 RE_3250.set_origin(station_code_to_id("TAEA"), 1, platform=1)
+RE_3250.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_3250.change_platform(station_code_to_id("TT"), 3)
 
-RE_3251 = Train.from_blueprint(3251, RE17A_REUTLINGEN_ALBSTADT, "RE 17a", "5:48", "LPPLPPL", "REGIONAL", 160)
+RE_3251 = Train.from_blueprint(3251, RE17A_REUTLINGEN_ALBSTADT, "RE 17a", "5:47", "LPPLPPL", "REGIONAL", 160)
 RE_3251.set_origin("RTU", 1, platform=2)
 RE_3251.change_platform(station_code_to_id("TT"), 2)
+RE_3251.extend_stop(station_code_to_id("TAE"), 3)
 
-RE_3252 = Train.from_blueprint(3252, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "6:07", "LPPLPPL", "REGIONAL", 160)
+RE_3252 = Train.from_blueprint(3252, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "6:17", "LPPLPPL", "REGIONAL", 160)
 RE_3252.set_origin(station_code_to_id("TAEA"), 1, platform=1)
+RE_3252.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_3252.change_platform(station_code_to_id("TT"), 3)
 
-RE_3253 = Train.from_blueprint(3253, RE17A_REUTLINGEN_ALBSTADT, "RE 17a", "6:48", "LPPLPPL", "REGIONAL", 160)
+RE_3253 = Train.from_blueprint(3253, RE17A_REUTLINGEN_ALBSTADT, "RE 17a", "6:47", "LPPLPPL", "REGIONAL", 160)
 RE_3253.set_origin("RTU", 1, platform=2)
 RE_3253.change_platform(station_code_to_id("TT"), 2)
+
+RE_3254 = Train.from_blueprint(3254, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "7:17", "LPPLPPL", "REGIONAL", 160)
+RE_3254.change_platform(station_code_to_id("TT"), 3)
+RE_3254.set_ending(station_code_to_id("RTU"), 1, platform=1)
+RE_3251.add_leg(RE_3254)
 
 ## RE 17
 RE_19701 = Train.from_blueprint(19701, RE_REUTLINGEN_TUEBINGEN, "RE 17", "5:17", "LPPL", max_speed_kmph=160)
@@ -468,18 +476,19 @@ TRAINS = [
 
 
 def main():
-    selected_section = "Tübingen - Betzingen"
+    selected_section = "Tübingen - Albstadt"
 
     timetable_df = trains_to_dataframe(TRAINS)
     if timetable_df.empty:
         print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
         return
-    plot_route_timetable(timetable_df, selected_section, "05:00", 60)
+    plot_route_timetable(timetable_df, selected_section, "05:00", 140)
 
-    generate_line_timetable(TRAINS, selected_section, "05:00", 60)
-    print(RE_3250.timetable())
-    print(MEX_19307.timetable())
-    export_trains_txt(TRAINS)
+    generate_line_timetable(TRAINS, selected_section, "06:00", 140)
+    #generate_line_timetable(TRAINS, "Albstadt - Tübingen", "5:00", 140)
+    print(RE_3251.timetable())
+    print(RE_3252.timetable())
+    # export_trains_txt(TRAINS)
 
 
 if __name__ == "__main__":
