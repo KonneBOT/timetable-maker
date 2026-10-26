@@ -21,6 +21,15 @@
 
 ## ZAB 1
 
+### Mühlbachäcker Süd
+- 3-gleisig?? Mit doppelter Weiche Richtung Derendingen?
+- ggf. nur 2 Bahnsteiggleise?
+
+### Steinlachwasen
+- Gleiswechselweiche Richtung Dußlingen?
+- RE im Gegengleis als fliegende Überholung bspw. von S11 die abbiegt Richtung Nehren Innenstadt?
+- nochmalige Bestätigung dass nur S11 & S12 in Steinlachwasen hält
+
 ### Dußlingen Bhf
 
 - Zweigleisig kommplett bis Nehren
@@ -169,7 +178,7 @@ Tübingen (0) - Gbf (1,4) - Neckaraue (2,6) - Kfurt (7,4) - Wannweil (9,5) - Bet
 
 ### S12 (RT Süd, Ohmenhausen - Tübingen)
 
-- nur HVZ
+- nur HVZ (? ggf. auch immer 60min Takt)
 - 60 min?
 
 ### S2 (RT Süd - Ohmenhausen - Mössingen)
@@ -187,18 +196,19 @@ Tübingen (0) - Gbf (1,4) - Neckaraue (2,6) - Kfurt (7,4) - Wannweil (9,5) - Bet
 
 ### S31 (Rottenburg - Tübingen Gbf)
 
-- 60 min, in HVZ 30min oder S3 in HVZ 30min bis Bieringen?
+- 60 min, in HVZ 30min bis Bieringen?
 - Verdichtung mit S3 und RE zwischen Ro-Tü auf 15min Takt in HVZ sonst 20min
 
 ### S4 (Herrenberg - Tübingen)
 
-- 30 min Takt?
+- 30 min Takt
 - Entringen - Herrenberg soll ganzer Tag 30min haben, Tü-Entr mostly 15min aber mind. 30?
   - S5 abends in Tübingen enden (von RT kommend)
 
 ### S5 (Entringen - Tü - RT - Pfullingen - Engstingen)
 
 - 30min Takt
+- abends nur Engst <-> Tü?
 - Taktverdichtung auf 15min bis Pfullingen Süd mit S6
 - Taktverdichtung mit S2/S12 auf 6-8 Fahrten / Stunde bis Reutlingen Süd
 
