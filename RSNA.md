@@ -175,10 +175,12 @@ Tübingen (0) - Gbf (1,4) - Neckaraue (2,6) - Kfurt (7,4) - Wannweil (9,5) - Bet
 
 - 30 min Takt
 - prolly nur bis 20 Uhr oso
+- Ankunft in TMS so dass Umstieg auf RE Richtung Albstadt mgl ist
 
-### S12 (RT Süd, Ohmenhausen - Tübingen)
+### S12 (RT Süd - Ohmenhausen -  Dußlingen - Tübingen)
 
 - nur HVZ (? ggf. auch immer 60min Takt)
+- kurz vor S1 in Dußlingen Richtung Gomaringen fahren -> Umstieg auf S1 Richtung Albstadt von Steinlachwasen mgl.
 - 60 min?
 
 ### S2 (RT Süd - Ohmenhausen - Mössingen)
@@ -188,6 +190,7 @@ Tübingen (0) - Gbf (1,4) - Neckaraue (2,6) - Kfurt (7,4) - Wannweil (9,5) - Bet
   - S12 60min RT Süd - Ohmenhausen - Tübingen
   - S2 30min RT Süd - Ohmenhausen - Mössingen
   - S2 60min RT Süd - Ohmenhausen West
+- Anpassende Wende in TMS dass Umstieg auf RE mgl. ist (Gleis 1 RE Richtung Albstadt, Gl. 2 S11, Gl. 3 S2?)
 
 ### S3 (Horb - Rottenburg - Tübingen)
 
