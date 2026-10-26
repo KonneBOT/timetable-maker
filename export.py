@@ -53,10 +53,12 @@ def _copy_text_to_clipboard(text):
 
 
 def _output_to_clipboard_or_terminal(output):
-    choice = input("Copy to clipboard or print to terminal? [c/P] ").strip().lower()
+    choice = input("Copy to clipboard or print to terminal? [c/p/q] ").strip().lower()
     if choice in {"c", "clipboard"}:
         _copy_text_to_clipboard(output)
         print("Timetable copied to the clipboard.")
+        return
+    if choice == "q":
         return
     print(output, end="")
 
@@ -91,7 +93,9 @@ def export_trains_txt(trains, file_path=None):
     if file_path is not None:
         path = Path(file_path)
         if path.exists():
-            answer = input(f"{path} already exists. Overwrite? [y/N] ").strip().lower()
+            answer = input(f"{path} already exists. Overwrite? [y/N/q] ").strip().lower()
+            if answer == "q":
+                return output
             if answer not in {"y", "yes"}:
                 _output_to_clipboard_or_terminal(output)
                 return output
