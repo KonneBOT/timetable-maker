@@ -22,10 +22,12 @@
 ## ZAB 1
 
 ### Mühlbachäcker Süd
+
 - 3-gleisig?? Mit doppelter Weiche Richtung Derendingen?
 - ggf. nur 2 Bahnsteiggleise?
 
 ### Steinlachwasen
+
 - Gleiswechselweiche Richtung Dußlingen?
 - RE im Gegengleis als fliegende Überholung bspw. von S11 die abbiegt Richtung Nehren Innenstadt?
 - nochmalige Bestätigung dass nur S11 & S12 in Steinlachwasen hält
@@ -523,5 +525,46 @@ TMUS an :46:09 ab :47:00
 TT GL. 6 an :48:27
 
 ```
-TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, knapp) -> TFR (3min) -> TFRW (1min) -> TENO (1min) -> TBGS (1min) -> TBGM (1min) -> TBG (1min) -> TENG (3min) -> TBSH (2min) -> TBIS (1min) -> TWEZ (2min) -> THSU (2min) -> THST (2min knapp) -> THCH (2min) -> TBOD (3min) -> TBSB (3min) -> TMS (1min knapp, +6s) -> TNEH (2min) -> TDU (3min knapp) -> TST (5min) -> TDD (1min) -> TMUS (1min) -> TT (1min reicht für 5/11/6, für rest eher 2min) 
+TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, knapp) -> TFR (3min) -> TFRW (1min) -> TENO (1min) -> TBGS (1min) -> TBGM (1min) -> TBG (1min) -> TENG (3min) -> TBSH (2min) -> TBIS (1min) -> TWEZ (2min) -> THSU (2min) -> THST (2min knapp) -> THCH (2min) -> TBOD (3min) -> TBSB (3min) -> TMS (1min knapp, +6s) -> TNEH (2min) -> TDU (3min knapp) -> TST (5min) -> TDD (1min) -> TMUS (1min) -> TT (1min reicht für 5/11/6, für rest eher 2min)
 ```
+
+## Implementation / Takt
+### ZAB
+#### RS 1 (nach Albstadt)
+- Abfahrt in Tü immer :10 und :39
+**RS 1 :10** 
+- Kreuzung in THCH mit RE (extend +2/3)
+- Kreuzung in TBSH / TBIS und TFRW mit RS 1
+- Kreuzung mit RE in TLAU (extend +1)
+- Kreuzung in TAEW mit RS 1
+**RS 1 :39**
+- Minute früher damit sies nach Balingen schafft vor RE
+- Kreuzung in THCH (extend -2!!), TBSH / TENG mit RS 1
+- Kreuzung und Überholung in Balingen mit REs (extend +3?)
+- Kreuzung in TFRW, TAEW (extend +1)
+#### RS 1 (nach Tü)
+- Abfahrt in TAET immer :21 und :51
+**RS 1 :21**
+- Kreuzung in TAEW mit RS 1
+- Kreuzung in TLA (Zusatz, demnach extend +1) mit RE, falls kein RE (morgens) +1 in TBG!
+- Kreuzung in TFRW, TBSH, THCH mit RS 1
+- Kreuzung in TBOD mit RE (ggf. +1 #todo)
+**RS 1 :51**
+- Kreuzung in TAEW (ggf. Abfahrt schon :50??) und TFRW mit RS1
+- Kreuzung TBSH / TBIS mit RS1 + RE
+- Kreuzung THCH mit RS 1
+- Überholung RE in TBOD (extend +2) 
+#### RE 17a (nach Albstadt)
+RE Abfahrt in Tü immer :00 (:47 im Blueprint)
+- Kreuzung in TBOD, TBIS mit RS 1
+- Überholung + Kreuzung in TBG mit RS1 und RE
+- Kreuzung in TLA mit RS 1
+#### RE 17a (nach Tü/Stuttgart)
+RE Abfahrt in TAE immer :17
+- Kreuzung in TALU mit RS 1
+- Kreuzung in TBG mit RS 1 und RE
+- Kreuzung in THCH mit RS 1
+- Überholung in TBOD mit RS 1
+
+
+
