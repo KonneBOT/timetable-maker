@@ -19,6 +19,12 @@ def _train_type(train):
     return "REG" if train.train_type == "REGIONAL" else train.train_type
 
 
+def _export_train_id(train):
+    """Return the compact identifier used in exported train rows."""
+    prefix = train.name.split(maxsplit=1)[0]
+    return f"{prefix}_{train.id}"
+
+
 def _format_from_time(value):
     return value if len(value.split(":")) == 3 else f"{value}:00"
 
@@ -69,7 +75,7 @@ def export_trains_txt(trains, file_path=None):
     for train in trains:
         legs = list(train.iter_legs())
         for index, leg in enumerate(legs):
-            reporting_name = train._reporting_number(index, len(legs))
+            export_train_id = _export_train_id(leg)
             visits = []
             for visit in leg.visits:
                 station = STATIONS[visit.station.id]
@@ -84,7 +90,7 @@ def export_trains_txt(trains, file_path=None):
                     f"{_duration_minutes(visit.arrival, visit.departure)}"
                 )
             lines.append(
-                f"{train.name}|{reporting_name} {_train_type(train)} "
+                f"{export_train_id}|{export_train_id} {_train_type(train)} "
                 f"{train.max_speed_kmph} {train.composition} {train.flags} : "
                 + " ".join(visits)
             )
