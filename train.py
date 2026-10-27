@@ -373,27 +373,38 @@ class Train:
         raise ValueError(f"Train {self.id} has no stop at station ID {station.id}")
 
     def extend_stop(self, station_id, minutes):
-        """Adjust a stop's dwell time by shifting its departure."""
+        """Adjust a stop's dwell time and shift all following visits."""
         station = self._station(station_id)
         if not isinstance(minutes, int) or isinstance(minutes, bool):
             raise ValueError("Stop extension must be an integer")
 
-        for stop in self.visits:
+        for index, stop in enumerate(self.visits):
             if stop.station is station:
                 arrival = self._parse_time(stop.arrival)
 
                 if stop.departure is None:
+                    if arrival is None:
+                        raise ValueError(
+                            f"Stop at station {station_id} has no timetable time"
+                        )
                     departure = arrival + timedelta(minutes=minutes)
                     stop.departure = self._format_time(departure)
-                    return self
+                else:
+                    departure = self._parse_time(stop.departure)
+                    adjusted_departure = departure + timedelta(minutes=minutes)
+                    if arrival is not None and adjusted_departure < arrival:
+                        raise ValueError(
+                            "Stop extension would create a negative dwell time"
+                        )
+                    stop.departure = self._format_time(adjusted_departure)
 
-                departure = self._parse_time(stop.departure)                
-                adjusted_departure = departure + timedelta(minutes=minutes)
-                if arrival is not None and adjusted_departure < arrival:
-                    raise ValueError(
-                        "Stop extension would create a negative dwell time"
+                for following_stop in self.visits[index + 1:]:
+                    following_stop.arrival = self._shift_time(
+                        following_stop.arrival, timedelta(minutes=minutes)
                     )
-                stop.departure = self._format_time(adjusted_departure)
+                    following_stop.departure = self._shift_time(
+                        following_stop.departure, timedelta(minutes=minutes)
+                    )
                 return self
 
         raise ValueError(f"Train {self.id} has no stop at station ID {station_id}")
