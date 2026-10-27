@@ -133,14 +133,16 @@ train_19317.add_leg(train_19317_leg_b, intermission=12)
 TRAINS = [train_19317]
 ```
 
-For a train named `MEX 13`, the exported reporting numbers are:
+Train rows use a compact identifier derived from the service prefix and the
+actual train or leg ID. For example, `MEX 13` with ID `19301` is exported as:
 
 ```text
-MEX 13|MEX 13A
-MEX 13|MEX 13B
+MEX_19301|MEX_19301
+MEX_19317|MEX_19317
+MEX_19317B|MEX_19317B
 ```
 
-Names are not normalized: the space in `MEX 13` remains present.
+The identifier contains no spaces. A second leg uses its own ID.
 
 Use `timetable()` while building a train. It displays the stable train ID,
 leg boundaries, intermissions, and one-based positions:
