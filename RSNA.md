@@ -548,12 +548,12 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 - Kreuzung in TAEW mit RS 1
 - Kreuzung in TLA (Zusatz, demnach extend +1) mit RE, falls kein RE (morgens) +1 in TBG!
 - Kreuzung in TFRW, TBSH, THCH mit RS 1
-- Kreuzung in TBOD mit RE (ggf. +1 #todo)
+- Kreuzung in TBOD mit RE (ggf. +1)
 ##### RS 1 :51
-- Kreuzung in TAEW (ggf. Abfahrt schon :50??) und TFRW mit RS1
+- Kreuzung in TAEW (ggf. Abfahrt schon :50 dann dafür +1 in TFRW??) und TFRW mit RS1
 - Kreuzung TBSH / TBIS mit RS1 + RE
 - Kreuzung THCH mit RS 1
-- Überholung RE in TBOD (extend +2) 
+- Überholung RE in TBOD (extend +3) 
 #### RE 17a (nach Albstadt)
 RE Abfahrt in Tü immer :00 (:47 im Blueprint)
 - Kreuzung in TBOD, TBIS mit RS 1
