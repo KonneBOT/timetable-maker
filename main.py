@@ -424,7 +424,7 @@ RE_3253 = Train.from_blueprint(3253, RE17A_REUTLINGEN_ALBSTADT, "RE 17a", "6:47"
 RE_3253.set_origin("RTU", 1, platform=2)
 RE_3253.change_platform(station_code_to_id("TT"), 2)
 
-RE_3254 = Train.from_blueprint(3254, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "7:17", "LPPLPPL", "REGIONAL", 160)
+RE_3254 = Train.from_blueprint(3254, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "7:18", "LPPLPPL", "REGIONAL", 160)
 RE_3254.change_platform(station_code_to_id("TT"), 3)
 RE_3254.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_3251.add_leg(RE_3254)
@@ -486,7 +486,7 @@ S1_33105.set_origin(station_code_to_id("TTBW"), 2, platform=1)
 S1_33105.change_platform(station_code_to_id("TT"), 11)
 S1_33105.extend_stop(station_code_to_id("TLAU"), 1)
 
-S1_33107 = Train.from_blueprint(33107, RS1_TUEBINGEN_ALBSTADT, "RS 1", "6:40", "LPLPL")
+S1_33107 = Train.from_blueprint(33107, RS1_TUEBINGEN_ALBSTADT, "RS 1", "6:39", "LPLPL")
 S1_33107.set_origin(station_code_to_id("TTBW"), 2, platform=1)
 S1_33107.change_platform(station_code_to_id("TT"), 11)
 S1_33107.extend_stop(station_code_to_id("TBG"), 3)
@@ -498,7 +498,7 @@ S1_33109.set_origin(station_code_to_id("TTBW"), 2, platform=1)
 S1_33109.change_platform(station_code_to_id("TT"), 11)
 S1_33109.extend_stop(station_code_to_id("TLAU"), 1)
 
-S1_33111 = Train.from_blueprint(33111, RS1_TUEBINGEN_ALBSTADT, "RS 1", "7:40", "LPLPL")
+S1_33111 = Train.from_blueprint(33111, RS1_TUEBINGEN_ALBSTADT, "RS 1", "7:39", "LPLPL")
 S1_33111.set_origin(station_code_to_id("TTBW"), 2, platform=1)
 S1_33111.change_platform(station_code_to_id("TT"), 11)
 S1_33111.extend_stop(station_code_to_id("TBG"), 3)
@@ -555,7 +555,7 @@ def main():
     if timetable_df.empty:
         print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
         return
-    plot_route_timetable(timetable_df, selected_section, "05:00", 140)
+    plot_route_timetable(timetable_df, selected_section, "06:00", 140)
 
     generate_line_timetable(TRAINS, selected_section, "06:00", 140)
     #generate_line_timetable(TRAINS, "Albstadt - Tübingen", "5:00", 140)
