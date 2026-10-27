@@ -210,7 +210,7 @@ RE17A_REUTLINGEN_ALBSTADT = {
         {"station_id": station_code_to_id("TMS"), "arrival": 10, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("THCH"), "arrival": 6, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TBIS"), "arrival": 6, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("TBG"), "arrival": 5, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("TBG"), "arrival": 5, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("TAE"), "arrival": 10, "departure": None},
     ]
 }
@@ -477,7 +477,7 @@ S1_33101.extend_stop(station_code_to_id("TLAU"), 1)
 S1_33103 = Train.from_blueprint(33103, RS1_TUEBINGEN_ALBSTADT, "RS 1", "5:39", "LPL")
 S1_33103.set_origin(station_code_to_id("TTBW"), 2, platform=1)
 S1_33103.change_platform(station_code_to_id("TT"), 11)
-S1_33103.extend_stop(station_code_to_id("TBG"), 3)
+S1_33103.extend_stop(station_code_to_id("TBG"), 3) # Overtake
 S1_33103.extend_stop(station_code_to_id("THCH"), -2)
 S1_33103.extend_stop(station_code_to_id("TAEW"), 1)
 
