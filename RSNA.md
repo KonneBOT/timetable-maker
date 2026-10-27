@@ -532,12 +532,12 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 ### ZAB
 #### RS 1 (nach Albstadt)
 - Abfahrt in Tü immer :10 und :39
-**RS 1 :10** 
+##### RS 1 :10
 - Kreuzung in THCH mit RE (extend +2/3)
 - Kreuzung in TBSH / TBIS und TFRW mit RS 1
 - Kreuzung mit RE in TLAU (extend +1)
 - Kreuzung in TAEW mit RS 1
-**RS 1 :39**
+##### RS 1 :39
 - Minute früher damit sies nach Balingen schafft vor RE
 - Kreuzung in THCH (extend -2!!), TBSH / TENG mit RS 1
 - Kreuzung und Überholung in Balingen mit REs (extend +3?)
