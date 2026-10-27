@@ -30,7 +30,7 @@ LINE_SECTIONS = {
                 "TT", "TMUS", "TDD", "TST", "TDU", "TNEH", "TMS",
                 "TBSB", "TBOD", "THCH", "THST", "THSU", "TWEZ", "TBIS",
                 "TBSH", "TENG", "TBG", "TBGM", "TBGS", "TENO", "TFRW",
-                "TFR", "TLAO", "TLAU", "TAEW", "TAEM", "TAE", "TAET",
+                "TFR", "TLA", "TLAO", "TLAU", "TAEW", "TAEM", "TAE", "TAET",
             ),
         ),
         LineSection(
