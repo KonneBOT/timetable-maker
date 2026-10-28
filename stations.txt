@@ -46,11 +46,11 @@ Q|Nehren Mitte|NMI|X
 R|Nehren Bhf (TNEH)|TNEH|13.3
 S|Nehren Süd|NSU|X
 T|Mössingen Abstellung|TMSA|X
-U|Mössingen (TMS)|TMS|16.1
+U|MÖSSINGEN (TMS)|TMS|16.1
 V|Bad Sebastiansweiler - Belsen|TBSB|17.7
 W|Bodelshausen|TBOD|21.3
 X|Hechingen Abstellung|THEA|24.6
-Y|Hechingen (THCH)|THCH|24.7
+Y|HECHINGEN (THCH)|THCH|24.7
 Z|Hechingen Stetten|THST|27.0
 à|Hechingen Süd|THSU|30.0
 á|Wessingen - Zimmern|TWEZ|32.0
@@ -58,7 +58,7 @@ Z|Hechingen Stetten|THST|27.0
 ã|Eyach <--|TEY|X
 ä|Bisingen Steinhofen|TBSH|35.1
 å|Engstlatt (TENG)|TENG|38.7
-æ|Balingen (TBG)|TBG|41.7
+æ|BALINGEN (TBG)|TBG|41.7
 ç|Balingen Süd|TBGS|42.8
 è|--> Schömberg|TSCB|X
 |THCH Wende|THCH We|
@@ -73,7 +73,7 @@ Z|Hechingen Stetten|THST|27.0
 ð|Albstadt Ebingen West (TAEW)|TAEW|57.3
 ñ|Albstadt Ebingen Meßstetterstrasse|TAEM|58.6
 ò|Ebingen Abstellung|TAEA|59.5
-ó|Albstadt Ebingen (TAE)|TAE|59.6
+ó|ALBSTADT EBINGEN (TAE)|TAE|59.6
 ô|--> Sigmaringen|TSIG|60.0
 õ|--> Tailfingen / Onstmettingen|TAET|59.8
 ö|--> Burladingen|TBLD|X
@@ -92,5 +92,8 @@ Z|Hechingen Stetten|THST|27.0
 ĉ|Altingen|TALT|14.5
 ċ|Gültstein|TGU|17.2
 č|Herrenberg Zwerchweg|TZWE|19.0
-ď|Herrenberg|THEZ|21.2
+ď|HERRENBERG (THEZ)|THEZ|21.2
 đ|Tübingen BW|TTBW|X
+ĕ|Wende West|TTWW|X
+x|Industrie|TTI|X
+ē|TT Wende Ost|TTWO|X
