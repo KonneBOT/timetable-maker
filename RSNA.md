@@ -566,5 +566,26 @@ RE Abfahrt in TAE immer :17
 - Kreuzung in THCH mit RS 1
 - Überholung in TBOD mit RS 1
 
+### Testrun
+- RE Richtung Tü ist sehr knapp, maybe 1 min früher los in TAE, Puffer in TBG fixt das schon?, außerdem 1min zu spät in Tü... ggf. nur 1 min halt da?
+- Balingen Gleis 1 80er Einfahrt, sonst zu viel Varianz
+- RE 19701 hat kein Ending
+- add ending fügt nen Halt am Sink hinzu, das ja quatsch, eig param stopping=false??
+- maybe TENO - TFRW + TAE - TAEW auf 160kmh erhöhen damit RE Verspätung reinholen kann?
+  - maybe aber schwierig weil dann die knappen Kreuzungen in TLA und Aufholen bis TBG kaputt gehen?
+- RE 3251 Kreuzung zum Fahrplan hinzufügen (TBOD 6:14, 3min von TMS, 3min nach THCH)
+  - generell für alle RE Kreuzungen schauen, dass die im Station Board auftauchen, d.h. in TBOD, TLAU (3 von TAE, 7 nach TBG) TLA (4 von TBG, 6 nach TAE) bei den entsprechenden Zügen
+- neue Weiche in TBG von Gleis 3 auf TBGM Gleis 2 (Redundanz)?
+- ggf. BW lösen, dass jedes Gleis ne eigene Station ist? Damit der Konflikt mit passing nicht gegeben ist? vllt auch dumme Idee
+  - BW 3. 33. 34 muss eh reworked werden, weil atm kann nur ein Zug einfahren
+- RE 3252 keine Platform in TAE atm
+- 3er Kreuzung in TBG verändern, RS 1 auf Gleis 1 als erstes, dann die RE auf 2 und 3 (atm RS 1 steht auf Gleis 3)
+  - RS 1 die überholt wird könnte außerdem ne Minute früher los, und dann in TFRW dafür ne Minute länger warten?
+- alle RS 1 Richtung Tü haben kein Ending (+ Gleis Konflikt 11 ist belegt für abfahrende)
+- multiple Leg is broken für trains.txt export, wahrscheinlich mit dem Name Change kaputt gegangen
+  - Andere Idee um lange Züge zu splitten -> Coach Yards. Damit würde man auch die Zugnummern ändern können
+  - bspw. TTBW Gleis 3, 33, 34 könnte stattdessen ein CY sein, für RS Züge mit Wende auf andere Nummer (ist dann aber assigned zu TT und nicht TTBW, quasi origin platform für TT)
+  - Wenn Züge rangiert / gestabled werden sollen auf den Abstellgleisen, geht das nur mit gleichbleibender Zugnummer (und dann entweder mehrere Legs oder selbes Leg)
+
 
 
