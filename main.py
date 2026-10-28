@@ -305,8 +305,8 @@ MEX_TUEBINGEN_REUTLINGEN = {
     "stops": [
         {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
         {"station_id": station_code_to_id("TKI"), "arrival": 6, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("RBE"), "arrival": 1, "departure": 0, "platform": 2},
-        {"station_id": station_code_to_id("TRE"), "arrival": 3, "departure": None},
+        {"station_id": station_code_to_id("RBE"), "arrival": 2, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("TRE"), "arrival": 2, "departure": None},
     ],
 }
 
@@ -314,8 +314,8 @@ MEX_REUTLINGEN_TUEBINGEN = {
     "name": "MEX 13",
     "stops": [
         {"station_id": station_code_to_id("TRE"), "arrival": None, "departure": 0},
-        {"station_id": station_code_to_id("RBE"), "arrival": 3, "departure": 0, "platform": 1},
-        {"station_id": station_code_to_id("TKI"), "arrival": 1, "departure": 5, "platform": 1},
+        {"station_id": station_code_to_id("RBE"), "arrival": 2, "departure": 0, "platform": 1},
+        {"station_id": station_code_to_id("TKI"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TT"), "arrival": 5, "departure": None}
     ]
 }
@@ -432,6 +432,7 @@ RE_3251.add_leg(RE_3254)
 ## RE 17
 RE_19701 = Train.from_blueprint(19701, RE_REUTLINGEN_TUEBINGEN, "RE 17", "5:17", "LPPL", max_speed_kmph=160)
 RE_19701.set_origin(station_code_to_id("RTU"), 1, platform=2)
+RE_19701.set_ending(station_code_to_id("TTBW"), 2)
 RE_19701.change_platform(station_code_to_id("TT"), 2)
 
 RE_19702 = Train.from_blueprint(19702, RE_TUEBINGEN_REUTLINGEN, "RE 17", "5:30", "LPLPL", max_speed_kmph=160)
@@ -439,34 +440,17 @@ RE_19702.set_origin(station_code_to_id("TTBW"), 2, platform=2)
 RE_19702.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_19702.change_platform(station_code_to_id("TT"), 3)
 
-RE_19703 = Train.from_blueprint(19703, RE_REUTLINGEN_TUEBINGEN, "RE 17", "6:17", "LPPL", max_speed_kmph=160)
+RE_19703 = Train.from_blueprint(19703, RE_REUTLINGEN_TUEBINGEN, "RE 17", "6:47", "LPPLPL", max_speed_kmph=160)
 RE_19703.set_origin(station_code_to_id("RTU"), 1, platform=2)
+RE_19703.set_ending(station_code_to_id("TTBW"), 2)
 RE_19703.change_platform(station_code_to_id("TT"), 2)
 
-RE_19704 = Train.from_blueprint(19704, RE_TUEBINGEN_REUTLINGEN, "RE 17", "6:00", "LPPL", max_speed_kmph=160)
+RE_19704 = Train.from_blueprint(19704, RE_TUEBINGEN_REUTLINGEN, "RE 17", "6:30", "LPL", max_speed_kmph=160)
 RE_19704.set_origin(station_code_to_id("TTBW"), 2, platform=2)
 RE_19704.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_19704.change_platform(station_code_to_id("TT"), 3)
 
-RE_19705 = Train.from_blueprint(19705, RE_REUTLINGEN_TUEBINGEN, "RE 17", "6:47", "LPPLPL", max_speed_kmph=160)
-RE_19705.set_origin(station_code_to_id("RTU"), 1, platform=2)
-RE_19705.change_platform(station_code_to_id("TT"), 2)
-
-RE_19706 = Train.from_blueprint(19706, RE_TUEBINGEN_REUTLINGEN, "RE 17", "6:30", "LPL", max_speed_kmph=160)
-RE_19706.set_origin(station_code_to_id("TTBW"), 2, platform=2)
-RE_19706.set_ending(station_code_to_id("RTU"), 1, platform=1)
-RE_19706.change_platform(station_code_to_id("TT"), 3)
-
-RE_19707 = Train.from_blueprint(19707, RE_REUTLINGEN_TUEBINGEN, "RE 17", "7:17", "LPPL", max_speed_kmph=160)
-RE_19707.set_origin(station_code_to_id("RTU"), 1, platform=2)
-RE_19707.change_platform(station_code_to_id("TT"), 2)
-
-RE_19708 = Train.from_blueprint(19708, RE_TUEBINGEN_REUTLINGEN, "RE 17", "7:00", "LPPLPL", max_speed_kmph=160)
-RE_19708.set_origin(station_code_to_id("TTBW"), 2, platform=2)
-RE_19708.set_ending(station_code_to_id("RTU"), 1, platform=1)
-RE_19708.change_platform(station_code_to_id("TT"), 3)
-
-_RE17_TRAINS = [RE_3250, RE_3251, RE_3252, RE_3253, RE_19701, RE_19702, RE_19703, RE_19704, RE_19705, RE_19706, RE_19707, RE_19708]
+_RE17_TRAINS = [RE_3250, RE_3251, RE_3252, RE_3253, RE_19701, RE_19702, RE_19703, RE_19704]
 
 ## S1 Trains
 S1_33101 = Train.from_blueprint(33101, RS1_TUEBINGEN_ALBSTADT, "RS 1", "5:10", "LPL")
