@@ -529,63 +529,80 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 ```
 
 ## Implementation / Takt
+
 ### ZAB
+
 #### RS 1 (nach Albstadt)
+
 - Abfahrt in Tü immer :10 und :39
+
 ##### RS 1 :10
+
 - Kreuzung in THCH mit RE (extend already im Blueprint (+3))
 - Kreuzung in TBSH / TBIS und TFRW mit RS 1
 - Kreuzung mit RE in TLAU (extend +1)
 - Kreuzung in TAEW mit RS 1
+
 ##### RS 1 :39
+
 - Minute früher damit sies nach Balingen schafft vor RE
 - Kreuzung in THCH (extend -2!!), TBSH / TENG mit RS 1
 - Kreuzung und Überholung in Balingen mit REs (extend +3?)
 - Kreuzung in TFRW, TAEW (extend +1)
+
 #### RS 1 (nach Tü)
+
 - Abfahrt in TAET immer :21 und :51
+
 ##### RS 1 :21
+
 - Kreuzung in TAEW mit RS 1
 - Kreuzung in TLA (Zusatz, demnach extend +1) mit RE, falls kein RE (morgens) +1 in TBG!
 - Kreuzung in TFRW, TBSH, THCH mit RS 1
 - Kreuzung in TBOD mit RE (ggf. +1)
+
 ##### RS 1 :51
+
 - Kreuzung in TAEW (ggf. Abfahrt schon :50 dann dafür +1 in TFRW??) und TFRW mit RS1
 - Kreuzung TBSH / TBIS mit RS1 + RE
 - Kreuzung THCH mit RS 1
-- Überholung RE in TBOD (extend +3) 
+- Überholung RE in TBOD (extend +3)
+
 #### RE 17a (nach Albstadt)
+
 RE Abfahrt in Tü immer :00 (:47 im Blueprint)
+
 - Kreuzung in TBOD, TBIS mit RS 1
 - Überholung + Kreuzung in TBG mit RS1 und RE
 - Kreuzung in TLA mit RS 1
+
 #### RE 17a (nach Tü/Stuttgart)
+
 RE Abfahrt in TAE immer :17
+
 - Kreuzung in TALU mit RS 1
 - Kreuzung in TBG mit RS 1 und RE
 - Kreuzung in THCH mit RS 1
 - Überholung in TBOD mit RS 1
 
 ### Testrun
-- RE Richtung Tü ist sehr knapp, maybe 1 min früher los in TAE, Puffer in TBG fixt das schon?, außerdem 1min zu spät in Tü... ggf. nur 1 min halt da?
-- Balingen Gleis 1 80er Einfahrt, sonst zu viel Varianz
+
+- RE Richtung Tü ist sehr knapp, maybe 1 min früher los in TAE, Puffer in TBG fixt das schon?, außerdem 1min zu spät in Tü... ggf. nur 1 min halt da? ✅
+- Balingen Gleis 1 80er Einfahrt, sonst zu viel Varianz ✅
 - RE 19701 hat kein Ending
 - add ending fügt nen Halt am Sink hinzu, das ja quatsch, eig param stopping=false??
-- maybe TENO - TFRW + TAE - TAEW auf 160kmh erhöhen damit RE Verspätung reinholen kann?
+- maybe TENO - TFRW + TAE - TAEW auf 160kmh erhöhen damit RE Verspätung reinholen kann? ✅
   - maybe aber schwierig weil dann die knappen Kreuzungen in TLA und Aufholen bis TBG kaputt gehen?
-- RE 3251 Kreuzung zum Fahrplan hinzufügen (TBOD 6:14, 3min von TMS, 3min nach THCH)
-  - generell für alle RE Kreuzungen schauen, dass die im Station Board auftauchen, d.h. in TBOD, TLAU (3 von TAE, 7 nach TBG) TLA (4 von TBG, 6 nach TAE) bei den entsprechenden Zügen
+- RE 3251 Kreuzung zum Fahrplan hinzufügen (TBOD 6:14, 3min von TMS, 3min nach THCH) ✅
+  - generell für alle RE Kreuzungen schauen, dass die im Station Board auftauchen, d.h. in TBOD, TLAU (3 von TAE, 7 nach TBG) TLA (4 von TBG, 6 nach TAE) bei den entsprechenden Zügen ✅
 - neue Weiche in TBG von Gleis 3 auf TBGM Gleis 2 (Redundanz)?
-- ggf. BW lösen, dass jedes Gleis ne eigene Station ist? Damit der Konflikt mit passing nicht gegeben ist? vllt auch dumme Idee
-  - BW 3. 33. 34 muss eh reworked werden, weil atm kann nur ein Zug einfahren
-- RE 3252 keine Platform in TAE atm
-- 3er Kreuzung in TBG verändern, RS 1 auf Gleis 1 als erstes, dann die RE auf 2 und 3 (atm RS 1 steht auf Gleis 3)
-  - RS 1 die überholt wird könnte außerdem ne Minute früher los, und dann in TFRW dafür ne Minute länger warten?
+- ggf. BW lösen, dass jedes Gleis ne eigene Station ist? Damit der Konflikt mit passing nicht gegeben ist? vllt auch dumme Idee ✅
+  - BW 3. 33. 34 muss eh reworked werden, weil atm kann nur ein Zug einfahren ✅
+- RE 3252 keine Platform in TAE atm ??
+- 3er Kreuzung in TBG verändern, RS 1 auf Gleis 1 als erstes, dann die RE auf 2 und 3 (atm RS 1 steht auf Gleis 3) ✅
+  - RS 1 die überholt wird könnte außerdem ne Minute früher los, und dann in TFRW dafür ne Minute länger warten? ✅
 - alle RS 1 Richtung Tü haben kein Ending (+ Gleis Konflikt 11 ist belegt für abfahrende)
 - multiple Leg is broken für trains.txt export, wahrscheinlich mit dem Name Change kaputt gegangen
   - Andere Idee um lange Züge zu splitten -> Coach Yards. Damit würde man auch die Zugnummern ändern können
   - bspw. TTBW Gleis 3, 33, 34 könnte stattdessen ein CY sein, für RS Züge mit Wende auf andere Nummer (ist dann aber assigned zu TT und nicht TTBW, quasi origin platform für TT)
   - Wenn Züge rangiert / gestabled werden sollen auf den Abstellgleisen, geht das nur mit gleichbleibender Zugnummer (und dann entweder mehrere Legs oder selbes Leg)
-
-
-
