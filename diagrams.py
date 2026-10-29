@@ -209,12 +209,13 @@ def generate_line_timetable(
     if df.empty:
         raise ValueError(f"No visits found for section {section.name!r}")
 
-    first_station = section.station_codes[0]
-    if isinstance(first_station, int):
-        first_rows = df[df["Station ID"] == first_station]
-    else:
-        first_rows = df[df["Station code"] == first_station]
-    first_rows = first_rows.copy()
+    # A train may enter the section after its configured endpoint. Use its
+    # first actual visit so partial services are included as well.
+    first_rows = (
+        df.sort_values(["Train number", "_section_position"])
+        .drop_duplicates("Train number", keep="first")
+        .copy()
+    )
     first_rows["departure_dt"] = pd.to_datetime(
         first_rows["Departure"], format="%H:%M", errors="coerce"
     )
