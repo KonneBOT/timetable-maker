@@ -283,11 +283,23 @@ class Train:
         self.visits.insert(0, self.visits.pop())
         return self
 
-    def set_ending(self, station, travel_time, stopping=False, platform="any"):
-        """Add a terminal visit after the current last visit."""
+    def set_ending(
+        self, station, travel_time, stopping=False, platform="any", departure=None
+    ):
+        """Add a terminal visit after the current last visit.
+
+        ``departure`` specifies the dwell time at the ending in minutes.
+        When it is greater than zero, the ending is automatically a stop.
+        """
 
         if not isinstance(travel_time, int) or isinstance(travel_time, bool) or travel_time < 0:
             raise ValueError("Travel time must be a non-negative integer")
+        if departure is not None and (
+            not isinstance(departure, int)
+            or isinstance(departure, bool)
+            or departure < 0
+        ):
+            raise ValueError("Departure must be a non-negative integer")
         if not self.visits or self.visits[-1].departure is not None:
             raise ValueError("The train must have an open ending")
 
@@ -300,7 +312,14 @@ class Train:
         last_departure = last_arrival + timedelta(minutes=1)
         last.departure = self._format_time(last_departure)
         ending_arrival = last_departure + timedelta(minutes=travel_time)
-        ending_departure = (ending_arrival + timedelta(minutes=1) if stopping else None)
+        if departure is not None:
+            stopping = departure > 0
+        dwell_time = departure if departure is not None else (1 if stopping else 0)
+        ending_departure = (
+            ending_arrival + timedelta(minutes=dwell_time)
+            if stopping
+            else None
+        )
 
         self.add_stop(
             station,
