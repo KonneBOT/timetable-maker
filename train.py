@@ -390,6 +390,8 @@ class Train:
                     departure = arrival + timedelta(minutes=minutes)
                     stop.departure = self._format_time(departure)
                 else:
+                    if arrival is None:
+                        stop.arrival = stop.departure
                     departure = self._parse_time(stop.departure)
                     adjusted_departure = departure + timedelta(minutes=minutes)
                     if arrival is not None and adjusted_departure < arrival:

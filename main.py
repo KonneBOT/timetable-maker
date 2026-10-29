@@ -431,10 +431,10 @@ RE_3253.set_origin("RTU", 1, platform=2)
 RE_3253.change_platform(station_code_to_id("TT"), 2)
 RE_3253.change_platform(station_code_to_id("TBG"), 3)
 
-RE_3254 = Train.from_blueprint(3254, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "7:16", "LPPLPPL", "REGIONAL", 160)
+RE_3254 = Train.from_blueprint(3254, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "7:15", "LPPLPPL", "REGIONAL", 160)
 RE_3254.change_platform(station_code_to_id("TT"), 3)
 RE_3254.change_platform(station_code_to_id("TAE"), 2)
-RE_3251.change_platform(station_code_to_id("TBG"), 2)
+RE_3254.change_platform(station_code_to_id("TBG"), 2)
 RE_3254.extend_stop(station_code_to_id("TAE"), 2)
 RE_3254.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_3251.add_leg(RE_3254)
@@ -521,6 +521,7 @@ S1_33106 = Train.from_blueprint(33106, RS1_ALBSTADT_TUEBINGEN, "RS 1", "6:21", "
 S1_33106.change_platform(station_code_to_id("TT"), 6)
 S1_33106.set_ending(station_code_to_id("TTBW"), 2)
 S1_33106.extend_stop(station_code_to_id("TLA"), 1)
+S1_33106.change_platform(station_code_to_id("TLA"), 2)
 S1_33106.extend_stop(station_code_to_id("TBOD"), 1)
 
 S1_33108 = Train.from_blueprint(33108, RS1_ALBSTADT_TUEBINGEN, "RS 1", "6:50", "LPLPL")
@@ -533,6 +534,7 @@ S1_33110 = Train.from_blueprint(33110, RS1_ALBSTADT_TUEBINGEN, "RS 1", "7:21", "
 S1_33110.change_platform(station_code_to_id("TT"), 6)
 S1_33110.set_ending(station_code_to_id("TTBW"), 2)
 S1_33110.extend_stop(station_code_to_id("TLA"), 1)
+S1_33110.change_platform(station_code_to_id("TLA"), 2)
 S1_33110.extend_stop(station_code_to_id("TBOD"), 1)
 
 S1_33112 = Train.from_blueprint(33112, RS1_ALBSTADT_TUEBINGEN, "RS 1", "7:50", "LPLPL")

@@ -601,8 +601,12 @@ RE Abfahrt in TAE immer :17
 - RE 3252 keine Platform in TAE atm ??
 - 3er Kreuzung in TBG verändern, RS 1 auf Gleis 1 als erstes, dann die RE auf 2 und 3 (atm RS 1 steht auf Gleis 3) ✅
   - RS 1 die überholt wird könnte außerdem ne Minute früher los, und dann in TFRW dafür ne Minute länger warten? ✅
-- alle RS 1 Richtung Tü haben kein Ending (+ Gleis Konflikt 11 ist belegt für abfahrende)
+- alle RS 1 Richtung Tü haben kein Ending (+ Gleis Konflikt 11 ist belegt für abfahrende) ✅
 - multiple Leg is broken für trains.txt export, wahrscheinlich mit dem Name Change kaputt gegangen
   - Andere Idee um lange Züge zu splitten -> Coach Yards. Damit würde man auch die Zugnummern ändern können
   - bspw. TTBW Gleis 3, 33, 34 könnte stattdessen ein CY sein, für RS Züge mit Wende auf andere Nummer (ist dann aber assigned zu TT und nicht TTBW, quasi origin platform für TT)
   - Wenn Züge rangiert / gestabled werden sollen auf den Abstellgleisen, geht das nur mit gleichbleibender Zugnummer (und dann entweder mehrere Legs oder selbes Leg)
+
+### Testrun #2
+- Ebingen Abstellung Gleis 2 non-sink für RE Stabling?
+- RE Albstadt - Tü immernoch 1 min late Abfahrt in Tü (planmäßig :01, entweder frühere Ankunft -> shift von ALLEN Zügen probably, oder nur 1 min in TT - unrealistisch...)
