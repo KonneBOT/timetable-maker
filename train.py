@@ -19,6 +19,7 @@ class Station:
     code: str
     km: float | None
     platforms: frozenset = field(default_factory=frozenset)
+    km_values: tuple[float | None, ...] = ()
     visits: list = field(default_factory=list, repr=False)
 
     def __getitem__(self, key):
@@ -73,7 +74,7 @@ class Visit:
 
 
 def parse_station_file(file):
-    """Load stations from ``abbrev|name|code|km[|platforms]`` records."""
+    """Load stations from ``abbrev|name|code|km[|km...] [|platforms]`` records."""
     stations = {}
     codes = {}
     with open(file, "r", encoding="utf-8") as station_file:
@@ -83,25 +84,36 @@ def parse_station_file(file):
                 continue
 
             parts = [part.strip() for part in line.split("|")]
-            if len(parts) not in {4, 5}:
+            if len(parts) < 4:
                 raise ValueError(
                     f"Invalid station record in {file}:{line_number}; "
                     "expected abbrev|name|code|km[|platforms]"
                 )
 
-            abbrev, name, code, km_text = parts[:4]
-            platform_text = parts[4] if len(parts) == 5 else ""
+            abbrev, name, code = parts[:3]
+            value_parts = parts[3:]
             if not abbrev or not name or not code:
                 raise ValueError(
                     f"Invalid station record in {file}:{line_number}; "
                     "abbreviation, name and code are required"
                 )
-            try:
-                km = None if km_text in {"", "X"} else float(km_text)
-            except ValueError as error:
+            km_values = []
+            while value_parts:
+                try:
+                    km_values.append(
+                        None
+                        if value_parts[0] in {"", "X"}
+                        else float(value_parts[0])
+                    )
+                except ValueError:
+                    break
+                value_parts.pop(0)
+            if not km_values:
                 raise ValueError(
-                    f"Invalid kilometre value in {file}:{line_number}: {km_text!r}"
-                ) from error
+                    f"Invalid kilometre value in {file}:{line_number}"
+                )
+            km = km_values[0]
+            platform_text = value_parts[0] if value_parts else ""
 
             platforms = frozenset(
                 int(platform.strip())
@@ -109,7 +121,9 @@ def parse_station_file(file):
                 if platform.strip()
             )
             station_id = len(stations) + 1
-            station = Station(station_id, abbrev, name, code, km, platforms)
+            station = Station(
+                station_id, abbrev, name, code, km, platforms, tuple(km_values)
+            )
             stations[station_id] = station
             codes.setdefault(code, []).append(station_id)
 
@@ -372,42 +386,50 @@ class Train:
                 return self
         raise ValueError(f"Train {self.id} has no stop at station ID {station.id}")
 
-    def extend_stop(self, station_id, minutes):
+    def extend_stop(self, station_id, minutes, visitNum=None):
         """Adjust a stop's dwell time and shift all following visits."""
         station = self._station(station_id)
         if not isinstance(minutes, int) or isinstance(minutes, bool):
             raise ValueError("Stop extension must be an integer")
-
+        visit_count = sum(1 for stop in self.visits if stop.station is station)
+        if visit_count == 0:
+            raise ValueError(f"Train {self.id} has no stop at station ID {station_id}")
+        else:
+            count = 1
         for index, stop in enumerate(self.visits):
             if stop.station is station:
-                arrival = self._parse_time(stop.arrival)
+                if count == visitNum or (visitNum is None and count == 1):
+                    arrival = self._parse_time(stop.arrival)
 
-                if stop.departure is None:
-                    if arrival is None:
-                        raise ValueError(
-                            f"Stop at station {station_id} has no timetable time"
+                    if stop.departure is None:
+                        if arrival is None:
+                            raise ValueError(
+                                f"Stop at station {station_id} has no timetable time"
+                            )
+                        departure = arrival + timedelta(minutes=minutes)
+                        stop.departure = self._format_time(departure)
+                    else:
+                        if arrival is None:
+                            stop.arrival = stop.departure
+                        departure = self._parse_time(stop.departure)
+                        adjusted_departure = departure + timedelta(minutes=minutes)
+                        if arrival is not None and adjusted_departure < arrival:
+                            raise ValueError(
+                                "Stop extension would create a negative dwell time"
+                            )
+                        stop.departure = self._format_time(adjusted_departure)
+
+                    for following_stop in self.visits[index + 1:]:
+                        following_stop.arrival = self._shift_time(
+                            following_stop.arrival, timedelta(minutes=minutes)
                         )
-                    departure = arrival + timedelta(minutes=minutes)
-                    stop.departure = self._format_time(departure)
+                        following_stop.departure = self._shift_time(
+                            following_stop.departure, timedelta(minutes=minutes)
+                        )
+                    
+                    return self
                 else:
-                    if arrival is None:
-                        stop.arrival = stop.departure
-                    departure = self._parse_time(stop.departure)
-                    adjusted_departure = departure + timedelta(minutes=minutes)
-                    if arrival is not None and adjusted_departure < arrival:
-                        raise ValueError(
-                            "Stop extension would create a negative dwell time"
-                        )
-                    stop.departure = self._format_time(adjusted_departure)
-
-                for following_stop in self.visits[index + 1:]:
-                    following_stop.arrival = self._shift_time(
-                        following_stop.arrival, timedelta(minutes=minutes)
-                    )
-                    following_stop.departure = self._shift_time(
-                        following_stop.departure, timedelta(minutes=minutes)
-                    )
-                return self
+                    count += 1
 
         raise ValueError(f"Train {self.id} has no stop at station ID {station_id}")
 
@@ -576,6 +598,7 @@ def trains_to_dataframe(trains, stations=STATIONS):
                     "Station code": station.code,
                     "Station ID": station_id,
                     "Km": station.km,
+                    "Km values": station.km_values,
                     "Arrival": stop.arrival,
                     "Departure": stop.departure,
                     "Platform": stop.platform,

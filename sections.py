@@ -45,6 +45,14 @@ LINE_SECTIONS = {
             ("TMS", "NSU", "NMI", "NSCH", "RGOT", "RGOM", "RGOO", "ROHW", "ROHM", "ROHO", "RBAK", "RBEM", "RBES"),
         ),
         LineSection(
+            "TMS - RTS",
+            (
+                "TMS", "NSU", "NMI", "NSCH", "RGOT", "RGOM", "RGOO",
+                "ROHW", "ROHM", "ROHO", "RBAK", "RBEM", "RBES", "RBO",
+                "RTW", "RHbfK", "RGA", "RALB", "RECH", "RTS",
+            ),
+        ),
+        LineSection(
             "Ohmenhausen West - Betzingen",
             ("ROHW", "ROHM", "ROHO", "RBAK", "RBEM", "RBES"),
         ),
