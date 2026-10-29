@@ -570,6 +570,7 @@ def trains_to_dataframe(trains, stations=STATIONS):
                         if len(legs) > 1
                         else f"{train.name} ({leg.id})"
                     ),
+                    "Destination": stations[leg.visits[-1].station.id].name,
                     "Stop": station.name,
                     "Abbreviation": station.abbrev,
                     "Station code": station.code,
