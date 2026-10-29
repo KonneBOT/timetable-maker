@@ -72,6 +72,94 @@ RS1_ALBSTADT_TUEBINGEN = {
     ]
 }
 
+RS11_TUEBINGEN_MOESSINGEN = {
+    "name": "RS 11",
+    "stops": [
+        {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0, "platform": 11},
+        {"station_id": station_code_to_id("TMUS"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TDD"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TST"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TDU"), "arrival": 5, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TDUO"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("NSCH"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("NMI"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("NSU"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TMS"), "arrival": 2, "departure": None, "platform": 2},
+    ]
+}
+
+RS11_MOESSINGEN_TUEBINGEN = {
+    "name": "RS 11",
+    "stops": [
+        {"station_id": station_code_to_id("TMS"), "arrival": None, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("NSU"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("NMI"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("NSCH"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TDUO"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TDU"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TST"), "arrival": 5, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TDD"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TMUS"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TT"), "arrival": 2, "departure": None, "platform": 11},
+    ]
+}
+
+RS12_TUEBINGEN_RTS = {
+    "name": "RS 12",
+    "stops": [
+        {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0, "platform": 11},
+        {"station_id": station_code_to_id("TMUS"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TDD"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TST"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TDU"), "arrival": 5, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TDUO"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RGOT"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RGOM"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RGOO"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("ROHW"), "arrival": 4, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("ROHM"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("ROHO"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RBAK"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RBEM"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RBES"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RBO"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTW"), "arrival": 1, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("RHbfK"), "arrival": 2, "departure": 1, "platform": 21},
+        {"station_id": station_code_to_id("RGA"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RALB"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RECH"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTS"), "arrival": 2, "departure": None, "platform": 2},
+    ]
+}
+
+RS12_RTS_TUEBINGEN = {
+    "name": "RS 12",
+    "stops": [
+         {"station_id": station_code_to_id("RTS"), "arrival": None, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RECH"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RALB"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RGA"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RHbfK"), "arrival": 2, "departure": 1, "platform": 22},
+        {"station_id": station_code_to_id("RTW"), "arrival": 2, "departure": 1, "platform": 4},
+        {"station_id": station_code_to_id("RBO"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RBES"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RBEM"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RBAK"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("ROHO"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("ROHM"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("ROHW"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RGOO"), "arrival": 4, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RGOM"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RGOT"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TDUO"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TDU"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TST"), "arrival": 5, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TDD"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TMUS"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TT"), "arrival": 2, "departure": None, "platform": 11},#
+    ]
+}
+
 RS2_RTS_MOESSINGEN = {
     "name": "RS 2",
     "stops": [
@@ -148,7 +236,37 @@ RS3_ROTTENBURG_TUEBINGEN = {
         {"station_id": station_code_to_id("TKI"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("TWEI"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TMUN"), "arrival": 1, "departure": 1, "platform": 4},
+        {"station_id": station_code_to_id("TT"), "arrival": 2, "departure": None},
+    ]
+}
+
+RS31_TUEBINGENGBF_ROTTENBURG = {
+    "name": "RS 31",
+    "stops": [
+        {"station_id": station_code_to_id("TTG"), "arrival": None, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("TT"), "arrival": 2, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("TMUN"), "arrival": 2, "departure": 1, "platform": 3},
+        {"station_id": station_code_to_id("TWEI"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TKI"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TBU"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TKIB"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TRTD"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TRT"), "arrival": 1, "departure": None},
+    ]
+}
+
+RS31_ROTTENBURG_TUEBINGENGBF = {
+    "name": "RS 31",
+    "stops": [
+        {"station_id": station_code_to_id("TRT"), "arrival": None, "departure": 1},
+        {"station_id": station_code_to_id("TRTD"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TKIB"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TBU"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TKI"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TWEI"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TMUN"), "arrival": 1, "departure": 1, "platform": 4},
         {"station_id": station_code_to_id("TT"), "arrival": 2, "departure": 1},
+        {"station_id": station_code_to_id("TTG"), "arrival": 2, "departure": None, "platform": 3},
     ]
 }
 
@@ -522,14 +640,74 @@ S1_33112.extend_stop(station_code_to_id("TBOD"), 3) # overtake by RE
 
 _S1_TRAINS = [S1_33101, S1_33102, S1_33103, S1_33104, S1_33105, S1_33106, S1_33107, S1_33108, S1_33109, S1_33110, S1_33111, S1_33112]
 
+## S11 Trains
+S11_33171 = Train.from_blueprint(33171, RS11_TUEBINGEN_MOESSINGEN, "RS 11", "6:01", "LPL")
+S11_33171.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+S11_33171.set_ending(station_code_to_id("TMSA"), 1, platform=1)
+
+S11_33173 = Train.from_blueprint(33173, RS11_TUEBINGEN_MOESSINGEN, "RS 11", "6:21", "LPL")
+S11_33173.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+S11_33173.set_ending(station_code_to_id("TMSA"), 1, platform=1)
+
+S11_33175 = Train.from_blueprint(33175, RS11_TUEBINGEN_MOESSINGEN, "RS 11", "7:01", "LPL")
+S11_33175.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+S11_33175.set_ending(station_code_to_id("TMSA"), 1, platform=1)
+
+S11_33177 = Train.from_blueprint(33177, RS11_TUEBINGEN_MOESSINGEN, "RS 11", "7:21", "LPL")
+S11_33177.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+S11_33177.set_ending(station_code_to_id("TMSA"), 1, platform=1)
+
+S11_33172 = Train.from_blueprint(33172, RS11_MOESSINGEN_TUEBINGEN, "RS 11", "6:31", "LPL")
+S11_33172.set_origin(station_code_to_id("TMSA"), 1, platform=1)
+
+S11_33174 = Train.from_blueprint(33174, RS11_MOESSINGEN_TUEBINGEN, "RS 11", "7:03", "LPL")
+S11_33174.set_origin(station_code_to_id("TMSA"), 1, platform=1)
+
+S11_33176 = Train.from_blueprint(33176, RS11_MOESSINGEN_TUEBINGEN, "RS 11", "7:31", "LPL")
+S11_33176.set_origin(station_code_to_id("TMSA"), 1, platform=1)
+
+S11_33178 = Train.from_blueprint(33178, RS11_MOESSINGEN_TUEBINGEN, "RS 11", "8:03", "LPL")
+S11_33178.set_origin(station_code_to_id("TMSA"), 1, platform=1)
+
+_S11_TRAINS = [S11_33171, S11_33172, S11_33173, S11_33174, S11_33175, S11_33176, S11_33177, S11_33178]
+
+## S12 Trains
+S12_33201 = Train.from_blueprint(33201, RS12_TUEBINGEN_RTS, "RS 12", "5:49", "LPL")
+S12_33201.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+S12_33201.set_ending(station_code_to_id("RTS"), 1, platform=3)
+
+S12_33203 = Train.from_blueprint(33203, RS12_TUEBINGEN_RTS, "RS 12", "6:49", "LPL")
+S12_33203.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+S12_33203.set_ending(station_code_to_id("RTS"), 1, platform=3)
+
+S12_33205 = Train.from_blueprint(33205, RS12_TUEBINGEN_RTS, "RS 12", "7:49", "LPL")
+S12_33205.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+S12_33205.set_ending(station_code_to_id("RTS"), 1, platform=3)
+
+S12_33202 = Train.from_blueprint(33202, RS12_RTS_TUEBINGEN, "RS 12", "5:14", "LPL")
+S12_33202.set_origin(station_code_to_id("RTS"), 1, platform=3)
+S12_33202.set_ending(station_code_to_id("TTBW"), 2, platform=1)
+
+S12_33204 = Train.from_blueprint(33204, RS12_RTS_TUEBINGEN, "RS 12", "6:14", "LPL")
+S12_33204.set_origin(station_code_to_id("RTS"), 1, platform=3)
+S12_33204.set_ending(station_code_to_id("TTBW"), 2, platform=1)
+
+S12_33206 = Train.from_blueprint(33206, RS12_RTS_TUEBINGEN, "RS 12", "7:14", "LPL")
+S12_33206.set_origin(station_code_to_id("RTS"), 1, platform=3)
+S12_33206.set_ending(station_code_to_id("TTBW"), 2, platform=1)
+
+_S12_TRAINS = [S12_33201, S12_33202, S12_33203, S12_33204, S12_33205, S12_33206]
+
 #################################
 ############# TRAINS #############
 #################################
 
 TRAINS = [
-    *_MEX_TRAINS,
+    #*_MEX_TRAINS,
     *_RE17_TRAINS,
-    *_S1_TRAINS
+    *_S1_TRAINS,
+    *_S11_TRAINS,
+    *_S12_TRAINS
 ]
 
 
@@ -542,12 +720,13 @@ def main():
         return
     plot_route_timetable(timetable_df, selected_section, "06:00", 140)
 
-    generate_line_timetable(TRAINS, selected_section, "06:00", 140)
-    generate_line_timetable(TRAINS, "Tübingen - Mössingen", "06:00", 140)
-    generate_line_timetable(TRAINS, "Albstadt - Tübingen", "5:00", 140)
-    print(RE_3251.timetable())
-    print(RE_19703.timetable())
-    export_trains_txt(TRAINS)
+    #generate_line_timetable(TRAINS, selected_section, "06:00", 140)
+    #generate_line_timetable(TRAINS, "Tübingen - Mössingen", "06:00", 140)
+    #generate_line_timetable(TRAINS, "Mössingen - Tübingen", "6:00", 140)
+    print(S12_33201.timetable())
+    print(S12_33206.timetable())
+
+    # export_trains_txt(TRAINS)
 
 
 if __name__ == "__main__":
