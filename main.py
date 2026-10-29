@@ -240,14 +240,16 @@ RE_TUEBINGEN_REUTLINGEN = {
         {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
         {"station_id": station_code_to_id("TKI"), "arrival": 5, "departure": 0, "platform": 2},
         {"station_id": station_code_to_id("RBE"), "arrival": 1, "departure": 0, "platform": 2},
-        {"station_id": station_code_to_id("TRE"), "arrival": 3, "departure": None},
+        {"station_id": station_code_to_id("TRE"), "arrival": 3, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTU"), "arrival": 1, "departure": 0, "platform": 1}
     ],
 }
 
 RE_REUTLINGEN_TUEBINGEN = {
     "name": "RE 17",
     "stops": [
-        {"station_id": station_code_to_id("TRE"), "arrival": None, "departure": 0},
+        {"station_id": station_code_to_id("RTU"), "arrival": None, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("TRE"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RBE"), "arrival": 3, "departure": 0, "platform": 1},
         {"station_id": station_code_to_id("TKI"), "arrival": 1, "departure": 0, "platform": 1},
         {"station_id": station_code_to_id("TT"), "arrival": 5, "departure": None}
@@ -257,7 +259,8 @@ RE_REUTLINGEN_TUEBINGEN = {
 RE17A_REUTLINGEN_ALBSTADT = {
     "name": "RE 17a",
     "stops": [
-        {"station_id": station_code_to_id("TRE"), "arrival": None, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTU"), "arrival": None, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("TRE"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RBE"), "arrival": 3, "departure": 0, "platform": 1},
         {"station_id": station_code_to_id("TKI"), "arrival": 1, "departure": 0, "platform": 1},
         {"station_id": station_code_to_id("TT"), "arrival": 5, "departure": 2},
@@ -274,7 +277,7 @@ RE17A_REUTLINGEN_ALBSTADT = {
 RE17A_ALBSTADT_REUTLINGEN = {
     "name": "RE 17a",
     "stops": [
-        {"station_id": station_code_to_id("TAE"), "arrival": None, "departure": 1},
+        {"station_id": station_code_to_id("TAE"), "arrival": None, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("TLAU"), "arrival": 3, "departure": 0, "platform": 2},
         {"station_id": station_code_to_id("TBG"), "arrival": 8, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("TBIS"), "arrival": 4, "departure": 1,"platform": 1},
@@ -284,7 +287,8 @@ RE17A_ALBSTADT_REUTLINGEN = {
         {"station_id": station_code_to_id("TT"), "arrival": 10, "departure": 2},
         {"station_id": station_code_to_id("TKI"), "arrival": 5, "departure": 0, "platform": 2},
         {"station_id": station_code_to_id("RBE"), "arrival": 1, "departure": 0, "platform": 2},
-        {"station_id": station_code_to_id("TRE"), "arrival": 3, "departure": None, "platform": 1},
+        {"station_id": station_code_to_id("TRE"), "arrival": 3, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RTU"), "arrival": 1, "departure": None, "platform": 1}
     ]
 }
 
@@ -310,14 +314,16 @@ MEX_TUEBINGEN_REUTLINGEN = {
         {"station_id": station_code_to_id("TT"), "arrival": None, "departure": 0},
         {"station_id": station_code_to_id("TKI"), "arrival": 6, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RBE"), "arrival": 2, "departure": 0, "platform": 2},
-        {"station_id": station_code_to_id("TRE"), "arrival": 2, "departure": None},
+        {"station_id": station_code_to_id("TRE"), "arrival": 2, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("RTU"), "arrival": 1, "departure": 0, "platform": 1}
     ],
 }
 
 MEX_REUTLINGEN_TUEBINGEN = {
     "name": "MEX 13",
     "stops": [
-        {"station_id": station_code_to_id("TRE"), "arrival": None, "departure": 0},
+        {"station_id": station_code_to_id("RTU"), "arrival": None, "departure": 0, "platform": 2},
+        {"station_id": station_code_to_id("TRE"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RBE"), "arrival": 2, "departure": 0, "platform": 1},
         {"station_id": station_code_to_id("TKI"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TT"), "arrival": 5, "departure": None}
@@ -334,52 +340,36 @@ MEX_REUTLINGEN_TUEBINGEN = {
 # Format: train_ID = Train.from_blueprint(id, blueprint, name, starttime, train_format, train_type, max_speed, penalties)
 MEX_19301 = Train.from_blueprint(19301, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "5:13", "LPPLPPL", "COMMUTER", 160)
 MEX_19301.set_origin(station_code_to_id("TTBW"), 2)
-MEX_19301.set_ending(station_code_to_id("RTU"), 1, platform=1)
 MEX_19301.change_platform(station_code_to_id("TT"), 5)
-MEX_19301.change_platform(station_code_to_id("TRE"), 1)
 
 MEX_19303 = Train.from_blueprint(19303, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "5:43", "LPPLPPL", "COMMUTER", 160)
 MEX_19303.set_origin(station_code_to_id("TTBW"), 2)
-MEX_19303.set_ending(station_code_to_id("RTU"), 1, platform=1)
 MEX_19303.change_platform(station_code_to_id("TT"), 5)
-MEX_19303.change_platform(station_code_to_id("TRE"), 1)
 
 MEX_19305 = Train.from_blueprint(19305, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "6:13", "LPPLPPL", "COMMUTER", 160)
 MEX_19305.set_origin(station_code_to_id("TTBW"), 2)
-MEX_19305.set_ending(station_code_to_id("RTU"), 1, platform=1)
 MEX_19305.change_platform(station_code_to_id("TT"), 5)
-MEX_19305.change_platform(station_code_to_id("TRE"), 1)
 
 MEX_19307 = Train.from_blueprint(19307, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "6:43", "LPPLPPL", "COMMUTER", 160)
 MEX_19307.set_origin(station_code_to_id("TTBW"), 2)
-MEX_19307.set_ending(station_code_to_id("RTU"), 1, platform=1)
 MEX_19307.change_platform(station_code_to_id("TT"), 5)
-MEX_19307.change_platform(station_code_to_id("TRE"), 1)
 
 MEX_19309 = Train.from_blueprint(19309, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "7:13", "LPPLPPL", "COMMUTER", 160)
 MEX_19309.set_origin(station_code_to_id("TTBW"), 2)
-MEX_19309.set_ending(station_code_to_id("RTU"), 1, platform=1)
 MEX_19309.change_platform(station_code_to_id("TT"), 5)
-MEX_19309.change_platform(station_code_to_id("TRE"), 1)
 
 MEX_19311 = Train.from_blueprint(19311, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "7:43", "LPPLPPL", "COMMUTER", 160)
 MEX_19311.set_origin(station_code_to_id("TTBW"), 2)
-MEX_19311.set_ending(station_code_to_id("RTU"), 1, platform=1)
 MEX_19311.change_platform(station_code_to_id("TT"), 5)
-MEX_19311.change_platform(station_code_to_id("TRE"), 1)
 
 ## RT -> Tü
 MEX_19302 = Train.from_blueprint(19302, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "5:04", "LPPLPPL", "COMMUTER", 160)
-MEX_19302.set_origin(station_code_to_id("RTU"),1,platform=2)
 MEX_19302.set_ending(station_code_to_id("TTBW"), 2, 1)
 MEX_19302.change_platform(station_code_to_id("TT"), 2)
-MEX_19302.change_platform(station_code_to_id("TRE"), 2)
 
 MEX_19304 = Train.from_blueprint(19304, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "5:34", "LPPL", "COMMUTER", 160)
-MEX_19304.set_origin(station_code_to_id("RTU"),1,platform=2)
 MEX_19304.set_ending(station_code_to_id("TTBW"), 2, 1)
 MEX_19304.change_platform(station_code_to_id("TT"), 2)
-MEX_19304.change_platform(station_code_to_id("TRE"), 2)
 
 MEX_19306 = Train.from_blueprint(19306, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "6:04", "LPPLPL", "COMMUTER", 160)
 MEX_19306.set_origin(station_code_to_id("RTU"),1,platform=2)
@@ -388,10 +378,8 @@ MEX_19306.change_platform(station_code_to_id("TT"), 2)
 MEX_19306.change_platform(station_code_to_id("TRE"), 2)
 
 MEX_19308 = Train.from_blueprint(19308, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "6:34", "LPPLPPL", "COMMUTER", 160)
-MEX_19308.set_origin(station_code_to_id("RTU"),1,platform=2)
 MEX_19308.set_ending(station_code_to_id("TTBW"), 2, 1)
 MEX_19308.change_platform(station_code_to_id("TT"), 2)
-MEX_19308.change_platform(station_code_to_id("TRE"), 2)
 
 MEX_19310 = Train.from_blueprint(19310, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "7:04", "LPPLPPL", "COMMUTER", 160)
 MEX_19310.set_origin(station_code_to_id("RTU"),1,platform=2)
@@ -400,22 +388,17 @@ MEX_19310.change_platform(station_code_to_id("TT"), 2)
 MEX_19310.change_platform(station_code_to_id("TRE"), 2)
 
 MEX_19312 = Train.from_blueprint(19312, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "7:34", "LPLPPL", "COMMUTER", 160)
-MEX_19312.set_origin(station_code_to_id("RTU"),1,platform=2)
 MEX_19312.set_ending(station_code_to_id("TTBW"), 2, 1)
 MEX_19312.change_platform(station_code_to_id("TT"), 2)
-MEX_19312.change_platform(station_code_to_id("TRE"), 2)
 
 _MEX_TRAINS = [MEX_19301, MEX_19302, MEX_19303, MEX_19304, MEX_19305, MEX_19306, MEX_19307, MEX_19308, MEX_19309, MEX_19310, MEX_19311, MEX_19312]
 
 ## RE 17a
 RE_3250 = Train.from_blueprint(3250, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "5:15", "LPPLPPL", "REGIONAL", 160)
 RE_3250.set_origin(station_code_to_id("TAEA"), 1, platform=2)
-RE_3250.change_platform(station_code_to_id("TAE"), 2)
-RE_3250.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_3250.change_platform(station_code_to_id("TT"), 3)
 
 RE_3251 = Train.from_blueprint(3251, RE17A_REUTLINGEN_ALBSTADT, "RE 17a", "5:47", "LPPLPPL", "REGIONAL", 160)
-RE_3251.set_origin("RTU", 1, platform=2)
 RE_3251.change_platform(station_code_to_id("TT"), 2)
 RE_3251.change_platform(station_code_to_id("TBG"), 3)
 RE_3251.extend_stop(station_code_to_id("TAE"), 3)
@@ -423,11 +406,9 @@ RE_3251.extend_stop(station_code_to_id("TAE"), 3)
 RE_3252 = Train.from_blueprint(3252, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "6:15", "LPPLPPL", "REGIONAL", 160)
 RE_3252.set_origin(station_code_to_id("TAEA"), 1, platform=2)
 RE_3252.change_platform(station_code_to_id("TBG"), 2)
-RE_3252.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_3252.change_platform(station_code_to_id("TT"), 3)
 
 RE_3253 = Train.from_blueprint(3253, RE17A_REUTLINGEN_ALBSTADT, "RE 17a", "6:47", "LPPLPPL", "REGIONAL", 160)
-RE_3253.set_origin("RTU", 1, platform=2)
 RE_3253.change_platform(station_code_to_id("TT"), 2)
 RE_3253.set_ending(station_code_to_id("TAEA"), 1, platform=2)
 RE_3253.extend_stop(station_code_to_id("TAE"), 3)
@@ -435,31 +416,25 @@ RE_3253.change_platform(station_code_to_id("TBG"), 3)
 
 RE_3254 = Train.from_blueprint(3254, RE17A_ALBSTADT_REUTLINGEN, "RE 17a", "7:14", "LPPLPPL", "REGIONAL", 160)
 RE_3254.change_platform(station_code_to_id("TT"), 3)
-RE_3254.change_platform(station_code_to_id("TAE"), 2)
 RE_3254.change_platform(station_code_to_id("TBG"), 2)
 RE_3254.extend_stop(station_code_to_id("TAE"), 2)
-RE_3254.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_3251.add_leg(RE_3254)
 
 ## RE 17
 RE_19701 = Train.from_blueprint(19701, RE_REUTLINGEN_TUEBINGEN, "RE 17", "5:17", "LPPL", max_speed_kmph=160)
-RE_19701.set_origin(station_code_to_id("RTU"), 1, platform=2)
 RE_19701.set_ending(station_code_to_id("TTBW"), 2)
 RE_19701.change_platform(station_code_to_id("TT"), 2)
 
 RE_19702 = Train.from_blueprint(19702, RE_TUEBINGEN_REUTLINGEN, "RE 17", "5:30", "LPLPL", max_speed_kmph=160)
 RE_19702.set_origin(station_code_to_id("TTBW"), 2, platform=2)
-RE_19702.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_19702.change_platform(station_code_to_id("TT"), 3)
 
 RE_19703 = Train.from_blueprint(19703, RE_REUTLINGEN_TUEBINGEN, "RE 17", "6:47", "LPPLPL", max_speed_kmph=160)
-RE_19703.set_origin(station_code_to_id("RTU"), 1, platform=2)
 RE_19703.set_ending(station_code_to_id("TTBW"), 2)
 RE_19703.change_platform(station_code_to_id("TT"), 2)
 
 RE_19704 = Train.from_blueprint(19704, RE_TUEBINGEN_REUTLINGEN, "RE 17", "6:30", "LPL", max_speed_kmph=160)
 RE_19704.set_origin(station_code_to_id("TTBW"), 2, platform=2)
-RE_19704.set_ending(station_code_to_id("RTU"), 1, platform=1)
 RE_19704.change_platform(station_code_to_id("TT"), 3)
 
 _RE17_TRAINS = [RE_3250, RE_3251, RE_3252, RE_3253, RE_19701, RE_19702, RE_19703, RE_19704]
@@ -568,7 +543,7 @@ def main():
     plot_route_timetable(timetable_df, selected_section, "06:00", 140)
 
     generate_line_timetable(TRAINS, selected_section, "06:00", 140)
-    # generate_line_timetable(TRAINS, "Betzingen - Tübingen", "06:00", 140)
+    generate_line_timetable(TRAINS, "Tübingen - Mössingen", "06:00", 140)
     generate_line_timetable(TRAINS, "Albstadt - Tübingen", "5:00", 140)
     print(RE_3251.timetable())
     print(RE_19703.timetable())
