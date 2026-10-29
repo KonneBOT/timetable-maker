@@ -527,7 +527,7 @@ TT GL. 6 an :48:27
 ```
 TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, knapp) -> TFR (3min) -> TFRW (1min) -> TENO (1min) -> TBGS (1min) -> TBGM (1min) -> TBG (1min) -> TENG (3min) -> TBSH (2min) -> TBIS (1min) -> TWEZ (2min) -> THSU (2min) -> THST (2min knapp) -> THCH (2min) -> TBOD (3min) -> TBSB (3min) -> TMS (1min knapp, +6s) -> TNEH (2min) -> TDU (3min knapp) -> TST (5min) -> TDD (1min) -> TMUS (1min) -> TT (1min reicht für 5/11/6, für rest eher 2min)
 ```
-
+----
 ## Implementation / Takt
 
 ### ZAB
@@ -571,6 +571,34 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 - Kreuzung THCH mit RS 1
 - Überholung RE in TBOD (**extend +3**)
 - **Ending setzen, platform in TT change (6?)**
+----
+#### RS 11 (nach TMS)
+- in TT ab um :02 bzw. :22 (Contract start :01, :21)
+##### RS 11 :01
+- Origin TTBW (bzw. später kann aus S1 gewendet werden die :39 ankommt!!)
+- Ending TMSA (bzw. später Wende auf S11, dann Gleiswechsel auf Gl. 1 bei Ankunft!)
+
+##### RS 11 :21
+- Origin TTBW (bzw. später Wende aus S1 die :10 ankommt?)
+- Ending TMSA (sollte in die Abstellung um Gleise frei zu machen)
+
+#### RS 11 (nach TT)
+- in TMS ab um :04 bzw. :32 (Contract :03, :31)
+##### RS 11 :03
+- Origin TMSA (lange Wartezeit sonst davor)
+- Ending TTBW (bzw. später dann Wende auf S1 um :38)
+##### RS 11 :31
+- Origin TMSA (oder Kurzwende auf Gl. 1 auf S11 mit Abfahrt :01!)
+- Ending TTBW (bzw. später Wende auf RS 1 mit Abfahrt :09)
+---
+### RS 12 (nach RTS)
+- Abfahrt in TT immer :50 (Contract :49)
+- Origin TTBW (for now, aus ggf. Leerfahrt von TTG und S31? c:)
+- Ending ist tough weil noch sonst keine Contracts, sollte aber eig einfach Wenden (sehr wahrscheinlich aber auf S2)
+
+### RS 12 (nach TT)
+- Abfahrt in RTS immer :15 (Contract: 14)
+- Ending TTBW (ggf. weiter als Leerfahrt nach TTG und dann S31?)
 
 #### RE 17a (nach Albstadt)
 
