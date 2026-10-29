@@ -134,15 +134,22 @@ TRAINS = [train_19317]
 ```
 
 Train rows use a compact identifier derived from the service prefix and the
-actual train or leg ID. For example, `MEX 13` with ID `19301` is exported as:
+train ID. For a single-leg train, `MEX 13` with ID `19301` is exported as:
 
 ```text
 MEX_19301|MEX_19301
-MEX_19317|MEX_19317
-MEX_19317B|MEX_19317B
 ```
 
-The identifier contains no spaces. A second leg uses its own ID.
+The identifier contains no spaces. Multi-leg trains use the parent train ID
+for every row and add `A`, `B`, `C`, and so on to the reporting number:
+
+```text
+RE_3251|RE_3251A
+RE_3251|RE_3251B
+```
+
+The first row is the parent leg and the second row is its next leg, even when
+the next leg was created with a separate ID such as `3254`.
 
 Use `timetable()` while building a train. It displays the stable train ID,
 leg boundaries, intermissions, and one-based positions:

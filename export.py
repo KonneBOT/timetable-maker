@@ -25,6 +25,19 @@ def _export_train_id(train):
     return f"{prefix}_{train.id}"
 
 
+def _export_train_ids(train, leg_index, total_legs):
+    """Return the exported name and reporting number for one leg."""
+    if total_legs == 1:
+        export_train_id = _export_train_id(train)
+        return export_train_id, export_train_id
+
+    parent = train
+    while parent._leg_parent is not None:
+        parent = parent._leg_parent
+    parent_id = _export_train_id(parent)
+    return parent_id, f"{parent_id}{chr(ord('A') + leg_index)}"
+
+
 def _format_from_time(value):
     return value if len(value.split(":")) == 3 else f"{value}:00"
 
@@ -75,7 +88,9 @@ def export_trains_txt(trains, file_path=None):
     for train in trains:
         legs = list(train.iter_legs())
         for index, leg in enumerate(legs):
-            export_train_id = _export_train_id(leg)
+            export_name, export_reporting_number = _export_train_ids(
+                train, index, len(legs)
+            )
             visits = []
             for visit in leg.visits:
                 station = STATIONS[visit.station.id]
@@ -90,7 +105,7 @@ def export_trains_txt(trains, file_path=None):
                     f"{_duration_minutes(visit.arrival, visit.departure)}"
                 )
             lines.append(
-                f"{export_train_id}|{export_train_id} {_train_type(train)} "
+                f"{export_name}|{export_reporting_number} {_train_type(train)} "
                 f"{train.max_speed_kmph} {train.composition} {train.flags} : "
                 + " ".join(visits)
             )
