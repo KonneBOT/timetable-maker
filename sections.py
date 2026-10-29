@@ -36,7 +36,7 @@ LINE_SECTIONS = {
         LineSection(
             "Tübingen - Mössingen",
             (
-                "TT", "TMUS", "TDD", "TST", "TDU", "TDUS",
+                "TT", "TMUS", "TDD", "TST", "TDU", "TDUO",
                 "NSCH", "NMI", "NSU", "TNEH", "TMS"
             ),
         ),
