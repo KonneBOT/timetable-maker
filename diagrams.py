@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from sections import get_section
-from train import trains_to_dataframe
+from train import Station, trains_to_dataframe
 
 if os.environ.get("DISPLAY", "") == "" and os.name != "nt":
     matplotlib.use("Agg")
@@ -114,7 +114,6 @@ def plot_route_timetable(
             "in the requested time window"
         )
 
-    fig, ax = plt.subplots(figsize=(12, 7))
     stations = df[["Stop", "Station code", "Station ID", "Km"]].drop_duplicates()
     station_order = []
     for station_ref in section.station_codes:
@@ -129,6 +128,10 @@ def plot_route_timetable(
         {code: index for index, code in enumerate(station_order)}
     )
     stations = stations.sort_values("order")
+    fig, ax = plt.subplots(
+        figsize=(max(12, len(df["Train number"].unique()) * 0.45 + 6),
+                 max(7, len(stations) * 0.35 + 3))
+    )
 
     for _, row in stations.iterrows():
         ax.axhline(row["Km"], color="lightgray", linewidth=0.8, zorder=1)
@@ -185,6 +188,91 @@ def plot_route_timetable(
 
 def _parse_time(time_text):
     return pd.to_datetime(time_text, format="%H:%M", errors="coerce")
+
+
+def plot_station_departures(
+    trains, station, start_time="00:00", duration=24 * 60
+):
+    """Plot all departures from a station in a time window."""
+    start = _parse_time(start_time)
+    if pd.isna(start):
+        raise ValueError(f"Invalid start time: {start_time!r}")
+    if not isinstance(duration, int) or isinstance(duration, bool) or duration <= 0:
+        raise ValueError("Duration must be a positive integer in minutes")
+    end = start + pd.Timedelta(minutes=duration)
+
+    df = trains_to_dataframe(trains)
+    if isinstance(station, Station):
+        station_rows = df[df["Station ID"] == station.id].copy()
+    elif isinstance(station, int) and not isinstance(station, bool):
+        station_rows = df[df["Station ID"] == station].copy()
+    elif isinstance(station, str):
+        station_rows = df[df["Station code"] == station].copy()
+    else:
+        raise ValueError(
+            "Station must be a Station, station code or numeric station ID"
+        )
+    if station_rows.empty:
+        raise ValueError(f"No visits found for station {station!r}")
+
+    station_rows["arrival_dt"] = pd.to_datetime(
+        station_rows["Arrival"], format="%H:%M", errors="coerce"
+    )
+    station_rows["departure_dt"] = pd.to_datetime(
+        station_rows["Departure"], format="%H:%M", errors="coerce"
+    )
+    station_rows = station_rows[
+        station_rows["departure_dt"].between(start, end, inclusive="left")
+    ].sort_values(["departure_dt", "Train number"])
+    if station_rows.empty:
+        raise ValueError(
+            f"No trains depart from station {station!r} "
+            "in the requested time window"
+        )
+
+    table_data = [
+        [
+            row["Train number"],
+            row["Arrival"] or "-",
+            row["Departure"],
+            row["Platform"],
+            row["Destination"],
+        ]
+        for _, row in station_rows.iterrows()
+    ]
+    columns = ["Train", "Arrival", "Departure", "Platform", "Direction"]
+    fig, ax = plt.subplots(
+        figsize=(max(10, len(columns) * 1.8),
+                 max(2.5, len(table_data) * 0.45 + 1.5))
+    )
+    ax.axis("off")
+    table = ax.table(
+        cellText=table_data,
+        colLabels=columns,
+        loc="center",
+        cellLoc="center",
+        colWidths=[0.28, 0.14, 0.14, 0.14, 0.30],
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+    table.scale(1.1, 1.7)
+    for (row, col), cell in table.get_celld().items():
+        if row == 0:
+            cell.set_facecolor("#003366")
+            cell.get_text().set_color("white")
+            cell.get_text().set_weight("bold")
+        elif col == 0:
+            cell.set_facecolor("#f2f2f2")
+            cell.get_text().set_weight("bold")
+            cell.get_text().set_ha("left")
+
+    station_name = station_rows.iloc[0]["Stop"]
+    plt.title(
+        f"Station departures: {station_name} ({start_time}, {duration} min)",
+        fontweight="bold",
+    )
+    plt.tight_layout()
+    display_or_save(fig, "station_departures", str(station))
 
 
 def generate_line_timetable(
@@ -270,7 +358,10 @@ def generate_line_timetable(
     timetable_table = timetable_table.reindex(station_order).fillna("|")
     timetable_table = timetable_table.reindex(columns=departure_order)
 
-    fig, ax = plt.subplots(figsize=(8, len(station_order) * 0.5 + 1.5))
+    fig, ax = plt.subplots(
+        figsize=(max(8, len(timetable_table.columns) * 1.4 + 2),
+                 max(2.5, len(station_order) * 0.5 + 1.5))
+    )
     ax.axis("off")
     table_data = [
         [station] + list(row.values)

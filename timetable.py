@@ -7,7 +7,11 @@ from main import (
     TRAINS,
     main,
 )
-from diagrams import generate_line_timetable, plot_route_timetable
+from diagrams import (
+    generate_line_timetable,
+    plot_route_timetable,
+    plot_station_departures,
+)
 from train import (
     STATIONS,
     Car,
