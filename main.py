@@ -1,5 +1,5 @@
 from train import Train, station_code_to_id, trains_to_dataframe
-from diagrams import generate_line_timetable, plot_route_timetable
+from diagrams import generate_line_timetable, plot_route_timetable, plot_station_departures
 from export import export_trains_txt
 
 RS1_TUEBINGEN_ALBSTADT = {
@@ -182,14 +182,14 @@ RS2_RTS_MOESSINGEN = {
         {"station_id": station_code_to_id("NSCH"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("NMI"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("NSU"), "arrival": 1, "departure": 1, "platform": 1},
-        {"station_id": station_code_to_id("TMS"), "arrival": 3, "departure": None},
+        {"station_id": station_code_to_id("TMS"), "arrival": 3, "departure": None, "platform": 3},
     ]
 }
 
 RS2_MOESSINGEN_RTS = {
     "name": "RS 2",
     "stops": [
-        {"station_id": station_code_to_id("TMS"), "arrival": None, "departure": 1},
+        {"station_id": station_code_to_id("TMS"), "arrival": None, "departure": 1, "platform": 3},
         {"station_id": station_code_to_id("NSU"), "arrival": 2, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("NMI"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("NSCH"), "arrival": 2, "departure": 1, "platform": 2},
@@ -674,29 +674,46 @@ _S11_TRAINS = [S11_33171, S11_33172, S11_33173, S11_33174, S11_33175, S11_33176,
 ## S12 Trains
 S12_33201 = Train.from_blueprint(33201, RS12_TUEBINGEN_RTS, "RS 12", "5:49", "LPL")
 S12_33201.set_origin(station_code_to_id("TTBW"), 2, platform=1)
-S12_33201.set_ending(station_code_to_id("RTS"), 1, platform=3)
+S12_33201.set_ending(station_code_to_id("PFAB"), 10, platform=1)
 
 S12_33203 = Train.from_blueprint(33203, RS12_TUEBINGEN_RTS, "RS 12", "6:49", "LPL")
 S12_33203.set_origin(station_code_to_id("TTBW"), 2, platform=1)
-S12_33203.set_ending(station_code_to_id("RTS"), 1, platform=3)
+S12_33203.set_ending(station_code_to_id("PFAB"), 10, platform=1)
 
 S12_33205 = Train.from_blueprint(33205, RS12_TUEBINGEN_RTS, "RS 12", "7:49", "LPL")
 S12_33205.set_origin(station_code_to_id("TTBW"), 2, platform=1)
-S12_33205.set_ending(station_code_to_id("RTS"), 1, platform=3)
+S12_33205.set_ending(station_code_to_id("PFAB"), 10, platform=1)
 
 S12_33202 = Train.from_blueprint(33202, RS12_RTS_TUEBINGEN, "RS 12", "5:14", "LPL")
-S12_33202.set_origin(station_code_to_id("RTS"), 1, platform=3)
+S12_33202.set_origin(station_code_to_id("PFAB"), 10, platform=2)
 S12_33202.set_ending(station_code_to_id("TTBW"), 2, platform=1)
 
 S12_33204 = Train.from_blueprint(33204, RS12_RTS_TUEBINGEN, "RS 12", "6:14", "LPL")
-S12_33204.set_origin(station_code_to_id("RTS"), 1, platform=3)
+S12_33204.set_origin(station_code_to_id("PFAB"), 10, platform=2)
 S12_33204.set_ending(station_code_to_id("TTBW"), 2, platform=1)
 
 S12_33206 = Train.from_blueprint(33206, RS12_RTS_TUEBINGEN, "RS 12", "7:14", "LPL")
-S12_33206.set_origin(station_code_to_id("RTS"), 1, platform=3)
+S12_33206.set_origin(station_code_to_id("PFAB"), 10, platform=2)
 S12_33206.set_ending(station_code_to_id("TTBW"), 2, platform=1)
 
 _S12_TRAINS = [S12_33201, S12_33202, S12_33203, S12_33204, S12_33205, S12_33206]
+
+## S2 Trains
+S2_33221 = Train.from_blueprint(33221, RS2_MOESSINGEN_RTS, "RS 2", "6:10", "LPLPL")
+S2_33221.set_origin(station_code_to_id("TMSA"), 1, platform=1)
+
+S2_33222 = Train.from_blueprint(33222, RS2_RTS_MOESSINGEN, "RS 2", "5:23", "LPLPL")
+S2_33222.set_origin(station_code_to_id("PFAB"), 10, platform=2)
+S2_33222.set_ending(station_code_to_id("TMSA"), 1, platform=1)
+
+S2_33223 = Train.from_blueprint(33223, RS2_MOESSINGEN_RTS, "RS 2", "6:40", "LPLPL")
+S2_33223.set_origin(station_code_to_id("TMSA"), 1, platform=1)
+
+S2_33224 = Train.from_blueprint(33224, RS2_RTS_MOESSINGEN, "RS 2", "5:53", "LPLPL")
+S2_33224.set_origin(station_code_to_id("PFAB"), 10, platform=2)
+S2_33224.set_ending(station_code_to_id("TMSA"), 1, platform=1)
+
+_S2_TRAINS = [S2_33221, S2_33222, S2_33223, S2_33224]
 
 #################################
 ############# TRAINS #############
@@ -707,7 +724,8 @@ TRAINS = [
     *_RE17_TRAINS,
     *_S1_TRAINS,
     *_S11_TRAINS,
-    *_S12_TRAINS
+    *_S12_TRAINS,
+    *_S2_TRAINS
 ]
 
 
@@ -718,15 +736,18 @@ def main():
     if timetable_df.empty:
         print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
         return
-    plot_route_timetable(timetable_df, selected_section, "06:00", 140)
+    #plot_route_timetable(timetable_df, selected_section, "06:00", 140)
 
     #generate_line_timetable(TRAINS, selected_section, "06:00", 140)
-    #generate_line_timetable(TRAINS, "Tübingen - Mössingen", "06:00", 140)
-    #generate_line_timetable(TRAINS, "Mössingen - Tübingen", "6:00", 140)
+    generate_line_timetable(TRAINS, "Tübingen - Mössingen", "06:00", 140)
+    generate_line_timetable(TRAINS, "Mössingen - Tübingen", "5:40", 140)
     print(S12_33201.timetable())
-    print(S12_33206.timetable())
+    print(S2_33221.timetable())
+    print(S11_33171.timetable())
+    print(S2_33222.timetable())
+    plot_station_departures(TRAINS, "TMS", "05:40", 140)
 
-    # export_trains_txt(TRAINS)
+    #export_trains_txt(TRAINS)
 
 
 if __name__ == "__main__":

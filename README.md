@@ -180,6 +180,23 @@ train_19317.set_origin("TTG", travel_time=2, stopping=True, platform=1)
 train_19317.set_ending("TRE", travel_time=4, stopping=False, platform=1)
 ```
 
+## Plotting station departures
+
+Use `plot_station_departures` to create a table of all departures from a
+station in a time window. The table includes train number, arrival, departure,
+platform, and the final station of the train leg:
+
+```python
+from diagrams import plot_station_departures
+from main import TRAINS
+
+plot_station_departures(TRAINS, "TT", start_time="06:00", duration=140)
+```
+
+The station may be provided as a station code, numeric station ID, or
+`Station` object. Plot dimensions are scaled to the number of rows, stations,
+and trains so that timetable labels remain readable.
+
 ## Running
 
 The project uses the virtual environment in `venv/`:

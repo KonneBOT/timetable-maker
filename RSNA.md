@@ -616,3 +616,8 @@ RE Abfahrt in TAE immer :17 (Contract start :15)
 - Kreuzung in TBG mit RS 1 und RE
 - Kreuzung in THCH mit RS 1
 - Überholung in TBOD mit RS 1
+
+
+### Testrun #3
+-[] S11 vor S1 mit knapper Ankunft in TMS über Gegengleis mgl -> falls da Konflikt mit S2 in Gegenrichtung dann nicht mehr -> wäre aber vom Takt eh cool wenn S11 auf 1 ankommt, S2 steht schon auf 3, S1 kommt auf 2 und dann fährt S2 erst los
+-[x] Kreuzung in TBOD immernoch zu knapp -> TBSB noch auf 160 erhöhen? ist knapp auf jeden fall
