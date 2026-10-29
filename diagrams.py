@@ -1,4 +1,5 @@
 import os
+from functools import cmp_to_key
 from pathlib import Path
 
 import matplotlib
@@ -190,6 +191,36 @@ def _parse_time(time_text):
     return pd.to_datetime(time_text, format="%H:%M", errors="coerce")
 
 
+def _sort_line_timetable_trains(df, train_numbers, base_order):
+    """Keep the base order unless trains share a later station."""
+    train_numbers = list(train_numbers)
+    train_rank = {
+        train_number: rank for rank, train_number in enumerate(base_order)
+    }
+    train_rows = {
+        train_number: train_data.set_index("_section_position")
+        for train_number, train_data in df.groupby("Train number", sort=False)
+    }
+
+    def compare(left, right):
+        common_positions = sorted(
+            set(train_rows[left].index) & set(train_rows[right].index)
+        )
+        if common_positions:
+            position = common_positions[0]
+            left_time = _parse_time(
+                train_rows[left].loc[position, "Event time"]
+            )
+            right_time = _parse_time(
+                train_rows[right].loc[position, "Event time"]
+            )
+            if left_time != right_time:
+                return -1 if left_time < right_time else 1
+        return train_rank[left] - train_rank[right]
+
+    return sorted(train_numbers, key=cmp_to_key(compare))
+
+
 def plot_station_departures(
     trains, station, start_time="00:00", duration=24 * 60
 ):
@@ -335,7 +366,7 @@ def generate_line_timetable(
         axis=1,
     )
     df["Time"] = df.apply(display_time, axis=1)
-    departure_order = (
+    base_order = (
         first_rows[first_rows["Train number"].isin(eligible_trains)]
         .groupby("Train number")["Departure"]
         .first()
@@ -355,7 +386,26 @@ def generate_line_timetable(
             code = matches.iloc[0] if not matches.empty else None
         if code in timetable_table.index and code not in station_order:
             station_order.append(code)
-    timetable_table = timetable_table.reindex(station_order).fillna("|")
+    departure_order = _sort_line_timetable_trains(
+        df, eligible_trains, base_order
+    )
+    timetable_table = timetable_table.reindex(station_order)
+    for train_number in timetable_table.columns:
+        present = timetable_table[train_number].notna()
+        if not present.any():
+            timetable_table[train_number] = ""
+            continue
+        first_stop = present.idxmax()
+        last_stop = present[::-1].idxmax()
+        before_first = timetable_table.index.get_loc(first_stop)
+        after_last = timetable_table.index.get_loc(last_stop) + 1
+        timetable_table.loc[
+            timetable_table.index[:before_first], train_number
+        ] = ""
+        timetable_table.loc[
+            timetable_table.index[after_last:], train_number
+        ] = ""
+    timetable_table = timetable_table.fillna("|")
     timetable_table = timetable_table.reindex(columns=departure_order)
 
     fig, ax = plt.subplots(
