@@ -7,23 +7,23 @@ c|Tübingen Neckaraue|TTN|2.6
 d|Kirchentellinsfurt|TKI|7.4
 e|Wannweil|TWAN|9.5
 f|Reutlingen-Betzingen|RBE|12.0
-g|Bosmännsäcker|RBO|13.1
-h|Reutlingen West|RTW|13.9
+g|Bosmännsäcker|RBO|13.1|16.9
+h|Reutlingen West|RTW|13.9|16.1
 i|Reutlingen Betriebshof|RTB|14.8
 j|REUTLINGEN HBF (TRE)|TRE|14.8
 k|Reutlingen Hbf (Karlsstrasse)|RHbfK|15.0
 l|Reutlingen Hbf (Bahnhofstrasse)|RHbfB|15.0
 m|RTunlimited|RTU|16.4
-n|Betzingen Süd|RBES|15.2
-o|Markwiesenstrasse|RBEM|18.1
-p|Adolf Kolping Strasse|RBAK|20.4
-q|Ohmenhausen Ost|ROHO|22.7
-r|Ohmenhausen Mitte|ROHM|25.2
-s|Ohmenhausen West|ROHW|26.9
-t|Gomaringen Ost|RGOO|31.7
-u|Gomaringen Mitte|RGOM|32.3
-v|Ohmenhausen Abstellung|ROHA|27.0
-w|Gomaringen Tübingerstrasse|RGOT|33.9
+n|Betzingen Süd|RBES|19.0
+o|Markwiesenstrasse|RBEM|21.9
+p|Adolf Kolping Strasse|RBAK|24.2
+q|Ohmenhausen Ost|ROHO|26.5
+r|Ohmenhausen Mitte|ROHM|27.0
+s|Ohmenhausen West|ROHW|30.7
+t|Gomaringen Ost|RGOO|35.5
+u|Gomaringen Mitte|RGOM|36.1
+v|Ohmenhausen Abstellung|ROHA|30.8
+w|Gomaringen Tübingerstrasse|RGOT|37.7
 y|Gartentor|RGA|13.9
 z|Albtorplatz|RALB|13.0
 A|Am Echazufer|RECH|12.1
@@ -41,12 +41,12 @@ L|Mühlbachäcker (nord)|TMUN|0.8
 M|Steinlachwasen|TST|2.8
 N|Dußligen (TDU)|TDU|8.1
 O|Dußlingen Ost|TDUO|9.0
-P|Schulzentrum Steinlach-Wiesaz|NSCH|35.6
-Q|Nehren Mitte|NMI|37.9
+P|Schulzentrum Steinlach-Wiesaz|NSCH|39.4
+Q|Nehren Mitte|NMI|41.7
 R|Nehren Bhf (TNEH)|TNEH|13.3
-S|Nehren Süd|NSU|38.7
+S|Nehren Süd|NSU|42.5
 T|Mössingen Abstellung|TMSA|X
-U|MÖSSINGEN (TMS)|TMS|16.1|41.9
+U|MÖSSINGEN (TMS)|TMS|16.1|45.7
 V|Bad Sebastiansweiler - Belsen|TBSB|17.7
 W|Bodelshausen|TBOD|21.3
 X|Hechingen Abstellung|THEA|24.6

@@ -100,7 +100,7 @@ def plot_route_timetable(
     if df.empty:
         raise ValueError(f"No trains have at least two visits in section {section.name!r}")
     if section.name == "TMS - RTS" or section.name == "RTS - TMS" or section.name == "Mössingen - Betzingen" or section.name == "Betzingen - Mössingen":
-        tms_rows = df["Station code"] == "TMS"
+        tms_rows = df["Station code"].isin(["TMS", "RTW", "RBO"])
         df.loc[tms_rows, "Km"] = df.loc[tms_rows, "Km values"].map(
             lambda values: values[1] if len(values) > 1 else values[0]
         )

@@ -180,6 +180,13 @@ train_19317.set_origin("TTG", travel_time=2, stopping=True, platform=1)
 train_19317.set_ending("TRE", travel_time=4, stopping=False, platform=1)
 ```
 
+Use `departure` to define a custom dwell time at the ending. A positive
+`departure` value automatically makes the ending a stop:
+
+```python
+train_19317.set_ending("TRE", travel_time=4, departure=5, platform=1)
+```
+
 ## Plotting station departures
 
 Use `plot_station_departures` to create a table of all departures from a
