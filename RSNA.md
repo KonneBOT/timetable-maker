@@ -608,5 +608,5 @@ RE Abfahrt in TAE immer :17
   - Wenn Züge rangiert / gestabled werden sollen auf den Abstellgleisen, geht das nur mit gleichbleibender Zugnummer (und dann entweder mehrere Legs oder selbes Leg)
 
 ### Testrun #2
-- Ebingen Abstellung Gleis 2 non-sink für RE Stabling?
+- Ebingen Abstellung Gleis 2 non-sink für RE Stabling? ✅
 - RE Albstadt - Tü immernoch 1 min late Abfahrt in Tü (planmäßig :01, entweder frühere Ankunft -> shift von ALLEN Zügen probably, oder nur 1 min in TT - unrealistisch...)
