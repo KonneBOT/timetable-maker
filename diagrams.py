@@ -68,7 +68,10 @@ def _filter_section_dataframe(
         for train_number, train_data in section_stations.groupby(
             "Train number", sort=False
         ):
-            positions = train_data["_section_position"].tolist()
+            positions = []
+            for position in train_data["_section_position"]:
+                if not positions or position != positions[-1]:
+                    positions.append(position)
             is_forward = all(
                 earlier < later for earlier, later in zip(positions, positions[1:])
             )

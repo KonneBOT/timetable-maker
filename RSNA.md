@@ -594,11 +594,52 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 ### RS 12 (nach RTS)
 - Abfahrt in TT immer :50 (Contract :49)
 - Origin TTBW (for now, aus ggf. Leerfahrt von TTG und S31? c:)
-- Ending ist tough weil noch sonst keine Contracts, sollte aber eig einfach Wenden (sehr wahrscheinlich aber auf S2)
+-[x] todo: Ending im Blueprint auf RTS platform 3, stopping=True, platform=3, depart=7
+- Add leg: S2 (Start + 1,2h :00) nach TMS
 
 ### RS 12 (nach TT)
-- Abfahrt in RTS immer :15 (Contract: 14)
+- Abfahrt in RTS immer :14 (Contract: 13)
 - Ending TTBW (ggf. weiter als Leerfahrt nach TTG und dann S31?)
+
+### RS 2 (nach TMS)
+- 20min Takt in HVZ
+- Abfahrten in RTS :00 :30, :45 (bis Ohmenhausen West) (Contract :03, :23, :43)
+  - abseits von HVZ 2x Fahrten (Zwischentakt um :45 fällt weg)
+  - in HVZ zusätzlich RS 12 um :16 (Contract :14)^
+- S2 in TMS wenden auf S2 nach RTS (kann auch theoretisch am Bahnsteig bleiben, Platz is)
+
+### RS 2 (nach RTS)
+- 20min Takt in HVZ
+- Abfahrten in TMS :12 (Contract :10), :42 (RTS Gl. 3 an :05), Ohmenhausen West Zwischentakt um :47 (Contract :45, RTS Gl. 3 an :20)
+  - S12 Ohmenhausen West :17 für cleanen 15-min Takt (RTS Gl. 3 an :50)
+#### RS 2 :12 in TMS
+- Contract Start :06
+- todo: origin im blueprint festlegen! (dann ggf. contract start anpassen!)
+- Ending auf RTS platform 3, stopping=True, platform=3, depart=7
+- Add leg: S12 (initial Contract-Start + 1h :16) nach TT
+  - außerhalb HVZ auf nächste S2, dann depart=22
+#### RS 2 :47 in ROHW
+- Contract Start :42
+- todo: origin im blueprint festlegen (dann ggf. contract start anpassen!)
+- todo: ending im blueprint RTS platform 3, stopping=True, platform=3, depart=7
+- Add leg: S2 (initial Contract-Start +1h :30) nach TMS
+#### RS 2 :42 in TMS
+- Contract Start :36
+- todo: origin im blueprint festlegen (contract start!)
+- Ending auf RTS platform 3, stopping=True, platform=3, depart=7
+- Add leg: S2 (+1h :45) bis ROHW
+
+----
+
+### Concat:
+S2 (:12 in TMS ab)  -> RTS Gl. 3 an :05 ab :12  -> S12 (RTS Gl. 2 ab :16) bis TT
+S12 (:17 in ROHW)   -> RTS Gl. 3 an :50 ab :57  -> S2 (RTS Gl. 2 ab :00) bis TMS
+S2 (:42 in TMS ab)  -> RTS Gl. 3 an :35 ab :42  -> S2 (RTS Gl. 2 ab :45) bis ROHW
+S2 (:47 in ROHW)    -> RTS Gl. 3 an :20 ab :27  -> S2 (RTS Gl. 2 ab :30) bis TMS
+ -> in TMS für Übersicht in die Abstellung
+ -> Wenn keine HVZ, S2 wendet mit 22min Wendezeit auf nächste S2, Rest fährt Richtung Hortense
+
+
 
 #### RE 17a (nach Albstadt)
 
