@@ -470,8 +470,10 @@ class Train:
             raise ValueError("Only REG trains may have multiple legs")
         if not isinstance(train, Train):
             raise TypeError("A leg must be another Train")
-        if train is self or train._leg_parent is not None:
-            raise ValueError("The train is already part of a leg chain")
+        if train is self:
+            raise ValueError("A train cannot be its own leg")
+        if train._leg_parent is not None:
+            train.add_leg(self)
         if intermission is not None and (
             not isinstance(intermission, int)
             or isinstance(intermission, bool)
