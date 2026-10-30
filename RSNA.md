@@ -601,6 +601,14 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 - Abfahrt in RTS immer :14 (Contract: 13)
 - Ending TTBW (ggf. weiter als Leerfahrt nach TTG und dann S31?)
 
+### Concat
+- RS 11 (-> TMS) :02 wendet auf RS 11 in TMS :32 (Gleis 1)
+  - RS 11 :32 (-> TT) wendet auf RS 11 :02 (Gleis 11)
+- andere RS 11 (-> TMS) :21 wendet _aus_ RS 12 (Gleis 11)
+  - dann in TMS in Abstellung (ggf. Gleiswechsel auf 3 in TMS?)
+- RS 12 (-> RTS) :50 wendet _aus_ RS 11 (Ankunft :29) (Abstellung nötig bzw. Gleis 11 freimachen, ggf. falls Zug zu lange -> neuer Contract?)
+- RS 1 wie Mex überschlagend auf sich selber wenden -> Rangieren iwo hin (maybe BW?) nötig für die halbe Stunde weil Gleis 11 gebraucht wird
+
 ### RS 2 (nach TMS)
 - 20min Takt in HVZ
 - Abfahrten in RTS :00 :30, :45 (bis Ohmenhausen West) (Contract :58, :28, :44)
