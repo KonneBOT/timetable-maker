@@ -603,10 +603,11 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 
 ### RS 2 (nach TMS)
 - 20min Takt in HVZ
-- Abfahrten in RTS :00 :30, :45 (bis Ohmenhausen West) (Contract :03, :23, :43)
+- Abfahrten in RTS :00 :30, :45 (bis Ohmenhausen West) (Contract :58, :28, :44)
   - abseits von HVZ 2x Fahrten (Zwischentakt um :45 fällt weg)
   - in HVZ zusätzlich RS 12 um :16 (Contract :14)^
 - S2 in TMS wenden auf S2 nach RTS (kann auch theoretisch am Bahnsteig bleiben, Platz is)
+  - dafür bei Folgeleistung: Contract Start -1 (:57, :27, :43)
 
 ### RS 2 (nach RTS)
 - 20min Takt in HVZ
@@ -614,7 +615,6 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
   - S12 Ohmenhausen West :17 für cleanen 15-min Takt (RTS Gl. 3 an :50)
 #### RS 2 :12 in TMS
 - Contract Start :06
-- todo: origin im blueprint festlegen! (dann ggf. contract start anpassen!)
 - Ending auf RTS platform 3, stopping=True, platform=3, depart=7
 - Add leg: S12 (initial Contract-Start + 1h :16) nach TT
   - außerhalb HVZ auf nächste S2, dann depart=22
