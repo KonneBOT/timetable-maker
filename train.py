@@ -473,7 +473,10 @@ class Train:
         if train is self:
             raise ValueError("A train cannot be its own leg")
         if train._leg_parent is not None:
-            train.add_leg(self)
+            raise ValueError(
+                f"Train {train.id} is already a leg of train "
+                f"{train._leg_parent.id}"
+            )
         if intermission is not None and (
             not isinstance(intermission, int)
             or isinstance(intermission, bool)
@@ -506,7 +509,8 @@ class Train:
             - next_time
         )
 
-        train._shift_visits(delta)
+        for leg in train.iter_legs():
+            leg._shift_visits(delta)
         train._leg_parent = self
         self._legs.append(train)
         return self
