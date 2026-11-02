@@ -534,7 +534,7 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 
 #### RS 1 (nach Albstadt)
 
-- Abfahrt in Tü immer :09 und :38
+- Abfahrt in Tü immer :09 und :39
 
 ##### RS 1 :09
 
@@ -545,7 +545,7 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 - Kreuzung mit RE in TLAU (**extend +1**)
 - Kreuzung in TAEW mit RS 1
 
-##### RS 1 :38
+##### RS 1 :39
 - **Origin setzen (TTBW, oder Leg)**
 - **Platform in TT setzen**
 - Minute früher damit sies nach Balingen schafft vor RE
@@ -574,11 +574,11 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 ----
 #### RS 11 (nach TMS)
 - in TT ab um :02 bzw. :22 (Contract start :01, :21)
-##### RS 11 :01
+##### RS 11 :02
 - Origin TTBW (bzw. später kann aus S1 gewendet werden die :39 ankommt!!)
 - Ending TMSA (bzw. später Wende auf S11, dann Gleiswechsel auf Gl. 1 bei Ankunft!)
 
-##### RS 11 :21
+##### RS 11 :22
 - Origin TTBW (bzw. später Wende aus S1 die :10 ankommt?)
 - Ending TMSA (sollte in die Abstellung um Gleise frei zu machen)
 
@@ -593,7 +593,7 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 ---
 ### RS 12 (nach RTS)
 - Abfahrt in TT immer :50 (Contract :49)
-- Origin TTBW (for now, aus ggf. Leerfahrt von TTG und S31? c:)
+- Origin aus S11 von TMS
 -[x] todo: Ending im Blueprint auf RTS platform 3, stopping=True, platform=3, depart=7
 - Add leg: S2 (Start + 1,2h :00) nach TMS
 
@@ -603,10 +603,11 @@ TAT -> TAE (1min) -> TAEM (1min) -> TAEW (1min) -> TALT (3min) -> TALO (2min, kn
 
 ### Concat
 - RS 11 (-> TMS) :02 wendet auf RS 11 in TMS :32 (Gleis 1)
-  - RS 11 :32 (-> TT) wendet auf RS 11 :02 (Gleis 11)
+  - RS 11 :32 (-> TT) wendet auf RS 11 :02 (Gleis 11) EIN PENDELZUG!!
 - andere RS 11 (-> TMS) :21 wendet _aus_ RS 12 (Gleis 11)
   - dann in TMS in Abstellung (ggf. Gleiswechsel auf 3 in TMS?)
-- RS 12 (-> RTS) :50 wendet _aus_ RS 11 (Ankunft :29) (Abstellung nötig bzw. Gleis 11 freimachen, ggf. falls Zug zu lange -> neuer Contract?)
+- RS 11 :01 (-> TT) wendet auf RS 12 (Ankunft :49) (Abstellung nötig bzw. Gleis 11 freimachen, ggf. falls Zug zu lange -> neuer Contract?)
+  - RS 12 hat ja dann noch folgende Legs tho (auf S2!)
 - RS 1 wie Mex überschlagend auf sich selber wenden -> Rangieren iwo hin (maybe BW?) nötig für die halbe Stunde weil Gleis 11 gebraucht wird
 
 ### RS 2 (nach TMS)

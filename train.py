@@ -501,7 +501,7 @@ class Train:
             )
             if intermission < 0:
                 raise ValueError(
-                    "The next leg must not start before the previous leg ends"
+                    f"Intermission is {intermission} minutes;\n{self.name}: {self.timetable()}\n{train.name}: {train.timetable()}\n"
                 )
         delta = (
             previous_time
