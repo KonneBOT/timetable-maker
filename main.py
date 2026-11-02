@@ -236,9 +236,9 @@ RS12_RTS_TUEBINGEN = {
         {"station_id": station_code_to_id("RBAK"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("ROHO"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("ROHM"), "arrival": 2, "departure": 1, "platform": 1},
-        {"station_id": station_code_to_id("ROHW"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("ROHW"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("RGOO"), "arrival": 4, "departure": 1, "platform": 1},
-        {"station_id": station_code_to_id("RGOM"), "arrival": 1, "departure": 2, "platform": 1},
+        {"station_id": station_code_to_id("RGOM"), "arrival": 1, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("RGOT"), "arrival": 1, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TDUO"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("TDU"), "arrival": 1, "departure": 1, "platform": 1},
@@ -327,7 +327,7 @@ RS2_ROHW_RTS = {
     "name": "RS 2",
     "stops": [
         {"station_id": station_code_to_id("ROHA"), "arrival": None, "departure": 0, "platform": 1},
-        {"station_id": station_code_to_id("ROHW"), "arrival": 1, "departure": 4, "platform": 1},
+        {"station_id": station_code_to_id("ROHW"), "arrival": 1, "departure": 4, "platform": 2},
         {"station_id": station_code_to_id("ROHM"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("ROHO"), "arrival": 2, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RBAK"), "arrival": 2, "departure": 1, "platform": 2},
@@ -1176,37 +1176,37 @@ S12_33202.set_origin(station_code_to_id("PFAB"), 10, platform=2)
 S12_33202.extend_stop(station_code_to_id("TT"), 2)
 S12_33202.add_leg(S11_33173)
 
-S12_33204 = Train.from_blueprint(33204, RS12_RTS_TUEBINGEN, "RS 12", "6:10", "LPL")
+S12_33204 = Train.from_blueprint(33204, RS12_RTS_TUEBINGEN, "RS 12", "6:11", "LPL")
 # Wendet aus S2_33215
 S12_33204.set_origin(station_code_to_id("RTS"), 1, platform=3)
 S12_33204.extend_stop(station_code_to_id("RTS"), 2, 2)
 S12_33204.extend_stop(station_code_to_id("TT"), 2)
 # Wendet auf S11_33181
 
-S12_33206 = Train.from_blueprint(33206, RS12_RTS_TUEBINGEN, "RS 12", "7:10", "LPL")
+S12_33206 = Train.from_blueprint(33206, RS12_RTS_TUEBINGEN, "RS 12", "7:11", "LPL")
 # Wendet aus S2_33219
 S12_33206.set_origin(station_code_to_id("RTS"), 1, platform=3)
-S12_33206.extend_stop(station_code_to_id("RTS"), 2)
+S12_33206.extend_stop(station_code_to_id("RTS"), 2, 2)
 S12_33206.extend_stop(station_code_to_id("TT"), 2)
 
-S12_33208 = Train.from_blueprint(33208, RS12_RTS_TUEBINGEN, "RS 12", "8:10", "LPL")
+S12_33208 = Train.from_blueprint(33208, RS12_RTS_TUEBINGEN, "RS 12", "8:11", "LPL")
 # Wendet aus S2_33225
 S12_33208.set_origin(station_code_to_id("RTS"), 1, platform=3)
-S12_33208.extend_stop(station_code_to_id("RTS"), 2)
+S12_33208.extend_stop(station_code_to_id("RTS"), 2, 2)
 S12_33208.extend_stop(station_code_to_id("TT"), 2)
 # Wendet auf S11_33185
 
-S12_33210 = Train.from_blueprint(33210, RS12_RTS_TUEBINGEN, "RS 12", "9:10", "LPL")
+S12_33210 = Train.from_blueprint(33210, RS12_RTS_TUEBINGEN, "RS 12", "9:11", "LPL")
 # Wendet aus S2_33231
 S12_33210.set_origin(station_code_to_id("RTS"), 1, platform=3)
 S12_33210.set_ending(station_code_to_id("TTBW"), 2, platform=1)
-S12_33210.extend_stop(station_code_to_id("RTS"), 2)
+S12_33210.extend_stop(station_code_to_id("RTS"), 2, 2)
 
 S12_TRAINS = [S12_33201, S12_33202, S12_33203, S12_33204, S12_33205, S12_33206, S12_33207, S12_33208, S12_33209, S12_33210]
 
 ## S2 Trains
 S2_33215 = Train.from_blueprint(33215, RS2_ROHW_RTS, "RS 2", "5:27", "LPLPL")
-S2_33215.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=5)
+S2_33215.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=6)
 # Wendet auf S12_33204
 S2_33215.add_leg(S12_33204)
 # Wendet auf S11_33177
@@ -1217,7 +1217,7 @@ S2_33217.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=6)
 # Wendet auf S2_33230
 
 S2_33219 = Train.from_blueprint(33219, RS2_MOESSINGEN_RTS, "RS 2", "6:06", "LPLPL")
-S2_33219.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=5)
+S2_33219.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=6)
 # Wendet auf S12_33206
 S2_33219.add_leg(S12_33206)
 # Wendet auf S11_33181
@@ -1232,7 +1232,7 @@ S2_33223.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=6)
 # Wendet auf S2_33234
 
 S2_33225 = Train.from_blueprint(33225, RS2_MOESSINGEN_RTS, "RS 2", "7:06", "LPLPL")
-S2_33225.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=5)
+S2_33225.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=6)
 # Wendet auf S12_33208
 S2_33225.add_leg(S12_33208)
 # Wendet auf S11_33185
@@ -1247,7 +1247,7 @@ S2_33229.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=6)
 # Wendet auf S2_33242
 
 S2_33231 = Train.from_blueprint(33231, RS2_MOESSINGEN_RTS, "RS 2", "8:06", "LPLPL")
-S2_33231.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=5)
+S2_33231.set_ending(station_code_to_id("RTS"), 1, True, platform=3, departure=6)
 # Wendet auf S12_33210
 S2_33231.add_leg(S12_33210)
 
@@ -1278,7 +1278,6 @@ S2_33243.set_ending(station_code_to_id("PFAB"), 10, True, platform=1, departure=
 ####################
 
 S2_33220 = Train.from_blueprint(33220, RS2_ROHW_MOESSINGEN, "RS 2", "5:28", "LPLPL")
-S2_33220.change_platform(station_code_to_id("ROHW"), 2)
 
 S2_33222 = Train.from_blueprint(33222, RS2_RTS_MOESSINGEN, "RS 2", "5:28", "LPLPL")
 S2_33222.set_origin(station_code_to_id("PFAB"), 10, platform=2)
@@ -1301,7 +1300,7 @@ S2_33217.add_leg(S2_33230)
 S2_33232 = Train.from_blueprint(33232, RS2_RTS_MOESSINGEN, "RS 2", "6:56", "LPLPL")
 # Wendet aus S12_33201
 S2_33232.set_origin(station_code_to_id("RTS"), 1, platform=3)
-S2_33232.extend_stop(station_code_to_id("RTS"), 2)
+S2_33232.extend_stop(station_code_to_id("RTS"), 2, 2)
 S12_33201.add_leg(S2_33232)
 
 S2_33234 = Train.from_blueprint(33234, RS2_RTS_MOESSINGEN, "RS 2", "7:26", "LPLPL")
@@ -1347,10 +1346,10 @@ S2_33246.extend_stop(station_code_to_id("RTS"), 2, 2)
 S2_33233.add_leg(S2_33246)
 
 S2_33248 = Train.from_blueprint(33248, RS2_RTS_MOESSINGEN, "RS 2", "9:56", "LPLPL")
-# Wendet aus S12_33207, S11_33174
+# Wendet aus S12_33207, S11_33178
 S2_33248.set_origin(station_code_to_id("RTS"), 1, platform=3)
 S2_33248.extend_stop(station_code_to_id("RTS"), 2, 2)
-S11_33174.add_leg(S2_33248)
+S11_33178.add_leg(S2_33248)
 
 S2_33250 = Train.from_blueprint(33250, RS2_RTS_MOESSINGEN, "RS 2", "10:26", "LPLPL")
 # Wendet aus S2_33237
@@ -1390,14 +1389,14 @@ def main():
     if timetable_df.empty:
         print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
         return
-    plot_route_timetable(timetable_df, selected_section, "05:40", 200)
+    #plot_route_timetable(timetable_df, selected_section, "05:40", 200)
     plot_route_timetable(timetable_df, "TMS - RTS", "05:00", 180)
     #generate_line_timetable(TRAINS, "Tübingen - Betzingen", "05:00", 160)
     #generate_line_timetable(TRAINS, "RT Hbf K / B - RT Süd", "05:40", 140)
     #generate_line_timetable(TRAINS, "TMS - RTS", "5:00", 180)
     #plot_station_departures(TRAINS, "RTS", "05:20", 180)
     #plot_station_departures(TRAINS, "TT", "06:00", 180)
-    print(S2_33215)
+    print(S12_33201.timetable())
     export_trains_txt(TRAINS)
 
 
