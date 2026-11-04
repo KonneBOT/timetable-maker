@@ -222,6 +222,8 @@ class Train:
         self, station_id, arrival=None, departure=None, platform="any"
     ):
         """Append a stop and return this train for fluent construction."""
+        self._parse_time(arrival)
+        self._parse_time(departure)
         station = self._station(station_id)
         platform = self._validate_platform(station, platform)
         visit = Visit(station, arrival, departure, platform, self)
@@ -300,17 +302,18 @@ class Train:
             or departure < 0
         ):
             raise ValueError("Departure must be a non-negative integer")
-        if not self.visits or self.visits[-1].departure is not None:
-            raise ValueError("The train must have an open ending")
+        if not self.visits:
+            raise ValueError("The train must contain at least one visit")
 
         last = self.visits[-1]
-        last_arrival = self._parse_time(last.arrival)
-
-        if last_arrival is None:
-            raise ValueError("The current ending must have an arrival time")
-
-        last_departure = last_arrival + timedelta(minutes=1)
-        last.departure = self._format_time(last_departure)
+        if last.departure is None:
+            last_arrival = self._parse_time(last.arrival)
+            if last_arrival is None:
+                raise ValueError("The current ending must have an arrival time")
+            last_departure = last_arrival + timedelta(minutes=1)
+            last.departure = self._format_time(last_departure)
+        else:
+            last_departure = self._parse_time(last.departure)
         ending_arrival = last_departure + timedelta(minutes=travel_time)
         if departure is not None:
             stopping = departure > 0
