@@ -531,8 +531,26 @@ RS5_TUEBINGEN_ENGSTINGEN = {
         {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFK"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFS"), "arrival": 2, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": 0, "platform": 1},
     ],
+}
+
+RS5_TRE_ENGSTINGEN = {
+    "name": "RS 5",
+    "stops": [
+        {"station_id": station_code_to_id("RTB"), "arrival": None, "departure": 0, "platform": 1},
+        {"station_id": station_code_to_id("RHbfK"), "arrival": 3, "departure": 1, "platform": 21},
+        {"station_id": station_code_to_id("RGA"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RALB"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RECH"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTS"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFA"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFB"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFK"), "arrival": 1, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("PFS"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": 0, "platform": 1},
+    ]
 }
 
 RS5_ENGSTINGEN_TUEBINGEN = {
@@ -688,90 +706,90 @@ MEX_REUTLINGEN_TUEBINGEN = {
 ## RS_3: 33300 - 33369, RS_31: 33370 - 33399, RS_4: 334XX, RS_5: 335XX, RS_6: 336XX, RS_7: 337XX
 def all_trains():
     # Format: train_ID = Train.from_blueprint(id, blueprint, name, starttime, train_format, train_type, max_speed, penalties)
-    MEX_19301 = Train.from_blueprint(19301, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "5:11", "LPPLPPL", "REGIONAL", 160)
+    MEX_19301 = Train.from_blueprint(19301, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "05:13", "LPPLPPL", "REGIONAL", 160)
     MEX_19301.set_origin(station_code_to_id("TTBW"), 2)
     MEX_19301.change_platform(station_code_to_id("TT"), 5)
     MEX_19301.extend_stop(station_code_to_id("TT"), 1)
 
-    MEX_19303 = Train.from_blueprint(19303, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "5:40", "LPPLPPL", "REGIONAL", 160)
+    MEX_19303 = Train.from_blueprint(19303, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "05:42", "LPPLPPL", "REGIONAL", 160)
     MEX_19303.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19305 = Train.from_blueprint(19305, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "6:10", "LPPLPPL", "REGIONAL", 160)
+    MEX_19305 = Train.from_blueprint(19305, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "06:12", "LPPLPPL", "REGIONAL", 160)
     MEX_19305.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19307 = Train.from_blueprint(19307, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "6:40", "LPPLPPL", "REGIONAL", 160)
+    MEX_19307 = Train.from_blueprint(19307, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "06:42", "LPPLPPL", "REGIONAL", 160)
     MEX_19307.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19309 = Train.from_blueprint(19309, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "7:10", "LPPLPPL", "REGIONAL", 160)
+    MEX_19309 = Train.from_blueprint(19309, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "07:12", "LPPLPPL", "REGIONAL", 160)
     MEX_19309.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19311 = Train.from_blueprint(19311, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "7:40", "LPPLPPL", "REGIONAL", 160)
+    MEX_19311 = Train.from_blueprint(19311, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "07:42", "LPPLPPL", "REGIONAL", 160)
     MEX_19311.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19313 = Train.from_blueprint(19313, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "8:10", "LPPLPPL", "REGIONAL", 160)
+    MEX_19313 = Train.from_blueprint(19313, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "08:12", "LPPLPPL", "REGIONAL", 160)
     MEX_19313.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19315 = Train.from_blueprint(19315, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "8:40", "LPPLPPL", "REGIONAL", 160)
+    MEX_19315 = Train.from_blueprint(19315, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "08:42", "LPPLPPL", "REGIONAL", 160)
     MEX_19315.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19317 = Train.from_blueprint(19317, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "9:10", "LPPLPPL", "REGIONAL", 160)
+    MEX_19317 = Train.from_blueprint(19317, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "09:12", "LPPLPPL", "REGIONAL", 160)
     MEX_19317.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19319 = Train.from_blueprint(19319, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "9:40", "LPPLPPL", "REGIONAL", 160)
+    MEX_19319 = Train.from_blueprint(19319, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "09:42", "LPPLPPL", "REGIONAL", 160)
     MEX_19319.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19321 = Train.from_blueprint(19321, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "10:40", "LPPLPPL", "REGIONAL", 160)
+    MEX_19321 = Train.from_blueprint(19321, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "10:42", "LPPLPPL", "REGIONAL", 160)
     MEX_19321.extend_stop(station_code_to_id("TT"), 3)
 
-    MEX_19323 = Train.from_blueprint(19323, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "10:40", "LPPLPPL", "REGIONAL", 160)
+    MEX_19323 = Train.from_blueprint(19323, MEX_TUEBINGEN_REUTLINGEN, "MEX 13", "10:42", "LPPLPPL", "REGIONAL", 160)
     MEX_19323.extend_stop(station_code_to_id("TT"), 3)
 
     ## RT -> Tü
-    MEX_19302 = Train.from_blueprint(19302, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "5:04", "LPPLPPL", "REGIONAL", 160)
+    MEX_19302 = Train.from_blueprint(19302, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "05:06", "LPPLPPL", "REGIONAL", 160)
     MEX_19302.extend_stop(station_code_to_id("TT"), 4)
     MEX_19302.add_leg(MEX_19303)
 
-    MEX_19304 = Train.from_blueprint(19304, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "5:34", "LPPL", "REGIONAL", 160)
+    MEX_19304 = Train.from_blueprint(19304, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "05:36", "LPPL", "REGIONAL", 160)
     MEX_19304.extend_stop(station_code_to_id("TT"), 4)
     MEX_19304.add_leg(MEX_19305)
 
-    MEX_19306 = Train.from_blueprint(19306, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "6:04", "LPPLPL", "REGIONAL", 160)
+    MEX_19306 = Train.from_blueprint(19306, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "06:06", "LPPLPL", "REGIONAL", 160)
     MEX_19306.extend_stop(station_code_to_id("TT"), 4)
     MEX_19306.add_leg(MEX_19307)
 
-    MEX_19308 = Train.from_blueprint(19308, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "6:34", "LPPLPPL", "REGIONAL", 160)
+    MEX_19308 = Train.from_blueprint(19308, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "06:36", "LPPLPPL", "REGIONAL", 160)
     MEX_19308.extend_stop(station_code_to_id("TT"), 4)
     MEX_19308.add_leg(MEX_19309)
 
-    MEX_19310 = Train.from_blueprint(19310, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "7:04", "LPPLPPL", "REGIONAL", 160)
+    MEX_19310 = Train.from_blueprint(19310, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "07:06", "LPPLPPL", "REGIONAL", 160)
     MEX_19310.extend_stop(station_code_to_id("TT"), 4)
     MEX_19310.add_leg(MEX_19311)
 
-    MEX_19312 = Train.from_blueprint(19312, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "7:34", "LPLPPL", "REGIONAL", 160)
+    MEX_19312 = Train.from_blueprint(19312, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "07:36", "LPLPPL", "REGIONAL", 160)
     MEX_19312.extend_stop(station_code_to_id("TT"), 4)
     MEX_19312.add_leg(MEX_19313)
 
-    MEX_19314 = Train.from_blueprint(19314, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "8:04", "LPPLPPL", "REGIONAL", 160)
+    MEX_19314 = Train.from_blueprint(19314, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "08:06", "LPPLPPL", "REGIONAL", 160)
     MEX_19314.extend_stop(station_code_to_id("TT"), 4)
     MEX_19314.add_leg(MEX_19315)
 
-    MEX_19316 = Train.from_blueprint(19316, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "8:34", "LPLPPL", "REGIONAL", 160)
+    MEX_19316 = Train.from_blueprint(19316, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "08:36", "LPLPPL", "REGIONAL", 160)
     MEX_19316.extend_stop(station_code_to_id("TT"), 4)
     MEX_19316.add_leg(MEX_19317)
 
-    MEX_19318 = Train.from_blueprint(19318, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "9:04", "LPPLPPL", "REGIONAL", 160)
+    MEX_19318 = Train.from_blueprint(19318, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "09:06", "LPPLPPL", "REGIONAL", 160)
     MEX_19318.extend_stop(station_code_to_id("TT"), 4)
     MEX_19318.add_leg(MEX_19319)
 
-    MEX_19320 = Train.from_blueprint(19320, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "9:34", "LPLPPL", "REGIONAL", 160)
+    MEX_19320 = Train.from_blueprint(19320, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "09:36", "LPLPPL", "REGIONAL", 160)
     MEX_19320.extend_stop(station_code_to_id("TT"), 4)
     MEX_19320.add_leg(MEX_19321)
 
-    MEX_19322 = Train.from_blueprint(19322, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "10:04", "LPPLPPL", "REGIONAL", 160)
+    MEX_19322 = Train.from_blueprint(19322, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "10:06", "LPPLPPL", "REGIONAL", 160)
     MEX_19322.extend_stop(station_code_to_id("TT"), 4)
     MEX_19322.add_leg(MEX_19323)
 
-    MEX_19324 = Train.from_blueprint(19324, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "10:34", "LPLPPL", "REGIONAL", 160)
+    MEX_19324 = Train.from_blueprint(19324, MEX_REUTLINGEN_TUEBINGEN, "MEX 13", "10:36", "LPLPPL", "REGIONAL", 160)
     MEX_19324.set_ending(station_code_to_id("TTBW"), 2, 1)
     MEX_19324.extend_stop(station_code_to_id("TT"), 4)
 
@@ -1474,119 +1492,117 @@ def all_trains():
     _S12_TRAINS = [train for train in S12_TRAINS if train._leg_parent is None]
     _S2_TRAINS = [train for train in S2_TRAINS if train._leg_parent is None]
 
-    
 
-    ## S4 Trains
-    S4_33401 = Train.from_blueprint(33401, RS4_TUEBINGEN_HERRENBERG, "RS 4", "5:06", "LPLPL")
+    S4_33401 = Train.from_blueprint(33401, RS4_TUEBINGEN_HERRENBERG, "RS 4", "05:03", "LPLPL")
     S4_33401.set_origin(station_code_to_id("TTBW"), 2, platform=1)
     S4_33401.extend_stop(station_code_to_id("TT"), 3)
     # wendet auf S4_33406
 
     # wendet aus S4_33402
-    S4_33403 = Train.from_blueprint(33403, RS4_TUEBINGEN_HERRENBERG, "RS 4", "5:38", "LPLPL")
+    S4_33403 = Train.from_blueprint(33403, RS4_TUEBINGEN_HERRENBERG, "RS 4", "05:35", "LPLPL")
     S4_33403.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33404
-    S4_33405 = Train.from_blueprint(33405, RS4_TUEBINGEN_HERRENBERG, "RS 4", "6:08", "LPLPL")
+    S4_33405 = Train.from_blueprint(33405, RS4_TUEBINGEN_HERRENBERG, "RS 4", "06:05", "LPLPL")
     S4_33405.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33401, S4_33406
-    S4_33407 = Train.from_blueprint(33407, RS4_TUEBINGEN_HERRENBERG, "RS 4", "6:38", "LPLPL")
+    S4_33407 = Train.from_blueprint(33407, RS4_TUEBINGEN_HERRENBERG, "RS 4", "06:35", "LPLPL")
     S4_33407.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33402, S4_33403, S4_33408
-    S4_33409 = Train.from_blueprint(33409, RS4_TUEBINGEN_HERRENBERG, "RS 4", "7:08", "LPLPL")
+    S4_33409 = Train.from_blueprint(33409, RS4_TUEBINGEN_HERRENBERG, "RS 4", "07:05", "LPLPL")
     S4_33409.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33404, S4_33405, S4_33410
-    S4_33411 = Train.from_blueprint(33411, RS4_TUEBINGEN_HERRENBERG, "RS 4", "7:38", "LPLPL")
+    S4_33411 = Train.from_blueprint(33411, RS4_TUEBINGEN_HERRENBERG, "RS 4", "07:35", "LPLPL")
     S4_33411.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33401, S4_33406, S4_33407, S4_33412
-    S4_33413 = Train.from_blueprint(33413, RS4_TUEBINGEN_HERRENBERG, "RS 4", "8:08", "LPLPL")
+    S4_33413 = Train.from_blueprint(33413, RS4_TUEBINGEN_HERRENBERG, "RS 4", "08:05", "LPLPL")
     S4_33413.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33402, S4_33403, S4_33408, S4_33409
-    S4_33415 = Train.from_blueprint(33415, RS4_TUEBINGEN_HERRENBERG, "RS 4", "8:38", "LPLPL")
+    S4_33415 = Train.from_blueprint(33415, RS4_TUEBINGEN_HERRENBERG, "RS 4", "08:35", "LPLPL")
     S4_33415.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33404, S4_33405, S4_33410, S4_33411
-    S4_33417 = Train.from_blueprint(33417, RS4_TUEBINGEN_HERRENBERG, "RS 4", "9:08", "LPLPL")
+    S4_33417 = Train.from_blueprint(33417, RS4_TUEBINGEN_HERRENBERG, "RS 4", "09:05", "LPLPL")
     S4_33417.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33401, S4_33406, S4_33407, S4_33412, S4_33413
-    S4_33419 = Train.from_blueprint(33419, RS4_TUEBINGEN_HERRENBERG, "RS 4", "9:38", "LPLPL")
+    S4_33419 = Train.from_blueprint(33419, RS4_TUEBINGEN_HERRENBERG, "RS 4", "09:35", "LPLPL")
     S4_33419.extend_stop(station_code_to_id("TT"), 2)
 
     # wendet aus S4_33402, S4_33403, S4_33408, S4_33409, S4_33415
-    S4_33421 = Train.from_blueprint(33421, RS4_TUEBINGEN_HERRENBERG, "RS 4", "10:08", "LPLPL")
+    S4_33421 = Train.from_blueprint(33421, RS4_TUEBINGEN_HERRENBERG, "RS 4", "10:05", "LPLPL")
     S4_33421.extend_stop(station_code_to_id("TT"), 2)
     S4_33421.set_ending(station_code_to_id("THBA"), 1, platform=1)
 
 
     # sollte um 04:59 (10min später als sonst) in THEZ los
-    S4_33402 = Train.from_blueprint(33402, RS4_HERRENBERG_TUEBINGEN, "RS 4", "4:55", "LPLPL")
+    S4_33402 = Train.from_blueprint(33402, RS4_HERRENBERG_TUEBINGEN, "RS 4", "04:52", "LPLPL")
     S4_33402.set_origin(station_code_to_id("THBA"), 1, platform=1)
     S4_33402.extend_stop(station_code_to_id("THEZ"), 2)
     S4_33402.extend_stop(station_code_to_id("TT"), 2)
     # Wendet auf S4_33403 (Ankunft :29, Abfahrt :41)
 
     # Abfahrt :19 los
-    S4_33404 = Train.from_blueprint(33404, RS4_HERRENBERG_TUEBINGEN, "RS 4", "5:15", "LPLPL")
+    S4_33404 = Train.from_blueprint(33404, RS4_HERRENBERG_TUEBINGEN, "RS 4", "05:12", "LPLPL")
     S4_33404.set_origin(station_code_to_id("THBA"), 1, platform=1)
     S4_33404.extend_stop(station_code_to_id("THEZ"), 2)
     S4_33404.extend_stop(station_code_to_id("TT"), 2)
     # Wendet auf S4_33405 (Ankunft :47, Abfahrt :11)
 
-    S4_33406 = Train.from_blueprint(33406, RS4_HERRENBERG_TUEBINGEN, "RS 4", "5:45", "LPLPL")
+    S4_33406 = Train.from_blueprint(33406, RS4_HERRENBERG_TUEBINGEN, "RS 4", "05:42", "LPLPL")
     S4_33406.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33406.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33401
     # Wendet auf S4_33407 (Ankunft :17, Abfahrt :41)
 
-    S4_33408 = Train.from_blueprint(33408, RS4_HERRENBERG_TUEBINGEN, "RS 4", "6:15", "LPLPL")
+    S4_33408 = Train.from_blueprint(33408, RS4_HERRENBERG_TUEBINGEN, "RS 4", "06:12", "LPLPL")
     S4_33408.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33408.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33403
     # Wendet auf S4_33409 (Ankunft :47, Abfahrt :11)
 
-    S4_33410 = Train.from_blueprint(33410, RS4_HERRENBERG_TUEBINGEN, "RS 4", "6:45", "LPLPL")
+    S4_33410 = Train.from_blueprint(33410, RS4_HERRENBERG_TUEBINGEN, "RS 4", "06:42", "LPLPL")
     S4_33410.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33410.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33405
     # Wendet auf S4_33411 (Ankunft :17, Abfahrt :41)
 
-    S4_33412 = Train.from_blueprint(33412, RS4_HERRENBERG_TUEBINGEN, "RS 4", "7:15", "LPLPL")
+    S4_33412 = Train.from_blueprint(33412, RS4_HERRENBERG_TUEBINGEN, "RS 4", "07:12", "LPLPL")
     S4_33412.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33412.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33407
     # Wendet auf S4_33413 (Ankunft :47, Abfahrt :11)
 
-    S4_33414 = Train.from_blueprint(33414, RS4_HERRENBERG_TUEBINGEN, "RS 4", "7:45", "LPLPL")
+    S4_33414 = Train.from_blueprint(33414, RS4_HERRENBERG_TUEBINGEN, "RS 4", "07:42", "LPLPL")
     S4_33414.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33414.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33409
     # Wendet auf S4_33415 (Ankunft :17, Abfahrt :41)
 
-    S4_33416 = Train.from_blueprint(33416, RS4_HERRENBERG_TUEBINGEN, "RS 4", "8:15", "LPLPL")
+    S4_33416 = Train.from_blueprint(33416, RS4_HERRENBERG_TUEBINGEN, "RS 4", "08:12", "LPLPL")
     S4_33416.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33416.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33411
     # Wendet auf S4_33417 (Ankunft :47, Abfahrt :11)
 
-    S4_33418 = Train.from_blueprint(33418, RS4_HERRENBERG_TUEBINGEN, "RS 4", "8:45", "LPLPL")
+    S4_33418 = Train.from_blueprint(33418, RS4_HERRENBERG_TUEBINGEN, "RS 4", "08:42", "LPLPL")
     S4_33418.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33418.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33413
     # wendet auf S4_33419 (Ankunft :17, Abfahrt :41)
 
-    S4_33420 = Train.from_blueprint(33420, RS4_HERRENBERG_TUEBINGEN, "RS 4", "9:15", "LPLPL")
+    S4_33420 = Train.from_blueprint(33420, RS4_HERRENBERG_TUEBINGEN, "RS 4", "09:12", "LPLPL")
     S4_33420.extend_stop(station_code_to_id("THEZ"), 3)
     S4_33420.extend_stop(station_code_to_id("TT"), 2)
     # Wendet aus S4_33415
     # Wendet auf S4_33421 (Ankunft :47, Abfahrt :11)
 
-    S4_33422 = Train.from_blueprint(33422, RS4_HERRENBERG_TUEBINGEN, "RS 4", "9:45", "LPLPL")
+    S4_33422 = Train.from_blueprint(33422, RS4_HERRENBERG_TUEBINGEN, "RS 4", "09:42", "LPLPL")
     S4_33422.extend_stop(station_code_to_id("THEZ"), 3)
     # Wendet aus S4_33417
     # ab ins BW
@@ -1629,84 +1645,119 @@ def all_trains():
     ## S5 Trains (for now bis TT only)
 
     # Erster Zug startet in TT 5:53 (demnach early in Engstingen später)
-    S5_33501 = Train.from_blueprint(33501, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "5:02", "LPLPL")
-    S5_33501.extend_stop(station_code_to_id("TT"), 2)
+    S5_33501 = Train.from_blueprint(33501, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "04:54", "LPLPL")
+    S5_33501.extend_stop(station_code_to_id("TT"), 7)
     # Wendet auf S5_33506
 
-    S5_33503 = Train.from_blueprint(33503, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "5:32", "LPLPL")
-    S5_33503.extend_stop(station_code_to_id("TT"), 2)
+    S5_33503 = Train.from_blueprint(33503, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "05:24", "LPLPL")
+    S5_33503.extend_stop(station_code_to_id("TT"), 7)
     # Wendet auf S5_33508
 
-    S5_33505 = Train.from_blueprint(33505, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "6:02", "LPLPL")
-    S5_33505.extend_stop(station_code_to_id("TT"), 2)
+    S5_33505 = Train.from_blueprint(33505, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "05:54", "LPLPL")
+    S5_33505.extend_stop(station_code_to_id("TT"), 7)
     # Wendet auf S5_33510
 
-    S5_33507 = Train.from_blueprint(33507, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "6:32", "LPLPL")
-    S5_33507.extend_stop(station_code_to_id("TT"), 2)
+    S5_33507 = Train.from_blueprint(33507, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "06:24", "LPLPL")
+    S5_33507.extend_stop(station_code_to_id("TT"), 7)
     # Wendet auf S5_33512
 
-    S5_33509 = Train.from_blueprint(33509, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "7:02", "LPLPL")
-    S5_33509.extend_stop(station_code_to_id("TT"), 2)  
+    S5_33509 = Train.from_blueprint(33509, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "06:54", "LPLPL")
+    S5_33509.extend_stop(station_code_to_id("TT"), 7)  
     # Wendet auf S5_33514
 
-    S5_33511 = Train.from_blueprint(33511, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "7:32", "LPLPL")
-    S5_33511.extend_stop(station_code_to_id("TT"), 2)
+    S5_33511 = Train.from_blueprint(33511, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "07:24", "LPLPL")
+    S5_33511.extend_stop(station_code_to_id("TT"), 7)
     # Wendet auf S5_33516
 
-    S5_33513 = Train.from_blueprint(33513, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "8:02", "LPLPL")
-    S5_33513.extend_stop(station_code_to_id("TT"), 2)
+    S5_33513 = Train.from_blueprint(33513, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "07:54", "LPLPL")
+    S5_33513.extend_stop(station_code_to_id("TT"), 7)
     # Wendet auf S5_33518
 
-    S5_33515 = Train.from_blueprint(33515, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "8:32", "LPLPL")
-    S5_33515.extend_stop(station_code_to_id("TT"), 2)
+    S5_33515 = Train.from_blueprint(33515, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "08:24", "LPLPL")
+    S5_33515.extend_stop(station_code_to_id("TT"), 7)
     # Wendet auf S5_33520
+
+    S5_33517 = Train.from_blueprint(33517, RS5_ENGSTINGEN_ENTRINGEN, "RS 5", "08:54", "LPLPL")
+    S5_33517.extend_stop(station_code_to_id("TT"), 7)
+    # Wendet auf S5_33522
+
+    S5_33519 = Train.from_blueprint(33519, RS5_ENGSTINGEN_TUEBINGEN, "RS 5", "09:24", "LPLPL")
+    S5_33519.set_ending(station_code_to_id("TTBW"), 2, platform=1)
+    S5_33519.extend_stop(station_code_to_id("TT"), 2)
+    
+    S5_33521 = Train.from_blueprint(33521, RS5_ENGSTINGEN_TUEBINGEN, "RS 5", "09:54", "LPLPL")
+    S5_33521.set_ending(station_code_to_id("TTBW"), 2, platform=1)
+    S5_33521.extend_stop(station_code_to_id("TT"), 2)
 
     # Probably erst dritter Zug in die Richtung, vorherige starten in TT
     # wendet aus S5_33501, Abfahrt 6:20 in TENG
-    S5_33506 = Train.from_blueprint(33506, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "6:18", "LPLPL")
+    S5_33498 = Train.from_blueprint(33498, RS5_TRE_ENGSTINGEN, "RS 5", "04:54", "LPLPL")
+    S5_33498.extend_stop(station_code_to_id("RHbfK"), 2)
+
+    S5_33500 = Train.from_blueprint(33500, RS5_TRE_ENGSTINGEN, "RS 5", "05:24", "LPLPL")
+    S5_33500.extend_stop(station_code_to_id("RHbfK"), 2)
+
+    S5_33502 = Train.from_blueprint(33502, RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "05:34", "LPLPL")
+    S5_33502.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+    S5_33502.extend_stop(station_code_to_id("TT"), 2)
+
+    S5_33504 = Train.from_blueprint(33504, RS5_TUEBINGEN_ENGSTINGEN, "RS 5", "06:04", "LPLPL")
+    S5_33504.set_origin(station_code_to_id("TTBW"), 2, platform=1)
+    S5_33504.extend_stop(station_code_to_id("TT"), 2)
+
+    S5_33506 = Train.from_blueprint(33506, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "06:15", "LPLPL")
     S5_33506.extend_stop(station_code_to_id("TENT"), 2)
     S5_33506.extend_stop(station_code_to_id("TT"), 3)
     S5_33501.add_leg(S5_33506)
 
-    S5_33508 = Train.from_blueprint(33508, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "6:48", "LPLPL")
+    S5_33508 = Train.from_blueprint(33508, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "06:45", "LPLPL")
     S5_33508.extend_stop(station_code_to_id("TENT"), 2)
     S5_33508.extend_stop(station_code_to_id("TT"), 3)
     S5_33503.add_leg(S5_33508)
 
-    S5_33510 = Train.from_blueprint(33510, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "7:18", "LPLPL")
+    S5_33510 = Train.from_blueprint(33510, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "07:15", "LPLPL")
     S5_33510.extend_stop(station_code_to_id("TENT"), 2)
     S5_33510.extend_stop(station_code_to_id("TT"), 3)
     S5_33505.add_leg(S5_33510)
 
-    S5_33512 = Train.from_blueprint(33512, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "7:48", "LPLPL")
+    S5_33512 = Train.from_blueprint(33512, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "07:45", "LPLPL")
     S5_33512.extend_stop(station_code_to_id("TENT"), 2)
     S5_33512.extend_stop(station_code_to_id("TT"), 3)
     S5_33507.add_leg(S5_33512)
 
-    S5_33514 = Train.from_blueprint(33514, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "8:18", "LPLPL")
+    S5_33514 = Train.from_blueprint(33514, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "08:15", "LPLPL")
     S5_33514.extend_stop(station_code_to_id("TENT"), 2)
     S5_33514.extend_stop(station_code_to_id("TT"), 3)
     S5_33509.add_leg(S5_33514)
 
-    S5_33516 = Train.from_blueprint(33516, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "8:48", "LPLPL")
+    S5_33516 = Train.from_blueprint(33516, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "08:45", "LPLPL")
     S5_33516.extend_stop(station_code_to_id("TENT"), 2)
     S5_33516.extend_stop(station_code_to_id("TT"), 3)
     S5_33511.add_leg(S5_33516)
 
-    S5_33518 = Train.from_blueprint(33518, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "9:18", "LPLPL")
+    S5_33518 = Train.from_blueprint(33518, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "09:15", "LPLPL")
     S5_33518.extend_stop(station_code_to_id("TENT"), 2)
     S5_33518.extend_stop(station_code_to_id("TT"), 3)
     S5_33513.add_leg(S5_33518)
 
-    S5_33520 = Train.from_blueprint(33520, RS5_ENTRINGEN_TUEBINGEN, "RS 5", "9:48", "LPLPL")
+    S5_33520 = Train.from_blueprint(33520, RS5_ENTRINGEN_TUEBINGEN, "RS 5", "09:45", "LPLPL")
     S5_33520.extend_stop(station_code_to_id("TENT"), 2)
     S5_33520.set_ending(station_code_to_id("TTBW"), 2, platform=1)
     S5_33520.extend_stop(station_code_to_id("TT"), 3)
     S5_33515.add_leg(S5_33520)
 
-    S5_TRAINS = [S5_33501, S5_33506, S5_33503, S5_33508, S5_33505, S5_33510, S5_33507, S5_33512,
-                S5_33509, S5_33514, S5_33511, S5_33516, S5_33513, S5_33518, S5_33515, S5_33520]
+    S5_33522 = Train.from_blueprint(33522, RS5_ENTRINGEN_ENGSTINGEN, "RS 5", "10:15", "LPLPL")
+    S5_33522.extend_stop(station_code_to_id("TENT"), 2)
+    S5_33522.set_ending(station_code_to_id("TTBW"), 2, platform=1)
+    S5_33517.add_leg(S5_33522)
+
+    S5_TRAINS = [S5_33498, S5_33500, S5_33501, S5_33502, S5_33504, S5_33506, S5_33503, S5_33508, S5_33505, S5_33510, S5_33507, S5_33512,
+                S5_33509, S5_33514, S5_33511, S5_33516, S5_33513, S5_33518, S5_33515, S5_33520, 
+                S5_33517, S5_33522, S5_33519, S5_33521]
     _S5_TRAINS = [train for train in S5_TRAINS if train._leg_parent is None]
+
+
+
 
     TRAINS = [
             *_MEX_TRAINS,
@@ -1736,13 +1787,14 @@ def main():
     if timetable_df.empty:
         print(f"The worksheet '{selected_section}' does not yet contain any timetable data.")
         return
-    plot_route_timetable(timetable_df, selected_section, "05:00", 200)
+    plot_route_timetable(timetable_df, "Tübingen - Betzingen", "05:00", 200)
     #plot_route_timetable(timetable_df, "TMS - RTS", "05:00", 180)
-    generate_line_timetable(TRAINS, "Tübingen - Betzingen", "05:00", 160)
-    generate_line_timetable(TRAINS, "RT Hbf K / B - RT Süd", "05:40", 140)
+    generate_line_timetable(TRAINS, "Betzingen - Tübingen", "05:00", 160)
+    generate_line_timetable(TRAINS, "RT Hbf K / B - RT Süd", "05:00", 160)
+    plot_route_timetable(timetable_df, "RT Hbf K / B - RT Süd", "05:00", 200)
     #generate_line_timetable(TRAINS, "TMS - RTS", "5:00", 180)
-    #plot_station_departures(TRAINS, "RTS", "05:20", 180)
-    #plot_station_departures(TRAINS, "TT", "06:00", 180)
+    plot_station_departures(TRAINS, "RTS", "05:20", 180)
+    plot_station_departures(TRAINS, "TT", "05:00", 180)
     #print(S11_33177.timetable())
     #export_trains_txt(TRAINS)
 
