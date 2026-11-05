@@ -475,7 +475,7 @@ RS5_ENTRINGEN_ENGSTINGEN = {
         {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFK"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFS"), "arrival": 2, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": 1, "platform": 1},
+        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": None, "platform": 1},
     ]
 }
 
@@ -488,7 +488,7 @@ RS5_ENGSTINGEN_ENTRINGEN = {
         {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFB"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFA"), "arrival": 2, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("RTS"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTS"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("RECH"), "arrival": 2, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RALB"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RGA"), "arrival": 2, "departure": 1, "platform": 2},
@@ -531,7 +531,7 @@ RS5_TUEBINGEN_ENGSTINGEN = {
         {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFK"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFS"), "arrival": 2, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": 0, "platform": 1},
+        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": None, "platform": 1},
     ],
 }
 
@@ -549,7 +549,7 @@ RS5_TRE_ENGSTINGEN = {
         {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFK"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFS"), "arrival": 2, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": 0, "platform": 1},
+        {"station_id": station_code_to_id("TKL"), "arrival": 1, "departure": None, "platform": 1},
     ]
 }
 
@@ -562,7 +562,7 @@ RS5_ENGSTINGEN_TUEBINGEN = {
         {"station_id": station_code_to_id("PFM"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFB"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("PFA"), "arrival": 2, "departure": 1, "platform": 2},
-        {"station_id": station_code_to_id("RTS"), "arrival": 2, "departure": 1, "platform": 2},
+        {"station_id": station_code_to_id("RTS"), "arrival": 2, "departure": 1, "platform": 1},
         {"station_id": station_code_to_id("RECH"), "arrival": 2, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RALB"), "arrival": 1, "departure": 1, "platform": 2},
         {"station_id": station_code_to_id("RGA"), "arrival": 2, "departure": 1, "platform": 2},
