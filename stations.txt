@@ -28,13 +28,13 @@ y|Gartentor|RGA|13.9
 z|Albtorplatz|RALB|13.0
 A|Am Echazufer|RECH|12.1
 B|Reutlingen Süd|RTS|10.9
-C|Arbachstraße|PFA|X
-D|Bismarckstraße|PFB|X
-E|Pfullingen Marktplatz|PFM|X
-F|Klostergarten|PFK|X
-G|Pfullingen Süd|PFS|X
-H|Abstellanlage Hortense|PFAB|X
-I|--> Engstingen|TKL|X
+C|Arbachstraße|PFA|9.8
+D|Bismarckstraße|PFB|9.0
+E|Pfullingen Marktplatz|PFM|8.5
+F|Klostergarten|PFK|8.0
+G|Pfullingen Süd|PFS|7.3
+H|Abstellanlage Hortense|PFAB|6.6
+I|--> Engstingen|TKL|6.4
 J|Mühlbachäcker (Süd)|TMUS|0.8
 K|Derendingen (TDD)|TDD|1.8
 L|Mühlbachäcker (nord)|TMUN|0.8
