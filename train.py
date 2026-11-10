@@ -455,15 +455,18 @@ class Train:
 
         raise ValueError(f"Train {self.id} has no stop at station ID {station_id}")
 
-    def change_platform(self, station_id, platform):
+    def change_platform(self, station_id, platform, visitNum=None):
         """Change the platform assigned to a station stop."""
         station = self._station(station_id)
         platform = self._validate_platform(station, platform)
 
+        count = 1
         for stop in self.visits:
             if stop.station is station:
-                stop.platform = platform
-                return self
+                if count == visitNum or (visitNum is None and count == 1):
+                    stop.platform = platform
+                    return self
+                count += 1
 
         raise ValueError(f"Train {self.id} has no stop at station ID {station_id}")
 
