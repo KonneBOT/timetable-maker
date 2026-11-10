@@ -648,6 +648,52 @@ S2 (:47 in ROHW)    -> RTS Gl. 3 an :20 ab :27  -> S2 (RTS Gl. 2 ab :30) bis TMS
  -> in TMS für Übersicht in die Abstellung
  -> Wenn keine HVZ, S2 wendet mit 22min Wendezeit auf nächste S2, Rest fährt Richtung Hortense
 
+### RS 3 / 31
+RS 3 -> TT
+Abfahrt :23 in TRT
+TKC 28:29
+Ankunft TT :33
+
+RS 3 -> TRT
+Abfahrt TT :38
+TKC :42:43
+Kreuzung mit S31 in TKC
+Kreuzung mit RE in TRT oder TRTD (Ankunft TRT :48, Abfahrt RE :49)
+
+RS31 -> TT
+Abfahrt TRT ca. :31 - :34
+Abfahrt so dass :40 -> :43 in TKC
+
+RS31 -> TRT
+Abfahrt TTG :04
+Abfahrt TT :07 (hinter RE)
+Kreuzung RS 31 TKC-TBU
+Kreuzung RE TRTD
+TRT an :25
+Wende auf Verstärker RS 31 (oder in Abstellung)
+
+RS 31 -> TT (Verstärker)
+Abfahrt TRT :08 um RE in TRTD zu kreuzen
+TT 25:26
+TTG an :28
+
+RS31 -> TRT  (Verstärker)
+```
+Abfahrt TTG :40 -> TT :44 
+-> GEHT NICHT weil :39:40 die RS 5 Kreuzung in TTG ist. Möglichkeit most likely: RS31 früher los fahren und dann in TT stehen und in Takt fädeln (achtung Gleisbelegungen dann aber, probably nur 1 bzw. 2 (RS 5 auf 1) frei
+```
+Abfahrt TTG :33, dann +7 in TT Abfahrt :44
+Kreuzung RS31 in TMUN
+Kreuzung RE in TBU
+
+### Testruns:
+- RS 31 Wende in TRT Gl. 2 ggf. nicht mgl weil an Sink Platformen nicht gedreht werden kann bzw. nicht begonnen? Game versucht dann immer Zug ausm Sink zu spawnen? yikes
+- RS 31 um 06:06 darf net von Gl. 12/14 starten weil da ja der RE chillt, geht eig nur Gl. 1 i think? ist ja nachher auch so
+- RS 5 Anpassungen für Kreuzung mit RS 31 um ~:00 in TT nötig (Gl. 1 / 2), und nachfahrende RS 5 Richtung Herrenberg ggf. auch (falls RS 31 auf Gl. 2)
+  - generell sollte RS 5 TKI -> TT einfach TTN und TTG Gl. 1 statt 3 bedienen
+- RE und RS 3 brauchen +1 nach Tü, probably eher Weichen und vmax auf Gl. 12 erhöhen. 
+- Hauptmap anpassen bzgl. Gleis 14 Verlängerung!
+
 
 
 #### RE 17a (nach Albstadt)
@@ -671,3 +717,25 @@ RE Abfahrt in TAE immer :17 (Contract start :15)
 ### Testrun #3
 -[] S11 vor S1 mit knapper Ankunft in TMS über Gegengleis mgl -> falls da Konflikt mit S2 in Gegenrichtung dann nicht mehr -> wäre aber vom Takt eh cool wenn S11 auf 1 ankommt, S2 steht schon auf 3, S1 kommt auf 2 und dann fährt S2 erst los
 -[x] Kreuzung in TBOD immernoch zu knapp -> TBSB noch auf 160 erhöhen? ist knapp auf jeden fall
+
+### Testrun #4
+- [x] 33602 Minute früher los und PFAB auf Gl. 1
+- [x] 33224 PFAB auf Gl. 1
+- [x]  Abfahrtssensoren PFAB Gl. 1 (!) anpassen (in Automatic Version), RTS in PFS auf Gl. 2 zeigen, PFS auf Gl. 1
+- [x] Abfahrtssensoren PFS Gl. 2 anpassen dass Durchfahrt Richtung PFK (also RTS) auch als Regel existiert
+- [x] 19301 TTBW Platform 1 setzen
+- [x] 33402 & 33404 Gleiswechsel Gl. 2 in TPG (zumindest für die Automatic Version)
+- [x] TTW Gl. 2 Departure Sensor Richtung TT kaputt
+- [x] 33500 1min früher von Betriebshof -> +1 in RHbfK
+- [x] 33502 braucht Minute extra von TTBW zu Gl. 1 TT
+- [x] Departure Sensor TT Gl. 1 anpassen dass Richtung TTG auf Gl. 2 gefahren wird (neu!), gleiches für Routing vor TTN -> TKI (Ausfahrt)
+- [x] Wenden in PFS MÜSSEN 1 Minute Lücke zwischen previous Legs haben (Fahrt nach PFS nicht so lange in PFS extenden -1)!
+
+### Testrun #5
+- [x] Routing Sensor in Endingen Ost -> TBG anpassen weil neues Signal bei TBGS
+- [x] RTW Gl. 4 Departure Sensor Routen löschen die nicht gehen (richtung TRE Gl. 3), RTW Gl. 3 hat keine Route richtung RHbfK
+- [x] Einfahrt TNES ist das Signal noch allocated (bzw. Gleis ist allocated nach neuem Signal)
+- [ ] Shunting auf Gl. 13 reverse deaktivieren
+- [ ] für Automatic Version, Wende in PFS verkürzen dass 2 (!) Minuten Puffer dazwischen sind, sonst ping der reuse command für ne split second
+- [x] Perpetual wieder aktivieren vor PFA
+- [ ] ggf. vorbeugend schonmal 19102 auf Gl. 1 in TTBW und Perpetual von Gl. 2 ausschalten (für die Endings TTBW Gl. 2 am Ende der Map
