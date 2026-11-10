@@ -22,7 +22,7 @@ LINE_SECTIONS = {
         ),
         LineSection(
             "Rottenburg - Tübingen",
-            ("TRT", "TRTD", "TKIB", "TBU", "TKC", "TWEI", "TMUN", "TT"),
+            ("THB", "TRT", "TRTD", "TKIB", "TBU", "TKC", "TWEI", "TMUN", "TT"),
         ),
         LineSection(
             "Tübingen - Albstadt",

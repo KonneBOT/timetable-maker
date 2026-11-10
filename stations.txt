@@ -97,4 +97,5 @@ Z|Hechingen Stetten|THST|27.0
 ĕ|Wende West|TTWW|X
 x|Industrie|TTI|X
 ē|TT Wende Ost|TTWO|X
-ė|Herrenberg Abstellung|THBA|1|21.3
+ė|Herrenberg Abstellung|THBA|21.3
+ę|--> Horb|THB|9.9
